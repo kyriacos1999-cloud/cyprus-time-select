@@ -33,7 +33,9 @@ const CollectionGrid = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group cursor-pointer"
-              onClick={scrollToOrder}
+              onClick={() => {
+                document.getElementById(`product-${product.id}`)?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               <div className="relative aspect-square overflow-hidden bg-white mb-3">
                 <img
