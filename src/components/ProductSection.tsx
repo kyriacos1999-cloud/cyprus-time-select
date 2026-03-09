@@ -64,6 +64,7 @@ const products: Product[] = [
     image: watch3,
     images: [watch3],
     badge: null,
+    priceId: null,
   },
 ];
 
