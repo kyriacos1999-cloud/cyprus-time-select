@@ -4,18 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CheckCircle2, Crown } from "lucide-react";
+import { Check, CheckCircle2, ChevronsUpDown, Crown, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { akisBranches, branchCities } from "@/data/akisBranches";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 const OrderForm = () => {
   const [selectedProduct, setSelectedProduct] = useState(products[0].id);
