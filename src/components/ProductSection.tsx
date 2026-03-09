@@ -123,6 +123,25 @@ const products: Product[] = [
     badge: "New",
     priceId: "price_1T93WDF5cmmFi3mjFW0QagSQ",
   },
+  {
+    id: 5,
+    name: "Rolex Submariner Sprite",
+    description: "GMT-Master II Sprite · Black dial · Black/green bezel · Jubilee bracelet",
+    price: 300,
+    image: product5Front,
+    images: [
+      product5Front,
+      product5FrontAlt,
+      product5Angle,
+      product5Bracelet,
+      product5Clasp,
+      product5OpenClasp,
+      product5Box,
+      product5Fullset,
+    ],
+    badge: "New",
+    priceId: "price_1T93f6F5cmmFi3mj8mFGlsAa",
+  },
 ];
 
 export { products };
