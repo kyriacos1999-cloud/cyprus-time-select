@@ -350,10 +350,12 @@ const OrderForm = () => {
 
               <Button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-primary hover:bg-rolex-green-light text-primary-foreground font-medium tracking-wider uppercase text-xs py-6 rounded-none transition-all duration-300"
               >
-                Place Order
+                {loading ? "Redirecting to Payment..." : paymentMethod === "online" ? "Pay with Stripe" : "Place Order"}
               </Button>
+              {errors.submit && <p className="text-destructive text-xs mt-2 font-light">{errors.submit}</p>}
             </div>
           </div>
         </form>
