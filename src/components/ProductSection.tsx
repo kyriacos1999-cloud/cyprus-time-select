@@ -27,6 +27,14 @@ import product4Crown from "@/assets/product4-crown.jpg";
 import product4Clasp from "@/assets/product4-clasp.jpg";
 import product4Box from "@/assets/product4-box.jpg";
 import product4Fullset from "@/assets/product4-fullset.jpg";
+import product5Front from "@/assets/product5-front.jpg";
+import product5FrontAlt from "@/assets/product5-front-alt.jpg";
+import product5Angle from "@/assets/product5-angle.jpg";
+import product5Bracelet from "@/assets/product5-bracelet.jpg";
+import product5Clasp from "@/assets/product5-clasp.jpg";
+import product5OpenClasp from "@/assets/product5-openclasp.jpg";
+import product5Box from "@/assets/product5-box.jpg";
+import product5Fullset from "@/assets/product5-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
