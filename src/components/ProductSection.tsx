@@ -249,11 +249,11 @@ const ProductGallery = ({ product }: { product: Product }) => {
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-            <span>904L stainless steel construction</span>
+            <span>1 year warranty included</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-            <span>Free next-day delivery across Cyprus</span>
+            <span>Free next-day delivery with Akis Express across Cyprus</span>
           </div>
         </div>
 
