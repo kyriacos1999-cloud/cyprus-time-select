@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProductSection from "@/components/ProductSection";
 import WhyBuySection from "@/components/WhyBuySection";
@@ -7,6 +8,7 @@ import FinalCTA from "@/components/FinalCTA";
 
 const Index = () => (
   <main>
+    <Navbar />
     <HeroSection />
     <ProductSection />
     <WhyBuySection />
