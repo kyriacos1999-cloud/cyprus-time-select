@@ -14,7 +14,12 @@ import product2Crown from "@/assets/product2-crown.jpg";
 import product2Clasp from "@/assets/product2-clasp.jpg";
 import product2Box from "@/assets/product2-box.jpg";
 import product2Fullset from "@/assets/product2-fullset.jpg";
-import watch3 from "@/assets/watch-3.jpg";
+import product3Front from "@/assets/product3-front.jpg";
+import product3Dial from "@/assets/product3-dial.jpg";
+import product3Crown from "@/assets/product3-crown.jpg";
+import product3Clasp from "@/assets/product3-clasp.jpg";
+import product3Box from "@/assets/product3-box.jpg";
+import product3Fullset from "@/assets/product3-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -70,13 +75,20 @@ const products: Product[] = [
   },
   {
     id: 3,
-    name: "Aqua Diver Pro",
-    description: "Stainless steel · Sapphire crystal",
-    price: 219,
-    image: watch3,
-    images: [watch3],
+    name: "Rolex Datejust 36mm AAA Clone",
+    description: "Datejust · Dark grey dial · Fluted bezel · 904L steel bracelet",
+    price: 270,
+    image: product3Front,
+    images: [
+      product3Front,
+      product3Dial,
+      product3Crown,
+      product3Clasp,
+      product3Box,
+      product3Fullset,
+    ],
     badge: null,
-    priceId: null,
+    priceId: "price_1T93PDF5cmmFi3mjc4ysUaGZ",
   },
 ];
 
