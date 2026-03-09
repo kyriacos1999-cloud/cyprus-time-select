@@ -21,6 +21,7 @@ export type Product = {
   image: string;
   images: string[];
   badge: string | null;
+  priceId: string | null;
 };
 
 const products: Product[] = [
@@ -43,6 +44,7 @@ const products: Product[] = [
       product1Card,
     ],
     badge: "Best Seller",
+    priceId: "price_1T939nF5cmmFi3mjCmqYm73I",
   },
   {
     id: 2,
@@ -52,6 +54,7 @@ const products: Product[] = [
     image: watch2,
     images: [watch2],
     badge: "Best Price",
+    priceId: null,
   },
   {
     id: 3,
@@ -61,6 +64,7 @@ const products: Product[] = [
     image: watch3,
     images: [watch3],
     badge: null,
+    priceId: null,
   },
 ];
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { products } from "@/components/ProductSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ const OrderForm = () => {
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [courierOpen, setCourierOpen] = useState(false);
 
@@ -44,11 +46,36 @@ const OrderForm = () => {
     return errs;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
-    if (Object.keys(errs).length === 0) {
+    if (Object.keys(errs).length > 0) return;
+
+    // For online payment with a Stripe price, redirect to Stripe Checkout
+    if (paymentMethod === "online" && product.priceId) {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase.functions.invoke("create-payment", {
+          body: {
+            priceId: product.priceId,
+            customerEmail: form.email,
+            customerName: form.name,
+            productName: product.name,
+            origin: window.location.origin,
+          },
+        });
+        if (error) throw error;
+        if (data?.url) {
+          window.location.href = data.url;
+        }
+      } catch (err: any) {
+        setErrors({ submit: err.message || "Payment failed. Please try again." });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      // COD or no Stripe price — show confirmation
       setSubmitted(true);
     }
   };
@@ -324,10 +351,12 @@ const OrderForm = () => {
 
               <Button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-primary hover:bg-rolex-green-light text-primary-foreground font-medium tracking-wider uppercase text-xs py-6 rounded-none transition-all duration-300"
               >
-                Place Order
+                {loading ? "Redirecting to Payment..." : paymentMethod === "online" ? "Pay with Stripe" : "Place Order"}
               </Button>
+              {errors.submit && <p className="text-destructive text-xs mt-2 font-light">{errors.submit}</p>}
             </div>
           </div>
         </form>
