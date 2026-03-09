@@ -55,7 +55,7 @@ const Footer = () => {
               <span className="font-display text-xl tracking-wider">REPLIC8</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs font-light mb-8">
-              Premium timepieces delivered to your door. Serving Cyprus exclusively with complimentary next-day delivery.
+              Premium timepieces delivered to your door. Serving Cyprus exclusively with free next-day delivery.
             </p>
 
             {/* Social icons */}
