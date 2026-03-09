@@ -341,11 +341,12 @@ const ProductSection = () => {
         {products.map((product, i) => (
           <motion.div
             key={product.id}
+            id={`product-${product.id}`}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className={i < products.length - 1 ? "mb-24" : ""}
+            className={`scroll-mt-20 ${i < products.length - 1 ? "mb-24" : ""}`}
           >
             {i > 0 && <div className="h-px bg-border max-w-6xl mx-auto mb-20" />}
             <ProductGallery product={product} />

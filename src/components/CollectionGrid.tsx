@@ -2,9 +2,6 @@ import { motion } from "framer-motion";
 import { products } from "@/components/ProductSection";
 
 const CollectionGrid = () => {
-  const scrollToOrder = () => {
-    document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section className="py-20 md:py-28 bg-secondary/30">
@@ -33,7 +30,9 @@ const CollectionGrid = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="group cursor-pointer"
-              onClick={scrollToOrder}
+              onClick={() => {
+                document.getElementById(`product-${product.id}`)?.scrollIntoView({ behavior: "smooth" });
+              }}
             >
               <div className="relative aspect-square overflow-hidden bg-white mb-3">
                 <img
