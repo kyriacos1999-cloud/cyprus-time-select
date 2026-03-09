@@ -17,6 +17,7 @@ const OrderForm = () => {
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [courierOpen, setCourierOpen] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
