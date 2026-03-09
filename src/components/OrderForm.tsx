@@ -44,7 +44,7 @@ const OrderForm = () => {
     if (!form.phone.trim() || !/^[0-9+\-\s]{7,15}$/.test(form.phone.trim()))
       errs.phone = "Valid phone number is required";
     if (!form.address.trim()) errs.address = "Delivery address is required";
-    if (!form.courier.trim()) errs.courier = "Nearest courier point is required";
+    if (!form.courier.trim()) errs.courier = "Please select an Akis Express branch";
     if (!agreed) errs.agreed = "Please agree to the terms";
     return errs;
   };
