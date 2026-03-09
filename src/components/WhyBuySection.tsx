@@ -1,8 +1,9 @@
-import { Truck, ShieldCheck, Banknote, ListChecks, MapPin } from "lucide-react";
+import { Truck, ShieldCheck, Banknote, ListChecks, MapPin, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
 const reasons = [
   { icon: Truck, title: "Free Next-Day Delivery", desc: "Free delivery anywhere in Cyprus" },
+  { icon: Award, title: "1-Year Warranty", desc: "Every watch includes a full 1-year warranty" },
   { icon: ShieldCheck, title: "Secure Payments", desc: "Encrypted & protected online checkout" },
   { icon: Banknote, title: "Cash on Delivery", desc: "Pay upon receipt with a €30 surcharge" },
   { icon: ListChecks, title: "Simple Ordering", desc: "No account needed — order in minutes" },
