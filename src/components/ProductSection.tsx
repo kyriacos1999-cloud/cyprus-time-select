@@ -173,12 +173,42 @@ export { products };
 
 const ProductGallery = ({ product }: { product: Product }) => {
   const [selectedImage, setSelectedImage] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (Math.abs(distance) < minSwipeDistance) return;
+
+    if (distance > 0 && selectedImage < product.images.length - 1) {
+      setSelectedImage(selectedImage + 1);
+    } else if (distance < 0 && selectedImage > 0) {
+      setSelectedImage(selectedImage - 1);
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
       {/* Main image + thumbnails */}
       <div>
-        <div className="relative aspect-square overflow-hidden bg-secondary mb-4">
+        <div
+          className="relative aspect-square overflow-hidden bg-secondary mb-4 touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           <motion.img
             key={selectedImage}
             initial={{ opacity: 0 }}
@@ -193,6 +223,17 @@ const ProductGallery = ({ product }: { product: Product }) => {
               {product.badge}
             </div>
           )}
+          {/* Dot indicators for mobile */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 lg:hidden">
+            {product.images.map((_, i) => (
+              <div
+                key={i}
+                className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                  selectedImage === i ? "bg-primary" : "bg-foreground/30"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Thumbnails */}
