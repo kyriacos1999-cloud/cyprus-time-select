@@ -35,6 +35,13 @@ import product5Clasp from "@/assets/product5-clasp.jpg";
 import product5OpenClasp from "@/assets/product5-openclasp.jpg";
 import product5Box from "@/assets/product5-box.jpg";
 import product5Fullset from "@/assets/product5-fullset.jpg";
+import product6Front from "@/assets/product6-front.jpg";
+import product6Angle from "@/assets/product6-angle.jpg";
+import product6Side from "@/assets/product6-side.jpg";
+import product6Back from "@/assets/product6-back.jpg";
+import product6Clasp from "@/assets/product6-clasp.jpg";
+import product6Box from "@/assets/product6-box.jpg";
+import product6Fullset from "@/assets/product6-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -141,6 +148,24 @@ const products: Product[] = [
     ],
     badge: "New",
     priceId: "price_1T93f6F5cmmFi3mj8mFGlsAa",
+  },
+  {
+    id: 6,
+    name: "Rolex Daytona Black AAA Clone",
+    description: "Daytona · Black dial · Tachymeter bezel · 904L steel bracelet",
+    price: 350,
+    image: product6Front,
+    images: [
+      product6Front,
+      product6Angle,
+      product6Side,
+      product6Back,
+      product6Clasp,
+      product6Box,
+      product6Fullset,
+    ],
+    badge: "New",
+    priceId: "price_1T93oBF5cmmFi3mjleOURhm0",
   },
 ];
 
