@@ -46,11 +46,35 @@ const OrderForm = () => {
     return errs;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
-    if (Object.keys(errs).length === 0) {
+    if (Object.keys(errs).length > 0) return;
+
+    // For online payment with a Stripe price, redirect to Stripe Checkout
+    if (paymentMethod === "online" && product.priceId) {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase.functions.invoke("create-payment", {
+          body: {
+            priceId: product.priceId,
+            customerEmail: form.email,
+            customerName: form.name,
+            productName: product.name,
+          },
+        });
+        if (error) throw error;
+        if (data?.url) {
+          window.location.href = data.url;
+        }
+      } catch (err: any) {
+        setErrors({ submit: err.message || "Payment failed. Please try again." });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      // COD or no Stripe price — show confirmation
       setSubmitted(true);
     }
   };
