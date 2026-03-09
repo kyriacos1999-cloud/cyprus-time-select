@@ -335,7 +335,7 @@ const OrderForm = () => {
                 )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Delivery</span>
-                  <span className="text-primary font-medium">Complimentary</span>
+                  <span className="text-primary font-medium">FREE</span>
                 </div>
               </div>
 
