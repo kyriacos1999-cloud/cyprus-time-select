@@ -6,6 +6,16 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle2, Crown } from "lucide-react";
 import { motion } from "framer-motion";
+import { akisBranches, branchCities } from "@/data/akisBranches";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const OrderForm = () => {
   const [selectedProduct, setSelectedProduct] = useState(products[0].id);
