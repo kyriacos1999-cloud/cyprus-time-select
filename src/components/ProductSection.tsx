@@ -35,6 +35,13 @@ import product5Clasp from "@/assets/product5-clasp.jpg";
 import product5OpenClasp from "@/assets/product5-openclasp.jpg";
 import product5Box from "@/assets/product5-box.jpg";
 import product5Fullset from "@/assets/product5-fullset.jpg";
+import product6Front from "@/assets/product6-front.jpg";
+import product6Angle from "@/assets/product6-angle.jpg";
+import product6Side from "@/assets/product6-side.jpg";
+import product6Back from "@/assets/product6-back.jpg";
+import product6Clasp from "@/assets/product6-clasp.jpg";
+import product6Box from "@/assets/product6-box.jpg";
+import product6Fullset from "@/assets/product6-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
