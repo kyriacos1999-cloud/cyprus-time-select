@@ -28,7 +28,7 @@ const products: Product[] = [
     id: 1,
     name: "Rolex No Date AAA Clone",
     description: "Submariner · Stainless steel · Black dial · 904L steel bracelet",
-    price: 189,
+    price: 300,
     image: product1Front,
     images: [
       product1Front,
