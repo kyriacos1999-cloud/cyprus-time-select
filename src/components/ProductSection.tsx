@@ -21,6 +21,7 @@ export type Product = {
   image: string;
   images: string[];
   badge: string | null;
+  priceId: string | null;
 };
 
 const products: Product[] = [
