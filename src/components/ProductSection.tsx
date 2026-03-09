@@ -97,6 +97,24 @@ const products: Product[] = [
     badge: null,
     priceId: "price_1T93PDF5cmmFi3mjc4ysUaGZ",
   },
+  {
+    id: 4,
+    name: "Rolex Submariner Blue/Gold",
+    description: "Submariner · Blue dial · Blue bezel · Two-tone steel & gold bracelet",
+    price: 300,
+    image: product4Front,
+    images: [
+      product4Front,
+      product4Dial1,
+      product4Dial2,
+      product4Crown,
+      product4Clasp,
+      product4Box,
+      product4Fullset,
+    ],
+    badge: "New",
+    priceId: "price_1T93WDF5cmmFi3mjFW0QagSQ",
+  },
 ];
 
 export { products };
