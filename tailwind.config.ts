@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Cormorant Garamond", "serif"],
-        body: ["Outfit", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
+        body: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,15 +51,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
-          muted: "hsl(var(--gold-muted))",
-        },
+        "rolex-green": "hsl(var(--rolex-green))",
+        "rolex-green-light": "hsl(var(--rolex-green-light))",
+        "rolex-gold": "hsl(var(--rolex-gold))",
+        "rolex-cream": "hsl(var(--rolex-cream))",
+        "rolex-dark": "hsl(var(--rolex-dark))",
         "surface-elevated": "hsl(var(--surface-elevated))",
         "surface-sunken": "hsl(var(--surface-sunken))",
         "surface-glass": "hsl(var(--surface-glass))",
+        gold: {
+          DEFAULT: "hsl(var(--rolex-green))",
+          light: "hsl(var(--rolex-green-light))",
+          dark: "hsl(var(--rolex-green))",
+          muted: "hsl(var(--rolex-green-light))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

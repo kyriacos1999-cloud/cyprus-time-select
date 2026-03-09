@@ -2,17 +2,16 @@ import { Truck, ShieldCheck, Banknote, ListChecks, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 
 const reasons = [
-  { icon: Truck, title: "Complimentary Delivery", desc: "Next-day, anywhere in Cyprus" },
-  { icon: ShieldCheck, title: "Secure Payments", desc: "Encrypted & protected checkout" },
-  { icon: Banknote, title: "Cash on Delivery", desc: "Pay upon receipt for +€30" },
-  { icon: ListChecks, title: "Effortless Ordering", desc: "No account needed, takes 2 min" },
-  { icon: MapPin, title: "Cyprus Exclusive", desc: "Dedicated local service" },
+  { icon: Truck, title: "Free Next-Day Delivery", desc: "Complimentary delivery anywhere in Cyprus" },
+  { icon: ShieldCheck, title: "Secure Payments", desc: "Encrypted & protected online checkout" },
+  { icon: Banknote, title: "Cash on Delivery", desc: "Pay upon receipt with a €30 surcharge" },
+  { icon: ListChecks, title: "Simple Ordering", desc: "No account needed — order in minutes" },
+  { icon: MapPin, title: "Cyprus Exclusive", desc: "Dedicated local service across the island" },
 ];
 
 const WhyBuySection = () => (
-  <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(40_65%_50%_/_0.03),_transparent_60%)]" />
-    <div className="container mx-auto px-4 relative">
+  <section id="why-us" className="py-24 md:py-32 bg-primary">
+    <div className="container mx-auto px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -20,17 +19,15 @@ const WhyBuySection = () => (
         transition={{ duration: 0.6 }}
         className="text-center mb-16"
       >
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="h-px w-12 bg-gold/30" />
-          <p className="text-gold font-body text-xs tracking-[0.4em] uppercase font-light">The Experience</p>
-          <div className="h-px w-12 bg-gold/30" />
-        </div>
-        <h2 className="text-4xl md:text-5xl font-display font-light text-foreground tracking-tight">
-          Why <span className="italic text-gradient-gold">Choose Us</span>
+        <p className="text-primary-foreground/60 text-xs tracking-[0.5em] uppercase mb-4 font-medium">
+          The Experience
+        </p>
+        <h2 className="text-4xl md:text-5xl font-display text-primary-foreground tracking-tight">
+          Why Choose Us
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
         {reasons.map((r, i) => (
           <motion.div
             key={r.title}
@@ -38,13 +35,13 @@ const WhyBuySection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="text-center p-6 border border-border bg-surface-elevated hover:border-gold/20 transition-all duration-500 group"
+            className="text-center"
           >
-            <div className="w-10 h-10 mx-auto mb-4 border border-gold/20 flex items-center justify-center group-hover:border-gold/50 transition-colors duration-500">
-              <r.icon className="w-4 h-4 text-gold/70 group-hover:text-gold transition-colors duration-500" />
+            <div className="w-12 h-12 mx-auto mb-5 border border-primary-foreground/20 flex items-center justify-center">
+              <r.icon className="w-5 h-5 text-primary-foreground/70" />
             </div>
-            <h3 className="font-display text-sm font-medium text-foreground mb-1 tracking-wide">{r.title}</h3>
-            <p className="text-[11px] text-muted-foreground font-body font-light">{r.desc}</p>
+            <h3 className="font-display text-sm text-primary-foreground mb-2 tracking-wide">{r.title}</h3>
+            <p className="text-xs text-primary-foreground/60 leading-relaxed font-light">{r.desc}</p>
           </motion.div>
         ))}
       </div>

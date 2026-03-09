@@ -38,27 +38,24 @@ const ProductSection = () => {
   };
 
   return (
-    <section id="products" className="py-24 md:py-32 bg-surface-sunken relative">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_0%,_hsl(40_65%_50%_/_0.04),_transparent_50%)]" />
-      <div className="container mx-auto px-4 relative">
+    <section id="products" className="py-24 md:py-32 bg-background">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-gold/30" />
-            <p className="text-gold font-body text-xs tracking-[0.4em] uppercase font-light">The Collection</p>
-            <div className="h-px w-12 bg-gold/30" />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-display font-light text-foreground tracking-tight">
-            Curated <span className="italic text-gradient-gold">Timepieces</span>
+          <p className="text-primary text-xs tracking-[0.5em] uppercase mb-4 font-medium">
+            The Collection
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-foreground tracking-tight">
+            Our Timepieces
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border max-w-6xl mx-auto">
           {products.map((product, i) => (
             <motion.div
               key={product.id}
@@ -66,52 +63,44 @@ const ProductSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer bg-background"
               onClick={scrollToOrder}
             >
-              <div className="relative bg-surface-elevated border border-border overflow-hidden transition-all duration-500 hover:border-gold/30 hover:shadow-[0_0_40px_-15px_hsl(40_65%_50%_/_0.15)]">
-                {/* Image */}
-                <div className="relative aspect-[4/5] overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              {/* Image */}
+              <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
 
-                  {product.badge && (
-                    <div className="absolute top-4 left-4 bg-gold/90 text-accent-foreground font-body text-[10px] tracking-[0.15em] uppercase font-medium px-3 py-1.5">
-                      {product.badge}
-                    </div>
-                  )}
+                {product.badge && (
+                  <div className="absolute top-5 left-5 bg-primary text-primary-foreground text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5">
+                    {product.badge}
+                  </div>
+                )}
+              </div>
 
-                  {/* Price overlay */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="font-display text-2xl font-light text-foreground mb-0.5 tracking-wide">
-                      {product.name}
-                    </h3>
-                    <p className="text-muted-foreground font-body text-xs font-light">
-                      {product.description}
-                    </p>
+              {/* Info */}
+              <div className="p-6 md:p-8 text-center">
+                <h3 className="font-display text-xl md:text-2xl text-foreground mb-2 tracking-wide">
+                  {product.name}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-5 font-light">
+                  {product.description}
+                </p>
+
+                <div className="flex items-center justify-center gap-6">
+                  <div>
+                    <p className="text-[10px] text-primary tracking-[0.2em] uppercase mb-1 font-medium">Online</p>
+                    <span className="text-xl font-display text-foreground">€{product.price}</span>
+                  </div>
+                  <div className="w-px h-8 bg-border" />
+                  <div>
+                    <p className="text-[10px] text-muted-foreground tracking-[0.2em] uppercase mb-1">COD</p>
+                    <span className="text-sm text-muted-foreground">€{product.price + 30}</span>
                   </div>
                 </div>
-
-                {/* Pricing */}
-                <div className="p-5 border-t border-border">
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-[10px] text-gold font-body tracking-[0.15em] uppercase mb-1">Online Price</p>
-                      <span className="text-2xl font-body font-light text-foreground">€{product.price}</span>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] text-muted-foreground font-body tracking-wider uppercase mb-1">COD Price</p>
-                      <span className="text-sm font-body text-muted-foreground">€{product.price + 30}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Shimmer effect on hover */}
-                <div className="absolute inset-0 shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </div>
             </motion.div>
           ))}
