@@ -14,7 +14,12 @@ import product2Crown from "@/assets/product2-crown.jpg";
 import product2Clasp from "@/assets/product2-clasp.jpg";
 import product2Box from "@/assets/product2-box.jpg";
 import product2Fullset from "@/assets/product2-fullset.jpg";
-import watch3 from "@/assets/watch-3.jpg";
+import product3Front from "@/assets/product3-front.jpg";
+import product3Dial from "@/assets/product3-dial.jpg";
+import product3Crown from "@/assets/product3-crown.jpg";
+import product3Clasp from "@/assets/product3-clasp.jpg";
+import product3Box from "@/assets/product3-box.jpg";
+import product3Fullset from "@/assets/product3-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
