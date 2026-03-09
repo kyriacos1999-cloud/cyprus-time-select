@@ -12,7 +12,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Luxury timepiece"
+          alt="Premium Rolex clone watches Cyprus — AAA replica timepieces by Replic8"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50" />
@@ -30,13 +30,13 @@ const HeroSection = () => {
           </p>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display text-white leading-[1.05] mb-8 tracking-tight">
-            Timeless
+            Rolex Clone
             <br />
-            <span className="italic">Elegance</span>
+            <span className="italic">Cyprus</span>
           </h1>
 
           <p className="text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed font-light">
-            Premium timepieces with free next-day delivery across Cyprus.
+            Premium AAA Rolex replica watches with free next-day delivery across Cyprus.
           </p>
 
           <button
