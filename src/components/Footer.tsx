@@ -76,7 +76,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-6">
               <Crown className="w-6 h-6 text-rolex-gold" />
-              <span className="font-display text-xl tracking-wider">CHRONOS</span>
+              <span className="font-display text-xl tracking-wider">REPLIC8</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs font-light mb-8">
               Premium timepieces delivered to your door. Serving Cyprus exclusively with complimentary next-day delivery.
@@ -124,7 +124,7 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/30 text-xs font-light">
-            © {new Date().getFullYear()} Chronos. All rights reserved.
+            © {new Date().getFullYear()} Replic8. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-white/30 hover:text-white/60 text-xs font-light transition-colors">
