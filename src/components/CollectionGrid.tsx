@@ -2,9 +2,6 @@ import { motion } from "framer-motion";
 import { products } from "@/components/ProductSection";
 
 const CollectionGrid = () => {
-  const scrollToOrder = () => {
-    document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section className="py-20 md:py-28 bg-secondary/30">
