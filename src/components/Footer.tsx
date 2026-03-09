@@ -84,6 +84,7 @@ const Footer = () => {
                   <li key={link.label}>
                     <a
                       href={link.href}
+                      {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
                     >
                       {link.label}
