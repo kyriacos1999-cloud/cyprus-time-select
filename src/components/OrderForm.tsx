@@ -4,18 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CheckCircle2, Crown } from "lucide-react";
+import { Check, CheckCircle2, ChevronsUpDown, Crown, Search } from "lucide-react";
 import { motion } from "framer-motion";
 import { akisBranches, branchCities } from "@/data/akisBranches";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 const OrderForm = () => {
   const [selectedProduct, setSelectedProduct] = useState(products[0].id);
@@ -23,6 +17,7 @@ const OrderForm = () => {
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [courierOpen, setCourierOpen] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -158,40 +153,78 @@ const OrderForm = () => {
               </div>
             ))}
 
-            {/* Akis Express Branch Dropdown */}
+            {/* Akis Express Branch Searchable Dropdown */}
             <div>
               <Label className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-light">
                 Nearest Akis Express Branch
               </Label>
-              <Select
-                value={form.courier}
-                onValueChange={(value) => updateField("courier", value)}
-              >
-                <SelectTrigger className="font-body font-light rounded-none bg-surface-elevated border-border focus:border-gold/50 focus:ring-gold/20 text-foreground h-12 [&>span]:text-muted-foreground/50 data-[state=open]:border-gold/50">
-                  <SelectValue placeholder="Select your nearest branch" />
-                </SelectTrigger>
-                <SelectContent className="bg-surface-elevated border-border rounded-none max-h-[300px]">
-                  {branchCities.map((city) => (
-                    <SelectGroup key={city}>
-                      <SelectLabel className="font-display text-xs tracking-[0.15em] uppercase text-gold/70 font-light py-2">
-                        {city}
-                      </SelectLabel>
-                      {akisBranches
-                        .filter((b) => b.city === city)
-                        .map((branch) => (
-                          <SelectItem
-                            key={branch.name}
-                            value={branch.name}
-                            className="font-body font-light text-foreground focus:bg-gold/10 focus:text-foreground rounded-none cursor-pointer"
-                          >
-                            <span>{branch.name}</span>
-                            <span className="text-[10px] text-muted-foreground ml-2">— {branch.address}</span>
-                          </SelectItem>
-                        ))}
-                    </SelectGroup>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Popover open={courierOpen} onOpenChange={setCourierOpen}>
+                <PopoverTrigger asChild>
+                  <button
+                    type="button"
+                    role="combobox"
+                    aria-expanded={courierOpen}
+                    className={cn(
+                      "flex h-12 w-full items-center justify-between rounded-none bg-surface-elevated border border-border px-3 py-2 text-sm font-body font-light transition-colors",
+                      "focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20",
+                      form.courier ? "text-foreground" : "text-muted-foreground/50"
+                    )}
+                  >
+                    {form.courier
+                      ? akisBranches.find((b) => b.name === form.courier)?.name
+                      : "Search for your nearest branch..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[--radix-popover-trigger-width] p-0 rounded-none border-border bg-surface-elevated" align="start">
+                  <Command className="bg-transparent">
+                    <div className="flex items-center border-b border-border px-3">
+                      <Search className="mr-2 h-4 w-4 shrink-0 text-muted-foreground/50" />
+                      <CommandInput
+                        placeholder="Type to search branches..."
+                        className="font-body font-light h-11 text-foreground placeholder:text-muted-foreground/50"
+                      />
+                    </div>
+                    <CommandList className="max-h-[250px]">
+                      <CommandEmpty className="py-6 text-center text-sm font-body font-light text-muted-foreground">
+                        No branch found.
+                      </CommandEmpty>
+                      {branchCities.map((city) => (
+                        <CommandGroup
+                          key={city}
+                          heading={city}
+                          className="[&_[cmdk-group-heading]]:font-display [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:tracking-[0.15em] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:text-gold/70 [&_[cmdk-group-heading]]:font-light"
+                        >
+                          {akisBranches
+                            .filter((b) => b.city === city)
+                            .map((branch) => (
+                              <CommandItem
+                                key={branch.name}
+                                value={`${branch.name} ${branch.address} ${branch.city}`}
+                                onSelect={() => {
+                                  updateField("courier", branch.name);
+                                  setCourierOpen(false);
+                                }}
+                                className="font-body font-light text-foreground rounded-none cursor-pointer aria-selected:bg-gold/10"
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4 text-gold",
+                                    form.courier === branch.name ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                <div className="flex flex-col">
+                                  <span>{branch.name}</span>
+                                  <span className="text-[10px] text-muted-foreground">{branch.address}</span>
+                                </div>
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      ))}
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
               {errors.courier && <p className="text-destructive text-xs mt-1.5 font-body font-light">{errors.courier}</p>}
             </div>
 
