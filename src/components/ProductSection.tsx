@@ -245,6 +245,14 @@ const ProductGallery = ({ product }: { product: Product }) => {
         <div className="space-y-3 mb-8 text-sm text-muted-foreground font-light">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+            <span>Automatic movement · Seiko NH35</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+            <span>100m water resistant</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full" />
             <span>Full set: Box, papers & international guarantee card</span>
           </div>
           <div className="flex items-center gap-2">
