@@ -6,6 +6,16 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle2, Crown } from "lucide-react";
 import { motion } from "framer-motion";
+import { akisBranches, branchCities } from "@/data/akisBranches";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const OrderForm = () => {
   const [selectedProduct, setSelectedProduct] = useState(products[0].id);
@@ -34,7 +44,7 @@ const OrderForm = () => {
     if (!form.phone.trim() || !/^[0-9+\-\s]{7,15}$/.test(form.phone.trim()))
       errs.phone = "Valid phone number is required";
     if (!form.address.trim()) errs.address = "Delivery address is required";
-    if (!form.courier.trim()) errs.courier = "Nearest courier point is required";
+    if (!form.courier.trim()) errs.courier = "Please select an Akis Express branch";
     if (!agreed) errs.agreed = "Please agree to the terms";
     return errs;
   };
@@ -132,7 +142,6 @@ const OrderForm = () => {
               { key: "email", label: "Email Address", type: "email", placeholder: "you@example.com" },
               { key: "phone", label: "Phone Number", type: "tel", placeholder: "+357 99 123456" },
               { key: "address", label: "Delivery Address", type: "text", placeholder: "Your full address in Cyprus" },
-              { key: "courier", label: "Nearest Akis Express Courier", type: "text", placeholder: "e.g. Nicosia Central" },
             ].map((f) => (
               <div key={f.key}>
                 <Label className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-light">
@@ -148,6 +157,43 @@ const OrderForm = () => {
                 {errors[f.key] && <p className="text-destructive text-xs mt-1.5 font-body font-light">{errors[f.key]}</p>}
               </div>
             ))}
+
+            {/* Akis Express Branch Dropdown */}
+            <div>
+              <Label className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-light">
+                Nearest Akis Express Branch
+              </Label>
+              <Select
+                value={form.courier}
+                onValueChange={(value) => updateField("courier", value)}
+              >
+                <SelectTrigger className="font-body font-light rounded-none bg-surface-elevated border-border focus:border-gold/50 focus:ring-gold/20 text-foreground h-12 [&>span]:text-muted-foreground/50 data-[state=open]:border-gold/50">
+                  <SelectValue placeholder="Select your nearest branch" />
+                </SelectTrigger>
+                <SelectContent className="bg-surface-elevated border-border rounded-none max-h-[300px]">
+                  {branchCities.map((city) => (
+                    <SelectGroup key={city}>
+                      <SelectLabel className="font-display text-xs tracking-[0.15em] uppercase text-gold/70 font-light py-2">
+                        {city}
+                      </SelectLabel>
+                      {akisBranches
+                        .filter((b) => b.city === city)
+                        .map((branch) => (
+                          <SelectItem
+                            key={branch.name}
+                            value={branch.name}
+                            className="font-body font-light text-foreground focus:bg-gold/10 focus:text-foreground rounded-none cursor-pointer"
+                          >
+                            <span>{branch.name}</span>
+                            <span className="text-[10px] text-muted-foreground ml-2">— {branch.address}</span>
+                          </SelectItem>
+                        ))}
+                    </SelectGroup>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.courier && <p className="text-destructive text-xs mt-1.5 font-body font-light">{errors.courier}</p>}
+            </div>
 
             {/* Payment */}
             <div>
