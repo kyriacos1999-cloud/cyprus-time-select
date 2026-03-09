@@ -62,6 +62,7 @@ const OrderForm = () => {
             customerEmail: form.email,
             customerName: form.name,
             productName: product.name,
+            origin: window.location.origin,
           },
         });
         if (error) throw error;
