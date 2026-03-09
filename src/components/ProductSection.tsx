@@ -20,6 +20,13 @@ import product3Crown from "@/assets/product3-crown.jpg";
 import product3Clasp from "@/assets/product3-clasp.jpg";
 import product3Box from "@/assets/product3-box.jpg";
 import product3Fullset from "@/assets/product3-fullset.jpg";
+import product4Front from "@/assets/product4-front.jpg";
+import product4Dial1 from "@/assets/product4-dial-1.jpg";
+import product4Dial2 from "@/assets/product4-dial-2.jpg";
+import product4Crown from "@/assets/product4-crown.jpg";
+import product4Clasp from "@/assets/product4-clasp.jpg";
+import product4Box from "@/assets/product4-box.jpg";
+import product4Fullset from "@/assets/product4-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -89,6 +96,24 @@ const products: Product[] = [
     ],
     badge: null,
     priceId: "price_1T93PDF5cmmFi3mjc4ysUaGZ",
+  },
+  {
+    id: 4,
+    name: "Rolex Submariner Blue/Gold",
+    description: "Submariner · Blue dial · Blue bezel · Two-tone steel & gold bracelet",
+    price: 300,
+    image: product4Front,
+    images: [
+      product4Front,
+      product4Dial1,
+      product4Dial2,
+      product4Crown,
+      product4Clasp,
+      product4Box,
+      product4Fullset,
+    ],
+    badge: "New",
+    priceId: "price_1T93WDF5cmmFi3mjFW0QagSQ",
   },
 ];
 
