@@ -269,12 +269,6 @@ const ProductGallery = ({ product }: { product: Product }) => {
 };
 
 const ProductSection = () => {
-  const scrollToOrder = () => {
-    document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const featuredProduct = products[0];
-  const otherProducts = products.slice(1);
 
   return (
     <section id="products" className="py-24 md:py-32 bg-background">
@@ -294,68 +288,20 @@ const ProductSection = () => {
           </h2>
         </motion.div>
 
-        {/* Featured product with gallery */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-24"
-        >
-          <ProductGallery product={featuredProduct} />
-        </motion.div>
-
-        {/* Other products */}
-        {otherProducts.length > 0 && (
-          <>
-            <div className="h-px bg-border max-w-6xl mx-auto mb-20" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border max-w-4xl mx-auto">
-              {otherProducts.map((product, i) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
-                  className="group cursor-pointer bg-background"
-                  onClick={scrollToOrder}
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    {product.badge && (
-                      <div className="absolute top-5 left-5 bg-primary text-primary-foreground text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5">
-                        {product.badge}
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-6 md:p-8 text-center">
-                    <h3 className="font-display text-xl md:text-2xl text-foreground mb-2 tracking-wide">
-                      {product.name}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-5 font-light">
-                      {product.description}
-                    </p>
-                    <div className="flex items-center justify-center gap-6">
-                      <div>
-                        <p className="text-[10px] text-primary tracking-[0.2em] uppercase mb-1 font-medium">Online</p>
-                        <span className="text-xl font-display text-foreground">€{product.price}</span>
-                      </div>
-                      <div className="w-px h-8 bg-border" />
-                      <div>
-                        <p className="text-[10px] text-muted-foreground tracking-[0.2em] uppercase mb-1">COD</p>
-                        <span className="text-sm text-muted-foreground">€{product.price + 30}</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </>
-        )}
+      {/* All products with gallery */}
+        {products.map((product, i) => (
+          <motion.div
+            key={product.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className={i < products.length - 1 ? "mb-24" : ""}
+          >
+            {i > 0 && <div className="h-px bg-border max-w-6xl mx-auto mb-20" />}
+            <ProductGallery product={product} />
+          </motion.div>
+        ))}
       </div>
     </section>
   );
