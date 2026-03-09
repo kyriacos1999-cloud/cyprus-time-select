@@ -75,13 +75,20 @@ const products: Product[] = [
   },
   {
     id: 3,
-    name: "Aqua Diver Pro",
-    description: "Stainless steel · Sapphire crystal",
-    price: 219,
-    image: watch3,
-    images: [watch3],
+    name: "Rolex Datejust 36mm AAA Clone",
+    description: "Datejust · Dark grey dial · Fluted bezel · 904L steel bracelet",
+    price: 270,
+    image: product3Front,
+    images: [
+      product3Front,
+      product3Dial,
+      product3Crown,
+      product3Clasp,
+      product3Box,
+      product3Fullset,
+    ],
     badge: null,
-    priceId: null,
+    priceId: "price_1T93PDF5cmmFi3mjc4ysUaGZ",
   },
 ];
 
