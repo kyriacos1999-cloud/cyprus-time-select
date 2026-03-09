@@ -2,7 +2,7 @@ import { Truck, ShieldCheck, Banknote, ListChecks, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 
 const reasons = [
-  { icon: Truck, title: "Free Next-Day Delivery", desc: "Complimentary delivery anywhere in Cyprus" },
+  { icon: Truck, title: "Free Next-Day Delivery", desc: "Free delivery anywhere in Cyprus" },
   { icon: ShieldCheck, title: "Secure Payments", desc: "Encrypted & protected online checkout" },
   { icon: Banknote, title: "Cash on Delivery", desc: "Pay upon receipt with a €30 surcharge" },
   { icon: ListChecks, title: "Simple Ordering", desc: "No account needed — order in minutes" },

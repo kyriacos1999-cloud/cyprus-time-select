@@ -36,7 +36,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed font-light">
-            Premium timepieces with complimentary next-day delivery across Cyprus.
+            Premium timepieces with free next-day delivery across Cyprus.
           </p>
 
           <button

@@ -7,7 +7,7 @@ import {
 import { motion } from "framer-motion";
 
 const faqs = [
-  { q: "Do you deliver all over Cyprus?", a: "Yes. We offer complimentary next-day delivery to every address across Cyprus — no exceptions." },
+  { q: "Do you deliver all over Cyprus?", a: "Yes. We offer free next-day delivery to every address across Cyprus — no exceptions." },
   { q: "Can I pay cash on delivery?", a: "Absolutely. Cash on delivery is available for a €30 surcharge, applied transparently at checkout." },
   { q: "Can I pay online?", a: "Yes. We offer secure, encrypted online payments with no additional fees — the most affordable option." },
   { q: "Do you deliver outside Cyprus?", a: "At this time, we exclusively serve Cyprus to ensure the highest quality of service and delivery speed." },

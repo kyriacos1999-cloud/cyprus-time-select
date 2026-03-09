@@ -31,7 +31,7 @@ const FinalCTA = () => {
             <span className="italic">Wear Tomorrow</span>
           </h2>
           <p className="text-white/60 text-base md:text-lg max-w-md mx-auto mb-10 font-light">
-            Complimentary next-day delivery anywhere in Cyprus.
+            Free next-day delivery anywhere in Cyprus.
           </p>
           <button
             onClick={scrollToOrder}
