@@ -269,12 +269,6 @@ const ProductGallery = ({ product }: { product: Product }) => {
 };
 
 const ProductSection = () => {
-  const scrollToOrder = () => {
-    document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const featuredProduct = products[0];
-  const otherProducts = products.slice(1);
 
   return (
     <section id="products" className="py-24 md:py-32 bg-background">
