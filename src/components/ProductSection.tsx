@@ -8,7 +8,12 @@ import product1Profile from "@/assets/product1-profile.jpg";
 import product1Box from "@/assets/product1-box.jpg";
 import product1BoxOpen from "@/assets/product1-boxopen.jpg";
 import product1Card from "@/assets/product1-card.jpg";
-import watch2 from "@/assets/watch-2.jpg";
+import product2Front from "@/assets/product2-front.jpg";
+import product2Dial from "@/assets/product2-dial.jpg";
+import product2Crown from "@/assets/product2-crown.jpg";
+import product2Clasp from "@/assets/product2-clasp.jpg";
+import product2Box from "@/assets/product2-box.jpg";
+import product2Fullset from "@/assets/product2-fullset.jpg";
 import watch3 from "@/assets/watch-3.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -48,13 +53,20 @@ const products: Product[] = [
   },
   {
     id: 2,
-    name: "Noir Minimalist",
-    description: "Matte black · Japanese mesh strap",
-    price: 149,
-    image: watch2,
-    images: [watch2],
-    badge: "Best Price",
-    priceId: null,
+    name: "Rolex Hulk AAA Clone",
+    description: "Submariner Hulk · Green dial · Green bezel · 904L steel bracelet",
+    price: 300,
+    image: product2Front,
+    images: [
+      product2Front,
+      product2Dial,
+      product2Crown,
+      product2Clasp,
+      product2Box,
+      product2Fullset,
+    ],
+    badge: "New",
+    priceId: "price_1T93MkF5cmmFi3mjKn986pRM",
   },
   {
     id: 3,
