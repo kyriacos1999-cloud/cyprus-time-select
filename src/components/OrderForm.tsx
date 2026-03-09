@@ -17,6 +17,7 @@ const OrderForm = () => {
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [courierOpen, setCourierOpen] = useState(false);
 
