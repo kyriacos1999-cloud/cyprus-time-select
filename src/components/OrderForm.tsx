@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Crown } from "lucide-react";
+import { motion } from "framer-motion";
 
 const OrderForm = () => {
   const [selectedProduct, setSelectedProduct] = useState(products[0].id);
@@ -27,14 +28,14 @@ const OrderForm = () => {
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = "Required";
+    if (!form.name.trim()) errs.name = "Full name is required";
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      errs.email = "Valid email required";
+      errs.email = "Valid email is required";
     if (!form.phone.trim() || !/^[0-9+\-\s]{7,15}$/.test(form.phone.trim()))
-      errs.phone = "Valid phone required";
-    if (!form.address.trim()) errs.address = "Required";
-    if (!form.courier.trim()) errs.courier = "Required";
-    if (!agreed) errs.agreed = "You must agree to terms";
+      errs.phone = "Valid phone number is required";
+    if (!form.address.trim()) errs.address = "Delivery address is required";
+    if (!form.courier.trim()) errs.courier = "Nearest courier point is required";
+    if (!agreed) errs.agreed = "Please agree to the terms";
     return errs;
   };
 
@@ -54,118 +55,141 @@ const OrderForm = () => {
 
   if (submitted) {
     return (
-      <section id="order-section" className="py-20 bg-surface-sunken">
+      <section id="order-section" className="py-24 md:py-32 bg-surface-sunken">
         <div className="container mx-auto px-4 max-w-lg text-center">
-          <div className="bg-surface-elevated border border-border rounded-sm p-10">
-            <CheckCircle2 className="w-16 h-16 text-gold mx-auto mb-4" />
-            <h2 className="text-2xl font-display font-bold text-foreground mb-2">Thank You!</h2>
-            <p className="text-muted-foreground font-body">
-              Your order request has been received. We will contact you shortly to confirm.
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="bg-surface-elevated border border-gold/20 p-12"
+          >
+            <CheckCircle2 className="w-14 h-14 text-gold mx-auto mb-6" />
+            <h2 className="text-3xl font-display font-light text-foreground mb-3">Thank You</h2>
+            <p className="text-muted-foreground font-body font-light">
+              Your order request has been received. We will contact you shortly to confirm your purchase.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
     );
   }
 
   return (
-    <section id="order-section" className="py-20 bg-surface-sunken">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
-          <p className="text-gold font-body text-sm tracking-[0.2em] uppercase mb-3">Checkout</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-            Complete Your Order
+    <section id="order-section" className="py-24 md:py-32 bg-surface-sunken relative">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,_hsl(40_65%_50%_/_0.04),_transparent_50%)]" />
+      <div className="container mx-auto px-4 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="h-px w-12 bg-gold/30" />
+            <p className="text-gold font-body text-xs tracking-[0.4em] uppercase font-light">Checkout</p>
+            <div className="h-px w-12 bg-gold/30" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-display font-light text-foreground tracking-tight">
+            Complete Your <span className="italic text-gradient-gold">Order</span>
           </h2>
-        </div>
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="max-w-3xl mx-auto grid md:grid-cols-5 gap-8">
-          {/* Form fields */}
-          <div className="md:col-span-3 space-y-5">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto grid lg:grid-cols-5 gap-10">
+          {/* Form */}
+          <div className="lg:col-span-3 space-y-6">
             {/* Product selector */}
             <div>
-              <Label className="font-body text-sm font-medium text-foreground mb-2 block">Select Watch</Label>
-              <div className="grid grid-cols-1 gap-2">
+              <Label className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3 block font-light">
+                Select Timepiece
+              </Label>
+              <div className="space-y-2">
                 {products.map((p) => (
                   <button
                     type="button"
                     key={p.id}
                     onClick={() => setSelectedProduct(p.id)}
-                    className={`flex items-center gap-3 p-3 rounded-sm border text-left transition-colors ${
+                    className={`w-full flex items-center gap-4 p-4 border text-left transition-all duration-300 ${
                       selectedProduct === p.id
-                        ? "border-gold bg-gold/5"
-                        : "border-border bg-surface-elevated hover:border-gold/40"
+                        ? "border-gold/50 bg-gold/5"
+                        : "border-border bg-surface-elevated hover:border-gold/20"
                     }`}
                   >
-                    <img src={p.image} alt={p.name} className="w-12 h-12 rounded-sm object-cover" />
+                    <img src={p.image} alt={p.name} className="w-14 h-14 object-cover" />
                     <div className="flex-1">
-                      <span className="font-display text-sm font-semibold text-foreground">{p.name}</span>
-                      <span className="block text-xs text-muted-foreground font-body">€{p.price}</span>
+                      <span className="font-display text-base text-foreground tracking-wide">{p.name}</span>
+                      <span className="block text-xs text-muted-foreground font-body font-light mt-0.5">{p.description}</span>
                     </div>
+                    <span className="font-body text-sm text-foreground">€{p.price}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Contact fields */}
+            {/* Fields */}
             {[
               { key: "name", label: "Full Name", type: "text", placeholder: "Your full name" },
-              { key: "email", label: "Email", type: "email", placeholder: "you@example.com" },
+              { key: "email", label: "Email Address", type: "email", placeholder: "you@example.com" },
               { key: "phone", label: "Phone Number", type: "tel", placeholder: "+357 99 123456" },
               { key: "address", label: "Delivery Address", type: "text", placeholder: "Your full address in Cyprus" },
               { key: "courier", label: "Nearest Akis Express Courier", type: "text", placeholder: "e.g. Nicosia Central" },
             ].map((f) => (
               <div key={f.key}>
-                <Label className="font-body text-sm font-medium text-foreground mb-1.5 block">{f.label}</Label>
+                <Label className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-light">
+                  {f.label}
+                </Label>
                 <Input
                   type={f.type}
                   placeholder={f.placeholder}
                   value={form[f.key as keyof typeof form]}
                   onChange={(e) => updateField(f.key, e.target.value)}
-                  className="font-body rounded-sm bg-surface-elevated"
+                  className="font-body font-light rounded-none bg-surface-elevated border-border focus:border-gold/50 focus:ring-gold/20 text-foreground placeholder:text-muted-foreground/50 h-12"
                 />
-                {errors[f.key] && <p className="text-destructive text-xs mt-1 font-body">{errors[f.key]}</p>}
+                {errors[f.key] && <p className="text-destructive text-xs mt-1.5 font-body font-light">{errors[f.key]}</p>}
               </div>
             ))}
 
-            {/* Payment method */}
+            {/* Payment */}
             <div>
-              <Label className="font-body text-sm font-medium text-foreground mb-2 block">Payment Method</Label>
+              <Label className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3 block font-light">
+                Payment Method
+              </Label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("online")}
-                  className={`relative p-4 rounded-sm border text-center transition-colors ${
+                  className={`relative p-5 border text-center transition-all duration-300 ${
                     paymentMethod === "online"
-                      ? "border-gold bg-gold/5 ring-1 ring-gold"
-                      : "border-border bg-surface-elevated hover:border-gold/40"
+                      ? "border-gold/50 bg-gold/5 glow-gold"
+                      : "border-border bg-surface-elevated hover:border-gold/20"
                   }`}
                 >
                   {paymentMethod === "online" && (
-                    <span className="absolute top-1.5 right-1.5 text-[10px] bg-gold text-accent-foreground px-1.5 py-0.5 rounded-sm font-body font-semibold">
-                      Recommended
+                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1 text-[9px] bg-gold text-accent-foreground px-3 py-1 font-body font-medium tracking-[0.15em] uppercase">
+                      <Crown className="w-2.5 h-2.5" /> Recommended
                     </span>
                   )}
-                  <span className="font-display text-sm font-semibold text-foreground block">Online Payment</span>
-                  <span className="text-lg font-body font-bold text-foreground">€{product.price}</span>
+                  <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Online Payment</span>
+                  <span className="text-2xl font-body font-light text-foreground">€{product.price}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("cod")}
-                  className={`p-4 rounded-sm border text-center transition-colors ${
+                  className={`p-5 border text-center transition-all duration-300 ${
                     paymentMethod === "cod"
-                      ? "border-gold bg-gold/5 ring-1 ring-gold"
-                      : "border-border bg-surface-elevated hover:border-gold/40"
+                      ? "border-gold/50 bg-gold/5"
+                      : "border-border bg-surface-elevated hover:border-gold/20"
                   }`}
                 >
-                  <span className="font-display text-sm font-semibold text-foreground block">Cash on Delivery</span>
-                  <span className="text-lg font-body font-bold text-foreground">€{product.price + 30}</span>
-                  <span className="block text-[10px] text-muted-foreground font-body">+€30 surcharge</span>
+                  <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Cash on Delivery</span>
+                  <span className="text-2xl font-body font-light text-foreground">€{product.price + 30}</span>
+                  <span className="block text-[10px] text-muted-foreground font-body mt-1 font-light">+€30 surcharge</span>
                 </button>
               </div>
             </div>
 
             {/* Terms */}
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-3 pt-2">
               <Checkbox
                 id="terms"
                 checked={agreed}
@@ -173,52 +197,58 @@ const OrderForm = () => {
                   setAgreed(v === true);
                   if (errors.agreed) setErrors((prev) => ({ ...prev, agreed: "" }));
                 }}
-                className="mt-0.5"
+                className="mt-0.5 border-border data-[state=checked]:bg-gold data-[state=checked]:border-gold rounded-none"
               />
-              <Label htmlFor="terms" className="font-body text-xs text-muted-foreground leading-relaxed cursor-pointer">
-                I agree to the terms and conditions and understand the pricing shown.
+              <Label htmlFor="terms" className="font-body text-xs text-muted-foreground leading-relaxed cursor-pointer font-light">
+                I agree to the terms and conditions and acknowledge the pricing structure shown.
               </Label>
             </div>
-            {errors.agreed && <p className="text-destructive text-xs font-body">{errors.agreed}</p>}
+            {errors.agreed && <p className="text-destructive text-xs font-body font-light">{errors.agreed}</p>}
           </div>
 
-          {/* Order summary */}
-          <div className="md:col-span-2">
-            <div className="sticky top-8 bg-surface-elevated border border-border rounded-sm p-6 space-y-4">
-              <h3 className="font-display text-lg font-semibold text-foreground">Order Summary</h3>
-              <div className="flex items-center gap-3">
-                <img src={product.image} alt={product.name} className="w-14 h-14 rounded-sm object-cover" />
+          {/* Summary */}
+          <div className="lg:col-span-2">
+            <div className="sticky top-8 bg-surface-elevated border border-border p-7 space-y-5">
+              <h3 className="font-display text-xl font-light text-foreground tracking-wide">Order Summary</h3>
+
+              <div className="flex items-center gap-4 pb-5 border-b border-border">
+                <img src={product.image} alt={product.name} className="w-16 h-16 object-cover" />
                 <div>
-                  <p className="font-display text-sm font-semibold text-foreground">{product.name}</p>
-                  <p className="text-xs text-muted-foreground font-body">{product.description}</p>
+                  <p className="font-display text-base text-foreground tracking-wide">{product.name}</p>
+                  <p className="text-[11px] text-muted-foreground font-body font-light mt-0.5">{product.description}</p>
                 </div>
               </div>
-              <hr className="border-border" />
-              <div className="space-y-2 text-sm font-body">
+
+              <div className="space-y-3 text-sm font-body font-light">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Base price</span>
-                  <span className="text-foreground font-medium">€{product.price}</span>
+                  <span className="text-muted-foreground">Timepiece</span>
+                  <span className="text-foreground">€{product.price}</span>
                 </div>
                 {paymentMethod === "cod" && (
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">COD surcharge</span>
-                    <span className="text-foreground font-medium">+€30</span>
+                    <span className="text-foreground">+€30</span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Delivery</span>
-                  <span className="text-gold font-medium">Free</span>
+                  <span className="text-gold">Complimentary</span>
                 </div>
               </div>
-              <hr className="border-border" />
-              <div className="flex justify-between text-lg font-body font-bold">
-                <span className="text-foreground">Total</span>
-                <span className="text-foreground">€{total}</span>
+
+              <div className="border-t border-border pt-5">
+                <div className="flex justify-between items-end">
+                  <span className="text-muted-foreground font-body text-xs tracking-[0.15em] uppercase font-light">Total</span>
+                  <span className="text-3xl font-display font-light text-foreground">€{total}</span>
+                </div>
+                <p className="text-[10px] text-muted-foreground font-body mt-2 font-light">
+                  Free next-day delivery across Cyprus
+                </p>
               </div>
-              <p className="text-[11px] text-muted-foreground font-body">Free next-day delivery across Cyprus</p>
+
               <Button
                 type="submit"
-                className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body font-semibold py-5 rounded-sm text-base"
+                className="w-full bg-gold hover:bg-gold-dark text-accent-foreground font-body font-medium tracking-wider uppercase text-xs py-6 rounded-none transition-all duration-300 hover:shadow-[0_0_30px_-5px_hsl(40_65%_50%_/_0.4)]"
               >
                 Place Order
               </Button>
