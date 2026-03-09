@@ -4,9 +4,12 @@ const footerLinks = [
   {
     title: "Collection",
     links: [
-      { label: "Rolex No Date AAA Clone", href: "#products" },
-      { label: "Noir Minimalist", href: "#products" },
-      { label: "Aqua Diver Pro", href: "#products" },
+      { label: "Rolex No Date AAA Clone", href: "#product-1" },
+      { label: "Rolex Hulk AAA Clone", href: "#product-2" },
+      { label: "Rolex Datejust 36mm", href: "#product-3" },
+      { label: "Rolex Submariner Blue/Gold", href: "#product-4" },
+      { label: "Rolex Submariner Sprite", href: "#product-5" },
+      { label: "Rolex Daytona Black", href: "#product-6" },
     ],
   },
   {
@@ -52,7 +55,7 @@ const Footer = () => {
               <span className="font-display text-xl tracking-wider">REPLIC8</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs font-light mb-8">
-              Premium timepieces delivered to your door. Serving Cyprus exclusively with complimentary next-day delivery.
+              Premium timepieces delivered to your door. Serving Cyprus exclusively with free next-day delivery.
             </p>
 
             {/* Social icons */}
