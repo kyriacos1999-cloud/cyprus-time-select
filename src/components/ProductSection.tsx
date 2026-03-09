@@ -54,6 +54,7 @@ const products: Product[] = [
     image: watch2,
     images: [watch2],
     badge: "Best Price",
+    priceId: null,
   },
   {
     id: 3,
