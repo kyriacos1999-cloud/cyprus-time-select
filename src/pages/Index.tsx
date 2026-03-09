@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import CollectionGrid from "@/components/CollectionGrid";
 import ProductSection from "@/components/ProductSection";
 import WhyBuySection from "@/components/WhyBuySection";
 import OrderForm from "@/components/OrderForm";
@@ -11,6 +12,7 @@ const Index = () => (
   <main>
     <Navbar />
     <HeroSection />
+    <CollectionGrid />
     <ProductSection />
     <WhyBuySection />
     <OrderForm />
