@@ -25,7 +25,7 @@ const footerLinks = [
     links: [
       { label: "Why Choose Us", href: "#why-us" },
       { label: "FAQ", href: "#faq" },
-      { label: "Contact Us", href: "#order-section" },
+      { label: "Contact Us", href: "https://www.tiktok.com/@replic8cy?_r=1&_t=ZN-94XoCUvwPNW" },
     ],
   },
 ];
