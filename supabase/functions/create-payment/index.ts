@@ -49,8 +49,8 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-      success_url: `${req.headers.get("origin")}/payment-success`,
-      cancel_url: `${req.headers.get("origin")}/#order-section`,
+      success_url: `${siteOrigin}/payment-success`,
+      cancel_url: `${siteOrigin}/#order-section`,
       metadata: {
         product_name: productName || "",
         customer_name: customerName || "",
