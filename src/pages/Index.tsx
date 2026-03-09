@@ -5,6 +5,7 @@ import WhyBuySection from "@/components/WhyBuySection";
 import OrderForm from "@/components/OrderForm";
 import FAQSection from "@/components/FAQSection";
 import FinalCTA from "@/components/FinalCTA";
+import Footer from "@/components/Footer";
 
 const Index = () => (
   <main>
@@ -15,6 +16,7 @@ const Index = () => (
     <OrderForm />
     <FAQSection />
     <FinalCTA />
+    <Footer />
   </main>
 );
 
