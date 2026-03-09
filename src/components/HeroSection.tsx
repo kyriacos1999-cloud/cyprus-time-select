@@ -12,7 +12,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Luxury timepiece"
+          alt="Premium Rolex clone watches Cyprus — AAA replica timepieces by Replic8"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50" />
