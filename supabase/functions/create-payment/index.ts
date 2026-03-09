@@ -13,7 +13,8 @@ serve(async (req) => {
   }
 
   try {
-    const { priceId, customerEmail, customerName, productName } = await req.json();
+    const { priceId, customerEmail, customerName, productName, origin: clientOrigin } = await req.json();
+    const siteOrigin = clientOrigin || req.headers.get("origin") || "https://replic8.lovable.app";
 
     if (!priceId) {
       throw new Error("Price ID is required");
