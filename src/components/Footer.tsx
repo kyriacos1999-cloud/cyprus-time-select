@@ -25,7 +25,7 @@ const footerLinks = [
     links: [
       { label: "Why Choose Us", href: "#why-us" },
       { label: "FAQ", href: "#faq" },
-      { label: "Contact Us", href: "#order-section" },
+      { label: "Contact Us", href: "https://www.tiktok.com/@replic8cy?_r=1&_t=ZN-94XoCUvwPNW" },
     ],
   },
 ];
@@ -84,6 +84,7 @@ const Footer = () => {
                   <li key={link.label}>
                     <a
                       href={link.href}
+                      {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
                     >
                       {link.label}
