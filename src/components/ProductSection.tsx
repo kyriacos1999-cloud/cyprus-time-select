@@ -44,6 +44,7 @@ const products: Product[] = [
       product1Card,
     ],
     badge: "Best Seller",
+    priceId: "price_1T939nF5cmmFi3mjCmqYm73I",
   },
   {
     id: 2,
