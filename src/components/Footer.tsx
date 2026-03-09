@@ -4,7 +4,7 @@ const footerLinks = [
   {
     title: "Collection",
     links: [
-      { label: "Chronos Elite", href: "#products" },
+      { label: "Rolex No Date AAA Clone", href: "#products" },
       { label: "Noir Minimalist", href: "#products" },
       { label: "Aqua Diver Pro", href: "#products" },
     ],
