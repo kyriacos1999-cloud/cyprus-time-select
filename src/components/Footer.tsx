@@ -124,7 +124,7 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/30 text-xs font-light">
-            © {new Date().getFullYear()} Chronos. All rights reserved.
+            © {new Date().getFullYear()} Replic8. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-white/30 hover:text-white/60 text-xs font-light transition-colors">

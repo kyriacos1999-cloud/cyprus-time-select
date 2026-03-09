@@ -12,7 +12,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             <Crown className="w-5 h-5 text-rolex-gold" />
             <span className="font-display text-lg text-primary-foreground tracking-wider">
-              CHRONOS
+              REPLIC8
             </span>
           </div>
 
