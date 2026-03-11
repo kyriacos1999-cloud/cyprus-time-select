@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import UrgencyBanner from "@/components/UrgencyBanner";
 import HeroSection from "@/components/HeroSection";
 import TrustBar from "@/components/TrustBar";
 import CollectionGrid from "@/components/CollectionGrid";
@@ -12,6 +13,7 @@ import Footer from "@/components/Footer";
 
 const Index = () => (
   <main>
+    <UrgencyBanner />
     <Navbar />
     <HeroSection />
     <TrustBar />
