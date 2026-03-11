@@ -30,13 +30,13 @@ const HeroSection = () => {
           </p>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display text-white leading-[1.05] mb-8 tracking-tight">
-            Rolex Clone
+            Luxury Watches
             <br />
-            <span className="italic">Cyprus</span>
+            <span className="italic">in Cyprus</span>
           </h1>
 
           <p className="text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed font-light">
-            Premium AAA Rolex replica watches with free next-day delivery across Cyprus.
+            Premium automatic men's watches with free next-day delivery across Cyprus.
           </p>
 
           <button
