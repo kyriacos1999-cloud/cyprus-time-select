@@ -35,7 +35,7 @@ const UrgencyBanner = () => {
   if (remaining <= 0) return null;
 
   return (
-    <div className="bg-foreground text-background py-2.5 overflow-hidden">
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-foreground text-background py-2.5 overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
