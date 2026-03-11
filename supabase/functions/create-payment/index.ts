@@ -39,7 +39,7 @@ serve(async (req) => {
       }
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: any = {
       customer: customerId,
       customer_email: customerId ? undefined : customerEmail,
       line_items: [
@@ -58,7 +58,13 @@ serve(async (req) => {
         product_name: productName || "",
         customer_name: customerName || "",
       },
-    });
+    };
+
+    if (couponId) {
+      sessionParams.discounts = [{ coupon: couponId }];
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
