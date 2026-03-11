@@ -33,11 +33,49 @@ const ProductPage = () => {
   }, [slug]);
 
   useEffect(() => {
-    if (result) {
-      document.title = result.seo.seoTitle;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) metaDesc.setAttribute("content", result.seo.metaDescription);
+    if (!result) return;
+    const { product, seo } = result;
+
+    document.title = seo.seoTitle;
+
+    const setMeta = (attr: string, key: string, content: string) => {
+      let el = document.querySelector(`meta[${attr}="${key}"]`);
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute(attr, key);
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+
+    const pageUrl = `https://replic8.shop/watches/${seo.slug}`;
+    // Product images are bundled assets — use origin + path for absolute URL
+    const ogImage = `${window.location.origin}${product.image}`;
+
+    setMeta("name", "description", seo.metaDescription);
+    setMeta("property", "og:title", seo.seoTitle);
+    setMeta("property", "og:description", seo.metaDescription);
+    setMeta("property", "og:image", ogImage);
+    setMeta("property", "og:url", pageUrl);
+    setMeta("property", "og:type", "product");
+    setMeta("name", "twitter:card", "summary_large_image");
+    setMeta("name", "twitter:title", seo.seoTitle);
+    setMeta("name", "twitter:description", seo.metaDescription);
+    setMeta("name", "twitter:image", ogImage);
+
+    // Set canonical
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
     }
+    canonical.setAttribute("href", pageUrl);
+
+    return () => {
+      // Reset to homepage defaults on unmount
+      document.title = "Luxury Watches Cyprus | Premium Men's Watches | Fast Delivery";
+    };
   }, [result]);
 
   if (!result) {
