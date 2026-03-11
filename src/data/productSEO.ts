@@ -76,7 +76,7 @@ export const productSEOData: Record<number, ProductSEO> = {
   },
   5: {
     slug: "gmt-sprite-black-green",
-    seoTitle: "GMT Sprite Black & Green | Premium Men's Watch | Cyprus",
+    seoTitle: "GMT-Master II Sprite AAA Clone | Premium Men's Watch | Cyprus",
     metaDescription: "GMT-style Sprite watch with black and green bezel, Jubilee bracelet, and automatic movement. Free next-day delivery across Cyprus.",
     longDescription: "Inspired by the iconic GMT traveller's watch, the Sprite edition features a distinctive black and green two-tone bezel that has taken the watch world by storm. The comfortable Jubilee-style bracelet adds a refined touch, while the GMT function allows tracking of a second time zone — perfect for frequent travellers or those with international connections. The Seiko NH35 automatic movement ensures reliable performance, and the detailed dial with luminous markers provides excellent readability. Whether you're exploring the streets of old Nicosia or relaxing on the beaches of Limassol, this watch makes a statement.",
     features: [
