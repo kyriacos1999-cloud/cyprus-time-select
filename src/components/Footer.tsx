@@ -17,7 +17,7 @@ const footerLinks = [
     links: [
       { label: "Order Online", href: "/#order-section", internal: true },
       { label: "Delivery Info", href: "/#faq", internal: true },
-      { label: "Payment Options", href: "/#faq", internal: true },
+      { label: "Blog", href: "/blog", internal: true },
     ],
   },
   {

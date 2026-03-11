@@ -1,0 +1,145 @@
+export type BlogPost = {
+  slug: string;
+  title: string;
+  seoTitle: string;
+  metaDescription: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
+  content: string[];
+  relatedProducts: number[];
+};
+
+export const blogPosts: BlogPost[] = [
+  {
+    slug: "why-automatic-watches-are-worth-it",
+    title: "Why Automatic Watches Are Worth It in 2026",
+    seoTitle: "Why Automatic Watches Are Worth It | Watch Guide Cyprus",
+    metaDescription: "Discover why automatic watches remain the top choice for men in Cyprus. Learn about Seiko NH35 movements, craftsmanship, and why mechanical beats quartz.",
+    excerpt: "Automatic watches have captivated men for centuries. Here's why they remain the ultimate statement piece in 2026 — and why Cyprus collectors love them.",
+    date: "2026-03-08",
+    readTime: "5 min read",
+    category: "Watch Guide",
+    content: [
+      "There's something magnetic about an automatic watch. Unlike quartz watches that run on batteries, automatic timepieces are powered by the natural motion of your wrist. Every sweep of the seconds hand is a reminder of the intricate engineering happening beneath the dial.",
+      "The Seiko NH35 movement — found in many premium watches available in Cyprus — is a perfect example. This Japanese-made calibre offers 41 hours of power reserve, beats at 21,600 vibrations per hour, and features both hand-winding and hacking capabilities. It's the same movement trusted by independent watchmakers worldwide.",
+      "## Why Men in Cyprus Choose Automatic",
+      "Cyprus has a growing community of watch enthusiasts who appreciate the craftsmanship behind mechanical timepieces. Whether in Nicosia's business districts or Limassol's marina, an automatic watch signals taste, attention to detail, and an appreciation for tradition.",
+      "Unlike smartwatches that become obsolete in two years, a well-built automatic watch can last decades. The sweeping seconds hand, the weight on your wrist, the satisfying winding crown — these tactile experiences simply can't be replicated by digital alternatives.",
+      "## The Investment Perspective",
+      "While luxury automatic watches from heritage brands can cost tens of thousands, premium alternatives offer the same Seiko NH35 movement, 904L stainless steel construction, and scratch-resistant crystals at a fraction of the price. For many collectors in Larnaca, Paphos, and across the island, this represents the smart way to enjoy luxury watchmaking.",
+      "The bottom line? An automatic watch isn't just a timekeeping device — it's a statement about who you are and what you value. And in Cyprus, that statement has never been louder.",
+    ],
+    relatedProducts: [1, 2, 5],
+  },
+  {
+    slug: "best-dive-watches-for-cyprus-summer",
+    title: "Best Dive Watches for a Cyprus Summer",
+    seoTitle: "Best Dive Watches for Cyprus Summer 2026 | Replic8",
+    metaDescription: "Top dive watches for Cyprus beaches and summer. Water-resistant, stylish, and durable — perfect for Ayia Napa, Protaras, and Limassol coastline.",
+    excerpt: "Planning your Cyprus summer? Here are the best dive watch styles that combine water resistance with head-turning design for the beach and beyond.",
+    date: "2026-03-05",
+    readTime: "4 min read",
+    category: "Style Guide",
+    content: [
+      "Cyprus summers are legendary — crystal-clear waters, golden beaches, and endless sunshine from May through October. If you're spending time along the coastline from Ayia Napa to Paphos, a dive watch isn't just a style choice — it's practical.",
+      "## What Makes a Great Dive Watch?",
+      "A true dive watch needs three things: water resistance (at least 100m), a unidirectional rotating bezel for tracking time underwater, and luminous markers for visibility in low light. The best dive watches combine these functional elements with a design that looks equally at home at a beach bar as it does beneath the waves.",
+      "## The Submariner Style — A Timeless Classic",
+      "The Submariner design has been the gold standard for dive watches since the 1950s. Its clean dial, prominent hour markers, and robust case construction have inspired countless watchmakers. Today, you can find premium versions with Seiko NH35 automatic movements and 904L stainless steel at accessible prices.",
+      "The black dial variant is the most versatile — it pairs with everything from swim shorts to a linen suit. For something bolder, the green 'Hulk' variant makes an unforgettable statement at any beach club in Limassol or rooftop bar in Nicosia.",
+      "## Two-Tone for Summer Evenings",
+      "The blue and gold two-tone Submariner style is perfect for summer evenings in Cyprus. The warm gold tones complement sun-kissed skin, while the deep blue dial evokes the Mediterranean Sea. It's the watch equivalent of a sunset over Coral Bay.",
+      "## Our Recommendation",
+      "For a Cyprus summer, you can't go wrong with any dive-style watch rated to 100m water resistance. Pair it with a confident attitude and you've got the ultimate summer accessory — no matter which beach you're on.",
+    ],
+    relatedProducts: [1, 2, 4],
+  },
+  {
+    slug: "how-to-spot-quality-watch",
+    title: "How to Spot a Quality Watch: 7 Things to Check",
+    seoTitle: "How to Spot a Quality Watch — 7 Key Checks | Replic8 Cyprus",
+    metaDescription: "Learn 7 key indicators of watch quality: movement type, case material, glass, weight, finishing, water resistance, and packaging. Expert guide for Cyprus buyers.",
+    excerpt: "Not all watches are created equal. Here are 7 things to look for when evaluating watch quality — whether you're buying online or in person.",
+    date: "2026-03-01",
+    readTime: "6 min read",
+    category: "Buyer's Guide",
+    content: [
+      "Whether you're a first-time buyer or a seasoned collector, knowing how to evaluate watch quality saves you from disappointment. Here are the seven key indicators that separate premium watches from cheap imitations.",
+      "## 1. Movement Type",
+      "The movement is the heart of any watch. Automatic movements like the Seiko NH35 are self-winding and battery-free, offering a smooth sweeping seconds hand. Cheap watches use low-grade quartz movements with a ticking motion. Always ask what movement powers the watch.",
+      "## 2. Case Material",
+      "Premium watches use 904L or 316L stainless steel — the same grades used in surgical instruments and marine applications. These resist corrosion, maintain their finish, and feel substantial on the wrist. Avoid watches made from alloy or base metals that tarnish quickly.",
+      "## 3. Crystal Glass",
+      "Scratch-resistant sapphire-style crystals protect the dial from daily wear. Lower quality watches use mineral glass or even plastic, which scratches easily and clouds over time. Run your fingernail across the crystal — a quality crystal feels perfectly smooth.",
+      "## 4. Weight and Balance",
+      "A quality watch has heft. Stainless steel cases and solid link bracelets create a satisfying weight that tells your wrist you're wearing something special. If a watch feels light or hollow, the materials are likely inferior.",
+      "## 5. Finishing Details",
+      "Look closely at the bezel markings, dial printing, and case edges. Premium watches have crisp, clean lines with no bleeding ink, misaligned text, or rough edges. The crown should operate smoothly with a satisfying click.",
+      "## 6. Water Resistance",
+      "Any watch rated to 100m water resistance has been properly sealed with gaskets at the crown, case back, and crystal. This isn't just about swimming — it's an indicator of overall build quality and attention to detail.",
+      "## 7. Packaging",
+      "Quality watches arrive in presentation boxes with papers. This isn't just marketing — it shows the manufacturer takes pride in the product from factory to wrist. In Cyprus, our watches ship in premium boxes ready for gifting.",
+      "## Final Thought",
+      "When shopping for watches in Nicosia, Limassol, Larnaca, or online, use these seven checks to evaluate quality. A watch that ticks all seven boxes will serve you well for years to come.",
+    ],
+    relatedProducts: [1, 3, 6],
+  },
+  {
+    slug: "perfect-watch-gift-guide-cyprus",
+    title: "The Perfect Watch Gift Guide for Men in Cyprus",
+    seoTitle: "Watch Gift Guide for Men in Cyprus | Replic8",
+    metaDescription: "Find the perfect watch gift for men in Cyprus. From birthdays to anniversaries, discover which watch style suits every occasion. Free next-day delivery.",
+    excerpt: "Looking for the perfect gift for him? A premium watch is always the right answer. Here's our guide to choosing the ideal timepiece for every occasion.",
+    date: "2026-02-25",
+    readTime: "4 min read",
+    category: "Gift Guide",
+    content: [
+      "A watch is more than a gift — it's a statement. It says 'I thought about this.' Whether it's a birthday, anniversary, graduation, or just because, the right watch creates a moment that lasts. Here's how to choose the perfect one.",
+      "## For the Classic Gentleman",
+      "If he wears suits, prefers understated elegance, and values tradition, the Datejust 36mm is your answer. Its refined size, fluted bezel, and clean dark grey dial work with everything from business attire to smart casual. It's the watch that whispers quality without shouting.",
+      "## For the Adventurer",
+      "Does he love the outdoors, water sports, or simply bold accessories? The Submariner in black is the quintessential adventure watch. With 100m water resistance and a rugged stainless steel build, it's ready for anything — from diving off the rocks in Protaras to exploring the Troodos mountains.",
+      "## For the Style-Conscious",
+      "The Hulk green Submariner is for the man who knows exactly what he wants. Its distinctive green dial and bezel turn heads at every coffee shop in Nicosia and every beach bar in Limassol. Bold, confident, unforgettable.",
+      "## For the Luxury Lover",
+      "The two-tone blue and gold Submariner combines prestige with personality. The warm gold tones and deep blue dial create an unmistakably luxurious look. Perfect for the man who appreciates the finer things.",
+      "## Delivery in Cyprus",
+      "Every watch ships in a premium presentation box with papers — no wrapping needed. With free next-day delivery to Nicosia, Limassol, Larnaca, Paphos, and everywhere in between, your gift arrives ready to impress.",
+      "## Our Tip",
+      "Not sure which one? The black Submariner is the safest choice — it's our best seller for a reason. But if you want to make a real impression, go bold with the Hulk or the Daytona. Either way, you can't go wrong.",
+    ],
+    relatedProducts: [1, 2, 3, 4],
+  },
+  {
+    slug: "watches-and-fashion-cyprus-mens-style",
+    title: "How to Match Your Watch with Your Outfit in Cyprus",
+    seoTitle: "Watch & Fashion Guide for Men in Cyprus | Replic8",
+    metaDescription: "Style guide: how to match your watch with outfits in Cyprus. From beach casual to business formal, learn which watch works for every look.",
+    excerpt: "Your watch says more about your style than any other accessory. Here's how to pair the right watch with the right outfit for every Cyprus occasion.",
+    date: "2026-02-20",
+    readTime: "5 min read",
+    category: "Style Guide",
+    content: [
+      "In Cyprus, where life moves between beach bars and business meetings, your watch needs to be as versatile as your lifestyle. Here's how to match your timepiece to every occasion on the island.",
+      "## Beach & Casual",
+      "For lazy days in Paphos or weekends by the pool, a dive watch on a steel bracelet is perfect. The Submariner style — whether in classic black or bold green — pairs naturally with shorts, linen shirts, and sandals. The steel bracelet handles salt water, sunscreen, and sand without complaint.",
+      "## Smart Casual — The Cyprus Sweet Spot",
+      "This is where most men in Cyprus live: polo shirts, chinos, loafers. The Datejust 36mm excels here. Its refined size doesn't overwhelm a lighter outfit, while the fluted bezel adds just enough visual interest. Pair it with rolled sleeves for maximum effect.",
+      "## Business & Formal",
+      "For meetings in Nicosia's business district or formal events in Limassol, the Datejust is again your best friend. Its dress-watch proportions slip effortlessly under a shirt cuff. The dark grey dial reads as sophisticated without being flashy.",
+      "## Evening & Going Out",
+      "When the sun sets and you're heading to dinner or a rooftop bar, the two-tone blue and gold Submariner comes alive. Under warm lighting, the gold tones glow and the blue dial deepens. It's the watch equivalent of a well-tailored blazer.",
+      "## The Chronograph Statement",
+      "The Daytona chronograph is for the man who wants his watch noticed. Its busy dial and tachymeter bezel are conversation starters at any Larnaca wine bar or Nicosia gallery opening. Pair it with dark jeans and a crisp white shirt for maximum impact.",
+      "## The Golden Rule",
+      "There are no strict rules — wear what makes you feel confident. A man who wears his watch with conviction always looks better than one who follows every style guide. In Cyprus, personal style wins every time.",
+    ],
+    relatedProducts: [3, 4, 6],
+  },
+];
+
+export const getBlogPostBySlug = (slug: string): BlogPost | null => {
+  return blogPosts.find((p) => p.slug === slug) || null;
+};
