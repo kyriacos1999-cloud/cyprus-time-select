@@ -132,7 +132,7 @@ const products: Product[] = [
   },
   {
     id: 5,
-    name: "Rolex Submariner Sprite",
+    name: "Rolex GMT-Master II Sprite AAA Clone",
     description: "GMT-Master II Sprite · Black dial · Black/green bezel · Jubilee bracelet",
     price: 300,
     image: product5Front,
