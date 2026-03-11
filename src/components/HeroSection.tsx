@@ -7,7 +7,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-14">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[94px]">
       {/* Full-bleed background image */}
       <div className="absolute inset-0">
         <img
