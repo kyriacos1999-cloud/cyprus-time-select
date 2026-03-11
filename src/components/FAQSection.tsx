@@ -10,7 +10,7 @@ import { useEffect } from "react";
 const faqs = [
   { q: "Is this a real Rolex?", a: "No. Our watches are high-quality replica models inspired by Rolex designs, not original watches from Rolex. They are designed for customers who appreciate the style of luxury watches at a much more accessible price." },
   { q: "How close are the watches to the original?", a: "Our watches are AAA-grade replicas, meaning they closely match the design, weight, and materials of the original models. Most people cannot distinguish them from the original without expert inspection." },
-  { q: "What quality can I expect?", a: "Our watches feature stainless steel cases, automatic or high-precision quartz movements, scratch-resistant glass, and detailed finishing and engravings. Every watch is tested before shipping." },
+  { q: "What quality can I expect?", a: "Our watches feature stainless steel cases, automatic movements, scratch-resistant glass, and detailed finishing and engravings. Every watch is tested before shipping." },
   { q: "Will people be able to tell it's a replica?", a: "In everyday situations, very unlikely. Our replicas are designed to closely match the appearance of the original watches, including size, weight, and finishing." },
   { q: "Do you ship within Cyprus?", a: "Yes. We offer fast delivery across Cyprus, usually within 1–2 business days." },
   { q: "Is payment safe?", a: "Yes. We use secure payment processing and encrypted checkout to protect your information." },
