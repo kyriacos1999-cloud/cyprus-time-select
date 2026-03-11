@@ -356,6 +356,10 @@ const OrderForm = () => {
               >
                 {loading ? "Redirecting to Payment..." : paymentMethod === "online" ? "Pay with Stripe" : "Place Order"}
               </Button>
+              <p className="text-center text-xs text-muted-foreground mt-3 font-light flex items-center justify-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[hsl(var(--rolex-green))] animate-pulse" />
+                High demand this week – limited pieces available.
+              </p>
               {errors.submit && <p className="text-destructive text-xs mt-2 font-light">{errors.submit}</p>}
             </div>
           </div>
