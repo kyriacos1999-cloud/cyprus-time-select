@@ -206,7 +206,7 @@ const ProductPage = () => {
               </div>
 
               <Link
-                to="/#order-section"
+                to={`/?product=${product.id}#order-section`}
                 className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[hsl(var(--rolex-green-light))] transition-colors duration-300 w-fit text-center"
               >
                 Order Now
