@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { products } from "@/components/ProductSection";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,23 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { cn } from "@/lib/utils";
 
 const OrderForm = () => {
-  const [selectedProduct, setSelectedProduct] = useState(products[0].id);
+  const location = useLocation();
+  const queryProduct = new URLSearchParams(location.search).get("product");
+  const initialProduct = queryProduct ? parseInt(queryProduct, 10) : products[0].id;
+  const [selectedProduct, setSelectedProduct] = useState(initialProduct);
+
+  useEffect(() => {
+    if (queryProduct) {
+      const id = parseInt(queryProduct, 10);
+      const found = products.find((p) => p.id === id);
+      if (found) {
+        setSelectedProduct(id);
+        setTimeout(() => {
+          document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [queryProduct]);
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
