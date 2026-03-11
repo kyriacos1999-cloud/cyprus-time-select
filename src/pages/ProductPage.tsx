@@ -311,6 +311,9 @@ const ProductPage = () => {
           </div>
         </section>
 
+        {/* Customer Reviews */}
+        <ReviewsSection productId={product.id} />
+
         {/* Product FAQ */}
         <section className="py-16 bg-secondary/30">
           <div className="container mx-auto px-4 max-w-2xl">
