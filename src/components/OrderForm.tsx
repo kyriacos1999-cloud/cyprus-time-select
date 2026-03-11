@@ -51,7 +51,24 @@ const OrderForm = () => {
 
   const product = products.find((p) => p.id === selectedProduct)!;
   const surcharge = paymentMethod === "cod" ? 30 : 0;
-  const total = product.price + surcharge;
+  const discount = appliedPromo === "WELCOME10" ? Math.round(product.price * 0.1) : 0;
+  const total = product.price + surcharge - discount;
+
+  const applyPromo = () => {
+    setPromoError("");
+    if (promoCode.trim().toUpperCase() === "WELCOME10") {
+      setAppliedPromo("WELCOME10");
+      setPromoCode("");
+    } else {
+      setPromoError("Invalid promo code");
+    }
+  };
+
+  const removePromo = () => {
+    setAppliedPromo(null);
+    setPromoCode("");
+    setPromoError("");
+  };
 
   const validate = () => {
     const errs: Record<string, string> = {};
