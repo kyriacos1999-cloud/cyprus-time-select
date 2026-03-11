@@ -7,10 +7,16 @@ import {
 import { motion } from "framer-motion";
 
 const faqs = [
-  { q: "Do you deliver all over Cyprus?", a: "Yes. We offer free next-day delivery to every address across Cyprus — no exceptions." },
-  { q: "Can I pay cash on delivery?", a: "Absolutely. Cash on delivery is available for a €30 surcharge, applied transparently at checkout." },
-  { q: "Can I pay online?", a: "Yes. We offer secure, encrypted online payments with no additional fees — the most affordable option." },
-  { q: "Do you deliver outside Cyprus?", a: "At this time, we exclusively serve Cyprus to ensure the highest quality of service and delivery speed." },
+  { q: "Is this a real Rolex?", a: "No. Our watches are high-quality replica models inspired by Rolex designs, not original watches from Rolex. They are designed for customers who appreciate the style of luxury watches at a much more accessible price." },
+  { q: "How close are the watches to the original?", a: "Our watches are AAA-grade replicas, meaning they closely match the design, weight, and materials of the original models. Most people cannot distinguish them from the original without expert inspection." },
+  { q: "What quality can I expect?", a: "Our watches feature stainless steel cases, automatic or high-precision quartz movements, scratch-resistant glass, and detailed finishing and engravings. Every watch is tested before shipping." },
+  { q: "Will people be able to tell it's a replica?", a: "In everyday situations, very unlikely. Our replicas are designed to closely match the appearance of the original watches, including size, weight, and finishing." },
+  { q: "Do you ship within Cyprus?", a: "Yes. We offer fast delivery across Cyprus, usually within 1–2 business days." },
+  { q: "Is payment safe?", a: "Yes. We use secure payment processing and encrypted checkout to protect your information." },
+  { q: "What if I'm not satisfied with my watch?", a: "We offer a customer satisfaction guarantee. If there is any issue with your watch when it arrives, contact us and we will help resolve it quickly." },
+  { q: "Do the watches come with a box?", a: "Yes. Watches include a presentation box suitable for storage or gifting, along with papers." },
+  { q: "Are these watches durable for daily wear?", a: "Yes. Our watches are designed for everyday use, with durable materials and reliable movements." },
+  { q: "Why are your prices so much lower than luxury watches?", a: "Luxury watches from brands like Rolex cost thousands due to brand value, heritage, and manufacturing. Our replicas focus on the look and feel of the design without the luxury price tag." },
 ];
 
 const FAQSection = () => (
