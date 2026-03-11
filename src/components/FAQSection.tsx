@@ -70,7 +70,7 @@ const FAQSection = () => {
               transition={{ duration: 0.4, delay: i * 0.1 }}
             >
               <AccordionItem value={`faq-${i}`} className="border border-border px-6 bg-background">
-                <AccordionTrigger className="font-display text-base text-foreground hover:no-underline tracking-wide hover:text-primary transition-colors duration-300 py-5">
+                <AccordionTrigger className="font-display text-base text-foreground hover:no-underline tracking-wide hover:text-primary transition-colors duration-300 py-5 text-left">
                   {faq.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground font-light pb-5 leading-relaxed">
