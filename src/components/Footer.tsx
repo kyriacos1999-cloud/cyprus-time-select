@@ -1,31 +1,31 @@
 import { Crown } from "lucide-react";
+import { Link } from "react-router-dom";
+import { productSEOData } from "@/data/productSEO";
+import { products } from "@/components/ProductSection";
 
 const footerLinks = [
   {
     title: "Collection",
-    links: [
-      { label: "Rolex No Date AAA Clone", href: "#product-1" },
-      { label: "Rolex Hulk AAA Clone", href: "#product-2" },
-      { label: "Rolex Datejust 36mm", href: "#product-3" },
-      { label: "Rolex Submariner Blue/Gold", href: "#product-4" },
-      { label: "Rolex Submariner Sprite", href: "#product-5" },
-      { label: "Rolex Daytona Black", href: "#product-6" },
-    ],
+    links: products.slice(0, 6).map((p) => ({
+      label: p.name,
+      href: `/watches/${productSEOData[p.id]?.slug || p.id}`,
+      internal: true,
+    })),
   },
   {
     title: "Services",
     links: [
-      { label: "Order Online", href: "#order-section" },
-      { label: "Delivery Info", href: "#faq" },
-      { label: "Payment Options", href: "#faq" },
+      { label: "Order Online", href: "/#order-section", internal: true },
+      { label: "Delivery Info", href: "/#faq", internal: true },
+      { label: "Payment Options", href: "/#faq", internal: true },
     ],
   },
   {
     title: "About",
     links: [
-      { label: "Why Choose Us", href: "#why-us" },
-      { label: "FAQ", href: "#faq" },
-      { label: "Contact Us", href: "https://www.tiktok.com/@replic8cy?_r=1&_t=ZN-94XoCUvwPNW" },
+      { label: "Why Choose Us", href: "/#why-us", internal: true },
+      { label: "FAQ", href: "/#faq", internal: true },
+      { label: "Contact Us", href: "https://www.tiktok.com/@replic8cy?_r=1&_t=ZN-94XoCUvwPNW", internal: false },
     ],
   },
 ];
@@ -44,18 +44,18 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-rolex-dark text-white">
+    <footer className="bg-[hsl(var(--rolex-dark))] text-white">
       {/* Main footer */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <Crown className="w-6 h-6 text-rolex-gold" />
+            <Link to="/" className="flex items-center gap-2 mb-6">
+              <Crown className="w-6 h-6 text-[hsl(var(--rolex-gold))]" />
               <span className="font-display text-xl tracking-wider">REPLIC8</span>
-            </div>
+            </Link>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs font-light mb-8">
-              The best Rolex clone watches in Cyprus. AAA quality replica timepieces delivered to your door with free next-day delivery.
+              Premium men's watches in Cyprus. Automatic movements, stainless steel construction, and free next-day delivery to Nicosia, Limassol, Larnaca, and Paphos.
             </p>
 
             {/* Social icons */}
@@ -65,6 +65,8 @@ const Footer = () => {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white/40 hover:text-white transition-colors duration-300"
                 >
                   {social.icon}
@@ -75,24 +77,34 @@ const Footer = () => {
 
           {/* Link columns */}
           {footerLinks.map((group) => (
-            <div key={group.title}>
+            <nav key={group.title} aria-label={group.title}>
               <h4 className="text-xs tracking-[0.2em] uppercase font-medium mb-5 text-white/70">
                 {group.title}
               </h4>
               <ul className="space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
-                    >
-                      {link.label}
-                    </a>
+                    {link.internal ? (
+                      <Link
+                        to={link.href}
+                        className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
         </div>
       </div>
@@ -109,9 +121,6 @@ const Footer = () => {
             </a>
             <a href="#" className="text-white/30 hover:text-white/60 text-xs font-light transition-colors">
               Terms of Service
-            </a>
-            <a href="#" className="text-white/30 hover:text-white/60 text-xs font-light transition-colors">
-              Cookie Policy
             </a>
           </div>
         </div>
