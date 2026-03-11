@@ -24,6 +24,112 @@ const productFaqs = [
   { q: "What if I'm not satisfied?", a: "We offer a customer satisfaction guarantee. Contact us if there is any issue and we will resolve it promptly." },
 ];
 
+const ReviewsSection = ({ productId }: { productId: number }) => {
+  const reviews = productReviews[productId] || [];
+  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+  const avgRating = reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : "0";
+
+  if (reviews.length === 0) return null;
+
+  return (
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl md:text-3xl font-display text-foreground tracking-tight">
+            Customer Reviews
+          </h2>
+          <div className="flex items-center gap-2">
+            <div className="flex gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-4 h-4 fill-[hsl(var(--rolex-gold))] text-[hsl(var(--rolex-gold))]" />
+              ))}
+            </div>
+            <span className="text-sm text-muted-foreground font-light">{avgRating} ({reviews.length})</span>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          {reviews.map((review, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="border border-border p-5 md:p-6"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <p className="text-sm font-medium text-foreground">{review.name}</p>
+                  <p className="text-xs text-muted-foreground font-light">{review.city}, Cyprus · {review.date}</p>
+                </div>
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star
+                      key={s}
+                      className={`w-3.5 h-3.5 ${s < review.rating ? "fill-[hsl(var(--rolex-gold))] text-[hsl(var(--rolex-gold))]" : "text-border"}`}
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed font-light mb-4">
+                "{review.text}"
+              </p>
+              {review.photos.length > 0 && (
+                <div className="flex gap-2 flex-wrap">
+                  {review.photos.map((photo, pi) => (
+                    <button
+                      key={pi}
+                      onClick={() => setLightboxImg(photo)}
+                      className="w-16 h-16 md:w-20 md:h-20 overflow-hidden border border-border hover:border-primary transition-colors"
+                    >
+                      <img
+                        src={photo}
+                        alt={`Review photo by ${review.name}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setLightboxImg(null)}
+          >
+            <button
+              onClick={() => setLightboxImg(null)}
+              className="absolute top-4 right-4 text-white/70 hover:text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              src={lightboxImg}
+              alt="Review photo enlarged"
+              className="max-w-full max-h-[85vh] object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
