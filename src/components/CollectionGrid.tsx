@@ -5,6 +5,7 @@ import { productSEOData } from "@/data/productSEO";
 import { useSoldOut } from "@/hooks/useSoldOut";
 
 const CollectionGrid = () => {
+  const { soldOutIds } = useSoldOut();
   return (
     <section className="py-20 md:py-28 bg-secondary/30">
       <div className="container mx-auto px-4">
