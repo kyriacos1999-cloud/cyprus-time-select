@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { priceId, customerEmail, customerName, productName, origin: clientOrigin, couponId } = await req.json();
+    const { priceId, productId, customerEmail, customerName, productName, origin: clientOrigin, couponId } = await req.json();
     const siteOrigin = clientOrigin || req.headers.get("origin") || "https://replic8.lovable.app";
 
     if (!priceId) {
@@ -57,6 +57,7 @@ serve(async (req) => {
       metadata: {
         product_name: productName || "",
         customer_name: customerName || "",
+        product_id: String(productId || ""),
       },
     };
 
