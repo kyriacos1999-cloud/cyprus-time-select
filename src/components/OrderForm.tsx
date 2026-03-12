@@ -98,6 +98,7 @@ const OrderForm = () => {
         const { data, error } = await supabase.functions.invoke("create-payment", {
           body: {
             priceId: product.priceId,
+            productId: product.id,
             customerEmail: form.email,
             customerName: form.name,
             productName: product.name,
