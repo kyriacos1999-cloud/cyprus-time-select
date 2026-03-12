@@ -37,28 +37,36 @@ const CollectionGrid = () => {
               >
                 <Link
                   to={seo ? `/watches/${seo.slug}` : `/#product-${product.id}`}
-                  className="group block"
+                  className={`group block ${soldOutIds.has(product.id) ? "pointer-events-none" : ""}`}
                 >
                   <div className="relative aspect-square overflow-hidden bg-white mb-3">
                     <img
                       src={product.image}
                       alt={`${product.name} — premium automatic men's watch`}
-                      className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500 ease-out"
+                      className={`w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500 ease-out ${soldOutIds.has(product.id) ? "grayscale opacity-50" : ""}`}
                       loading="lazy"
                     />
-                    {product.badge && (
+                    {soldOutIds.has(product.id) ? (
+                      <div className="absolute top-3 left-3 bg-destructive text-destructive-foreground text-[8px] md:text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1">
+                        Sold Out
+                      </div>
+                    ) : product.badge ? (
                       <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-[8px] md:text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1">
                         {product.badge}
                       </div>
-                    )}
+                    ) : null}
                   </div>
                   <div className="text-center">
                     <h3 className="font-display text-sm md:text-base text-foreground tracking-wide mb-1">
                       {product.name}
                     </h3>
-                    <span className="text-primary text-sm md:text-base font-display">
-                      €{product.price}
-                    </span>
+                    {soldOutIds.has(product.id) ? (
+                      <span className="text-destructive text-sm md:text-base font-display">Sold Out</span>
+                    ) : (
+                      <span className="text-primary text-sm md:text-base font-display">
+                        €{product.price}
+                      </span>
+                    )}
                   </div>
                 </Link>
               </motion.div>
