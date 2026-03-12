@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { products } from "@/components/ProductSection";
 import { productSEOData } from "@/data/productSEO";
+import { useSoldOut } from "@/hooks/useSoldOut";
 
 const CollectionGrid = () => {
   return (
