@@ -84,7 +84,7 @@ const Footer = () => {
               <ul className="space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    {link.internal ? (
+                    {link.internal && !link.href.includes('#') ? (
                       <Link
                         to={link.href}
                         className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
@@ -94,8 +94,8 @@ const Footer = () => {
                     ) : (
                       <a
                         href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        target={link.internal ? undefined : "_blank"}
+                        rel={link.internal ? undefined : "noopener noreferrer"}
                         className="text-white/40 hover:text-white text-sm transition-colors duration-300 font-light"
                       >
                         {link.label}
