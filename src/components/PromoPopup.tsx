@@ -4,17 +4,55 @@ import { X, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const PROMO_KEY = "replic8_promo_seen";
+const PROMO_END_KEY = "replic8_promo_end";
+const PROMO_MINUTES = 10;
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const getPromoEnd = () => {
+  const stored = localStorage.getItem(PROMO_END_KEY);
+  if (stored) {
+    const end = parseInt(stored, 10);
+    if (end > Date.now()) return end;
+    return null; // expired
+  }
+  // First visit — set expiry
+  const end = Date.now() + PROMO_MINUTES * 60 * 1000;
+  localStorage.setItem(PROMO_END_KEY, String(end));
+  return end;
+};
 
 const PromoPopup = () => {
   const [visible, setVisible] = useState(false);
+  const [endTime, setEndTime] = useState<number | null>(null);
+  const [remaining, setRemaining] = useState(0);
 
   useEffect(() => {
     const seen = localStorage.getItem(PROMO_KEY);
-    if (!seen) {
+    const end = getPromoEnd();
+    if (!seen && end) {
+      setEndTime(end);
+      setRemaining(end - Date.now());
       const timer = setTimeout(() => setVisible(true), 4000);
       return () => clearTimeout(timer);
     }
   }, []);
+
+  useEffect(() => {
+    if (!endTime) return;
+    const tick = setInterval(() => {
+      const diff = endTime - Date.now();
+      if (diff <= 0) {
+        setRemaining(0);
+        setVisible(false);
+        localStorage.setItem(PROMO_KEY, "1");
+        clearInterval(tick);
+      } else {
+        setRemaining(diff);
+      }
+    }, 1000);
+    return () => clearInterval(tick);
+  }, [endTime]);
 
   const dismiss = () => {
     setVisible(false);
@@ -27,11 +65,13 @@ const PromoPopup = () => {
     document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const minutes = Math.floor(remaining / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
   return (
     <AnimatePresence>
       {visible && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -39,7 +79,6 @@ const PromoPopup = () => {
             className="fixed inset-0 bg-foreground/40 backdrop-blur-sm z-[60]"
             onClick={dismiss}
           />
-          {/* Popup */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -66,9 +105,23 @@ const PromoPopup = () => {
               <h3 className="font-display text-2xl md:text-3xl text-foreground tracking-tight mb-2">
                 10% Off Your First Order
               </h3>
-              <p className="text-muted-foreground text-sm font-light mb-6 leading-relaxed">
+              <p className="text-muted-foreground text-sm font-light mb-4 leading-relaxed">
                 Welcome to Replic8. Use the code below at checkout to enjoy 10% off your first timepiece.
               </p>
+
+              {/* Countdown */}
+              <div className="flex items-center justify-center gap-1.5 font-mono mb-5">
+                <span className="text-destructive text-[10px] tracking-[0.2em] uppercase font-medium mr-2">
+                  Expires in
+                </span>
+                <span className="bg-destructive/10 text-destructive px-2 py-1 rounded-sm text-sm font-semibold">
+                  {pad(minutes)}
+                </span>
+                <span className="text-destructive/50">:</span>
+                <span className="bg-destructive/10 text-destructive px-2 py-1 rounded-sm text-sm font-semibold">
+                  {pad(seconds)}
+                </span>
+              </div>
 
               <div className="bg-secondary border border-border px-5 py-3 mb-6">
                 <span className="font-display text-xl tracking-[0.2em] text-foreground">WELCOME10</span>
