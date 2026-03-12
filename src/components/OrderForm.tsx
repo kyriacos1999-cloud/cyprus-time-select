@@ -174,25 +174,35 @@ const OrderForm = () => {
                 Select Timepiece
               </Label>
               <div className="space-y-2">
-                {products.map((p) => (
-                  <button
-                    type="button"
-                    key={p.id}
-                    onClick={() => setSelectedProduct(p.id)}
-                    className={`w-full flex items-center gap-4 p-4 border text-left transition-all duration-300 ${
-                      selectedProduct === p.id
-                        ? "border-primary bg-primary/5"
-                        : "border-border bg-background hover:border-primary/30"
-                    }`}
-                  >
-                    <img src={p.image} alt={p.name} className="w-14 h-14 object-cover" />
-                    <div className="flex-1">
-                      <span className="font-display text-base text-foreground tracking-wide">{p.name}</span>
-                      <span className="block text-xs text-muted-foreground font-light mt-0.5">{p.description}</span>
-                    </div>
-                    <span className="text-sm text-foreground font-medium">€{p.price}</span>
-                  </button>
-                ))}
+                {products.map((p) => {
+                  const isSoldOut = soldOutIds.has(p.id);
+                  return (
+                    <button
+                      type="button"
+                      key={p.id}
+                      onClick={() => !isSoldOut && setSelectedProduct(p.id)}
+                      disabled={isSoldOut}
+                      className={`w-full flex items-center gap-4 p-4 border text-left transition-all duration-300 ${
+                        isSoldOut
+                          ? "border-border bg-muted opacity-60 cursor-not-allowed"
+                          : selectedProduct === p.id
+                            ? "border-primary bg-primary/5"
+                            : "border-border bg-background hover:border-primary/30"
+                      }`}
+                    >
+                      <img src={p.image} alt={p.name} className={`w-14 h-14 object-cover ${isSoldOut ? "grayscale" : ""}`} />
+                      <div className="flex-1">
+                        <span className="font-display text-base text-foreground tracking-wide">{p.name}</span>
+                        <span className="block text-xs text-muted-foreground font-light mt-0.5">{p.description}</span>
+                      </div>
+                      {isSoldOut ? (
+                        <span className="text-xs text-destructive font-medium tracking-wider uppercase">Sold Out</span>
+                      ) : (
+                        <span className="text-sm text-foreground font-medium">€{p.price}</span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
