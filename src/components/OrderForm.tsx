@@ -444,10 +444,10 @@ const OrderForm = () => {
 
               <Button
                 type="submit"
-                disabled={loading}
-                className="w-full bg-primary hover:bg-rolex-green-light text-primary-foreground font-medium tracking-wider uppercase text-xs py-6 rounded-none transition-all duration-300"
+                disabled={loading || soldOutIds.has(selectedProduct)}
+                className="w-full bg-primary hover:bg-rolex-green-light text-primary-foreground font-medium tracking-wider uppercase text-xs py-6 rounded-none transition-all duration-300 disabled:opacity-50"
               >
-                {loading ? "Redirecting to Payment..." : paymentMethod === "online" ? "Pay with Stripe" : "Place Order"}
+                {soldOutIds.has(selectedProduct) ? "Sold Out" : loading ? "Redirecting to Payment..." : paymentMethod === "online" ? "Pay with Stripe" : "Place Order"}
               </Button>
               <p className="text-center text-xs text-muted-foreground mt-3 font-light flex items-center justify-center gap-1.5">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-[hsl(var(--rolex-green))] animate-pulse" />

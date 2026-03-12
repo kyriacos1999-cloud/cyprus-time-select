@@ -57,6 +57,7 @@ serve(async (req) => {
       metadata: {
         product_name: productName || "",
         customer_name: customerName || "",
+        product_id: String(productId || ""),
       },
     };
 

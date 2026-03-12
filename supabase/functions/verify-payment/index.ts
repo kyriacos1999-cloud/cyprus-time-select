@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -29,6 +30,19 @@ serve(async (req) => {
 
     if (session.payment_status !== "paid") {
       throw new Error("Payment not completed");
+    }
+
+    // Mark product as sold out
+    const productId = session.metadata?.product_id;
+    if (productId) {
+      const supabaseAdmin = createClient(
+        Deno.env.get("SUPABASE_URL") || "",
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
+      );
+      await supabaseAdmin
+        .from("product_inventory")
+        .update({ sold_out: true, updated_at: new Date().toISOString() })
+        .eq("product_id", parseInt(productId, 10));
     }
 
     const lineItem = session.line_items?.data[0];
