@@ -40,6 +40,8 @@ const OrderForm = () => {
       const id = (e as CustomEvent).detail;
       if (products.find((p) => p.id === id)) {
         setSelectedProduct(id);
+        setHighlightProduct(true);
+        setTimeout(() => setHighlightProduct(false), 1200);
       }
     };
     window.addEventListener("select-product", handler);
