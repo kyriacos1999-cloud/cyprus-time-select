@@ -12,7 +12,7 @@ const WatchAssemblyIntro = ({ onComplete }: { onComplete: () => void }) => {
 
   return (
     <AnimatePresence>
-      {phase !== "done" && (
+      {!isDone && (
         <motion.div
           className="fixed inset-0 z-[9999] bg-foreground flex items-center justify-center"
           exit={{ opacity: 0 }}
