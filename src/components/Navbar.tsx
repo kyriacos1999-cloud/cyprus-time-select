@@ -36,7 +36,7 @@ const Navbar = () => {
             onClick={scrollToOrder}
             className="bg-primary-foreground text-primary text-xs tracking-[0.15em] uppercase font-medium px-5 py-2 hover:bg-primary-foreground/90 transition-colors"
           >
-            Order Now
+            Start Your Order
           </button>
         </div>
       </div>

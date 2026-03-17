@@ -310,8 +310,11 @@ const ProductGallery = ({ product }: { product: Product }) => {
           onClick={() => document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" })}
           className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-rolex-green-light transition-colors duration-300 w-fit"
         >
-          Order Now
+          Select This Timepiece
         </button>
+        <p className="text-muted-foreground/60 text-[11px] mt-3 font-light tracking-wide">
+          Free next-day delivery · Secure checkout · No hidden fees
+        </p>
       </div>
     </div>
   );

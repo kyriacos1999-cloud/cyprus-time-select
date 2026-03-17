@@ -36,18 +36,23 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed font-light">
-            Premium automatic men's watches with free next-day delivery across Cyprus.
+            Premium automatic timepieces, delivered to your door — free, next day.
           </p>
 
-          <button
-            onClick={scrollToOrder}
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white text-sm tracking-[0.15em] uppercase font-medium px-10 py-4 hover:bg-white/20 transition-all duration-300"
-          >
-            Order Now
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+          <div className="flex flex-col items-center gap-3">
+            <button
+              onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white text-sm tracking-[0.15em] uppercase font-medium px-10 py-4 hover:bg-white/20 transition-all duration-300"
+            >
+              Explore the Collection
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <p className="text-white/40 text-[11px] tracking-wide font-light">
+              Free next-day delivery · 1-year warranty · Full set included
+            </p>
+          </div>
         </motion.div>
       </div>
 
