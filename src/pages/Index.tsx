@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import UrgencyBanner from "@/components/UrgencyBanner";
 import HeroSection from "@/components/HeroSection";
@@ -13,25 +14,31 @@ import SEOContentBlock from "@/components/SEOContentBlock";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
+import WatchAssemblyIntro from "@/components/WatchAssemblyIntro";
 
-const Index = () => (
-  <main>
-    <PromoPopup />
-    <UrgencyBanner />
-    <Navbar />
-    <HeroSection />
-    <TrustBar />
-    <CollectionGrid />
-    <ProductSection />
-    <WhyBuySection />
-    <SocialProof />
-    <OrderForm />
-    <FAQSection />
-    <SEOContentBlock />
-    <FinalCTA />
-    <Footer />
-    <StickyMobileCTA />
-  </main>
-);
+const Index = () => {
+  const [introComplete, setIntroComplete] = useState(false);
+
+  return (
+    <main>
+      <WatchAssemblyIntro onComplete={() => setIntroComplete(true)} />
+      {introComplete && <PromoPopup />}
+      <UrgencyBanner />
+      <Navbar />
+      <HeroSection />
+      <TrustBar />
+      <CollectionGrid />
+      <ProductSection />
+      <WhyBuySection />
+      <SocialProof />
+      <OrderForm />
+      <FAQSection />
+      <SEOContentBlock />
+      <FinalCTA />
+      <Footer />
+      <StickyMobileCTA />
+    </main>
+  );
+};
 
 export default Index;
