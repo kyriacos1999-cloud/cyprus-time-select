@@ -31,14 +31,19 @@ const FinalCTA = () => {
             <span className="italic">Wear Tomorrow</span>
           </h2>
           <p className="text-white/60 text-base md:text-lg max-w-md mx-auto mb-10 font-light">
-            Free next-day delivery anywhere in Cyprus.
+            Free next-day delivery anywhere in Cyprus. No risk, no hassle.
           </p>
-          <button
-            onClick={scrollToOrder}
-            className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-12 py-4 hover:bg-rolex-green-light transition-colors duration-300"
-          >
-            Complete My Order
-          </button>
+          <div className="flex flex-col items-center gap-3">
+            <button
+              onClick={scrollToOrder}
+              className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-12 py-4 hover:bg-rolex-green-light transition-colors duration-300"
+            >
+              Choose Your Watch
+            </button>
+            <p className="text-white/40 text-[11px] tracking-wide font-light">
+              Secure payment · Cash on delivery available
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
