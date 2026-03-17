@@ -404,12 +404,20 @@ const WatchAssemblyIntro = ({ onComplete }: { onComplete: () => void }) => {
                 setTimeout(() => setPhase("done"), 1000);
               }}
             >
+              <motion.img
+                src="/favicon.png"
+                alt="REPLIC8 Logo"
+                className="w-16 h-16 md:w-20 md:h-20 mb-4"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              />
               <motion.p
                 className="font-display text-3xl md:text-4xl tracking-[0.3em]"
                 style={{ color: gold }}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
                 REPLIC8
               </motion.p>
