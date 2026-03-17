@@ -19,6 +19,7 @@ const OrderForm = () => {
   const queryProduct = new URLSearchParams(location.search).get("product");
   const initialProduct = queryProduct ? parseInt(queryProduct, 10) : products[0].id;
   const [selectedProduct, setSelectedProduct] = useState(initialProduct);
+  const [highlightProduct, setHighlightProduct] = useState(false);
   const { soldOutIds } = useSoldOut();
 
   useEffect(() => {
