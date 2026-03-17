@@ -17,11 +17,17 @@ import StickyMobileCTA from "@/components/StickyMobileCTA";
 import WatchAssemblyIntro from "@/components/WatchAssemblyIntro";
 
 const Index = () => {
-  const [introComplete, setIntroComplete] = useState(false);
+  const alreadySeen = sessionStorage.getItem("intro_seen") === "1";
+  const [introComplete, setIntroComplete] = useState(alreadySeen);
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem("intro_seen", "1");
+    setIntroComplete(true);
+  };
 
   return (
     <main>
-      <WatchAssemblyIntro onComplete={() => setIntroComplete(true)} />
+      {!alreadySeen && <WatchAssemblyIntro onComplete={handleIntroComplete} />}
       {introComplete && <PromoPopup />}
       <UrgencyBanner />
       <Navbar />
