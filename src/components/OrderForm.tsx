@@ -33,6 +33,17 @@ const OrderForm = () => {
       }
     }
   }, [queryProduct]);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const id = (e as CustomEvent).detail;
+      if (products.find((p) => p.id === id)) {
+        setSelectedProduct(id);
+      }
+    };
+    window.addEventListener("select-product", handler);
+    return () => window.removeEventListener("select-product", handler);
+  }, []);
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("online");
   const [agreed, setAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
