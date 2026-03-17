@@ -8,7 +8,7 @@ import product1Profile from "@/assets/product1-profile.jpg";
 import product1Box from "@/assets/product1-box.jpg";
 import product1BoxOpen from "@/assets/product1-boxopen.jpg";
 import product1Card from "@/assets/product1-card.jpg";
-import product2Front from "@/assets/product2-front.jpg";
+import product2Front from "@/assets/product2-front.png";
 import product2Dial from "@/assets/product2-dial.jpg";
 import product2Crown from "@/assets/product2-crown.jpg";
 import product2Clasp from "@/assets/product2-clasp.jpg";
