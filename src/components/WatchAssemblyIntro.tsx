@@ -18,7 +18,7 @@ const WatchAssemblyIntro = ({ onComplete }: { onComplete: () => void }) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
           onAnimationComplete={() => {
-            if (phase === "done") onComplete();
+            if (isDone) onComplete();
           }}
         >
           <div className="relative w-72 h-72 md:w-96 md:h-96">
