@@ -200,7 +200,7 @@ const OrderForm = () => {
                         isSoldOut
                           ? "border-border bg-muted opacity-60 cursor-not-allowed"
                           : selectedProduct === p.id
-                            ? "border-primary bg-primary/5"
+                            ? `border-primary bg-primary/5 ${highlightProduct ? "ring-2 ring-primary/40 animate-[pulse_0.6s_ease-in-out_2]" : ""}`
                             : "border-border bg-background hover:border-primary/30"
                       }`}
                     >
