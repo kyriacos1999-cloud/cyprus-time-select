@@ -12,6 +12,7 @@ import FAQSection from "@/components/FAQSection";
 import SEOContentBlock from "@/components/SEOContentBlock";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
 
 const Index = () => (
   <main>
