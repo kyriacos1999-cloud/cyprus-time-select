@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const WatchAssemblyIntro = ({ onComplete }: { onComplete: () => void }) => {
   const [phase, setPhase] = useState<"assembling" | "logo" | "done">("assembling");
-  const isDone = phase === "done";
+
+  useEffect(() => {
+    if (phase === "done") onComplete();
+  }, [phase, onComplete]);
 
   const partColor = "hsl(var(--rolex-gold))";
   const metalColor = "hsl(0 0% 75%)";
@@ -12,14 +15,11 @@ const WatchAssemblyIntro = ({ onComplete }: { onComplete: () => void }) => {
 
   return (
     <AnimatePresence>
-      {!isDone && (
+      {phase !== "done" && (
         <motion.div
           className="fixed inset-0 z-[9999] bg-foreground flex items-center justify-center"
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          onAnimationComplete={() => {
-            if (isDone) onComplete();
-          }}
         >
           <div className="relative w-72 h-72 md:w-96 md:h-96">
             {/* ── CASE BACK ── */}
