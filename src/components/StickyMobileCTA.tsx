@@ -6,7 +6,12 @@ const StickyMobileCTA = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight * 0.85);
+      const orderSection = document.getElementById("order-section");
+      const pastHero = window.scrollY > window.innerHeight * 0.85;
+      const atOrderForm = orderSection
+        ? window.scrollY + window.innerHeight > orderSection.offsetTop + 80
+        : false;
+      setVisible(pastHero && !atOrderForm);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
