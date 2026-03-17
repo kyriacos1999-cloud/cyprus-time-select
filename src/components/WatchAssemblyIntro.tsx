@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const WatchAssemblyIntro = ({ onComplete }: { onComplete: () => void }) => {
   const [phase, setPhase] = useState<"assembling" | "logo" | "done">("assembling");
+  const isDone = phase === "done";
 
   const partColor = "hsl(var(--rolex-gold))";
   const metalColor = "hsl(0 0% 75%)";
