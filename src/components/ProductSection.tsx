@@ -1,4 +1,4 @@
-import product1Front from "@/assets/product1-front.jpg";
+import product1Front from "@/assets/product1-front.png";
 import product1Side from "@/assets/product1-side.jpg";
 import product1Back from "@/assets/product1-back.jpg";
 import product1Clasp from "@/assets/product1-clasp.jpg";
