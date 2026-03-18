@@ -99,7 +99,7 @@ const products: Product[] = [
     id: 3,
     name: "Rolex Datejust 36mm AAA Clone",
     description: "Datejust · Dark grey dial · Fluted bezel · 904L steel bracelet",
-    price: 270,
+    price: 300,
     image: product3Front,
     images: [
       product3Front,
