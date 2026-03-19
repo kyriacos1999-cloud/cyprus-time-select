@@ -42,7 +42,7 @@ const Index = () => {
       <SEOContentBlock />
       <FinalCTA />
       <Footer />
-      <StickyMobileCTA />
+      
     </main>
   );
 };
