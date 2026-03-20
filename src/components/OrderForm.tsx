@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Check, CheckCircle2, ChevronsUpDown, Crown, Search, Tag, X } from "lucide-react";
+import { Check, CheckCircle2, ChevronsUpDown, Crown, Search, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { akisBranches, branchCities } from "@/data/akisBranches";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
