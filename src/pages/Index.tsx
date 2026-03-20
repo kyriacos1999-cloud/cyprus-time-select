@@ -28,7 +28,7 @@ const Index = () => {
   return (
     <main>
       {!alreadySeen && <WatchAssemblyIntro onComplete={handleIntroComplete} />}
-      {introComplete && <PromoPopup />}
+      
       <UrgencyBanner />
       <Navbar />
       <HeroSection />

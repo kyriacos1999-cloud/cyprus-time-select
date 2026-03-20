@@ -379,12 +379,6 @@ const OrderForm = () => {
                     <span className="text-foreground">+€30</span>
                   </div>
                 )}
-                {discount > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-primary font-medium">WELCOME10 discount</span>
-                    <span className="text-primary font-medium">-€{discount}</span>
-                  </div>
-                )}
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Delivery</span>
                   <span className="text-primary font-medium">FREE</span>
