@@ -98,7 +98,7 @@ const OrderForm = () => {
             customerName: form.name,
             productName: product.name,
             origin: window.location.origin,
-            couponId: appliedPromo === "WELCOME10" ? "Kpc0LacG" : undefined,
+            
           },
         });
         if (error) throw error;
