@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Check, CheckCircle2, ChevronsUpDown, Crown, Search, Tag, X } from "lucide-react";
+import { Check, CheckCircle2, ChevronsUpDown, Crown, Search, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { akisBranches, branchCities } from "@/data/akisBranches";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -53,9 +53,6 @@ const OrderForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [courierOpen, setCourierOpen] = useState(false);
-  const [promoCode, setPromoCode] = useState("");
-  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
-  const [promoError, setPromoError] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -67,24 +64,8 @@ const OrderForm = () => {
 
   const product = products.find((p) => p.id === selectedProduct)!;
   const surcharge = paymentMethod === "cod" ? 30 : 0;
-  const discount = appliedPromo === "WELCOME10" ? Math.round(product.price * 0.1) : 0;
-  const total = product.price + surcharge - discount;
+  const total = product.price + surcharge;
 
-  const applyPromo = () => {
-    setPromoError("");
-    if (promoCode.trim().toUpperCase() === "WELCOME10") {
-      setAppliedPromo("WELCOME10");
-      setPromoCode("");
-    } else {
-      setPromoError("Invalid promo code");
-    }
-  };
-
-  const removePromo = () => {
-    setAppliedPromo(null);
-    setPromoCode("");
-    setPromoError("");
-  };
 
   const validate = () => {
     const errs: Record<string, string> = {};
@@ -117,7 +98,7 @@ const OrderForm = () => {
             customerName: form.name,
             productName: product.name,
             origin: window.location.origin,
-            couponId: appliedPromo === "WELCOME10" ? "Kpc0LacG" : undefined,
+            
           },
         });
         if (error) throw error;
@@ -356,42 +337,6 @@ const OrderForm = () => {
               </div>
             </div>
 
-            {/* Promo Code */}
-            <div>
-              <Label className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-medium">
-                Promo Code
-              </Label>
-              {appliedPromo ? (
-                <div className="flex items-center gap-2 bg-primary/5 border border-primary/30 px-4 py-3">
-                  <Tag className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-foreground font-medium flex-1">{appliedPromo}</span>
-                  <span className="text-xs text-primary font-medium">-10%</span>
-                  <button type="button" onClick={removePromo} className="text-muted-foreground hover:text-foreground transition-colors">
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  <Input
-                    type="text"
-                    placeholder="Enter promo code"
-                    value={promoCode}
-                    onChange={(e) => { setPromoCode(e.target.value); setPromoError(""); }}
-                    onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), applyPromo())}
-                    className="rounded-none bg-background border-border focus:border-primary focus:ring-primary/20 text-foreground placeholder:text-muted-foreground/40 h-12 uppercase tracking-wider"
-                  />
-                  <Button
-                    type="button"
-                    onClick={applyPromo}
-                    variant="outline"
-                    className="rounded-none border-border h-12 px-5 text-xs tracking-wider uppercase hover:border-primary hover:text-primary"
-                  >
-                    Apply
-                  </Button>
-                </div>
-              )}
-              {promoError && <p className="text-destructive text-xs mt-1.5 font-light">{promoError}</p>}
-            </div>
             {/* Terms */}
             <div className="flex items-start gap-3 pt-2">
               <Checkbox
@@ -432,12 +377,6 @@ const OrderForm = () => {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">COD surcharge</span>
                     <span className="text-foreground">+€30</span>
-                  </div>
-                )}
-                {discount > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-primary font-medium">WELCOME10 discount</span>
-                    <span className="text-primary font-medium">-€{discount}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
