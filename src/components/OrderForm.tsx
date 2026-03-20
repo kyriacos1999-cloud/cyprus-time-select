@@ -53,9 +53,6 @@ const OrderForm = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [courierOpen, setCourierOpen] = useState(false);
-  const [promoCode, setPromoCode] = useState("");
-  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
-  const [promoError, setPromoError] = useState("");
 
   const [form, setForm] = useState({
     name: "",
