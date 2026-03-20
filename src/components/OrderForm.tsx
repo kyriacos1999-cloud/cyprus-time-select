@@ -64,8 +64,7 @@ const OrderForm = () => {
 
   const product = products.find((p) => p.id === selectedProduct)!;
   const surcharge = paymentMethod === "cod" ? 30 : 0;
-  const discount = appliedPromo === "WELCOME10" ? Math.round(product.price * 0.1) : 0;
-  const total = product.price + surcharge - discount;
+  const total = product.price + surcharge;
 
   const applyPromo = () => {
     setPromoError("");
