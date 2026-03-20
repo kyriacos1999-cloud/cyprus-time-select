@@ -337,42 +337,6 @@ const OrderForm = () => {
               </div>
             </div>
 
-            {/* Promo Code */}
-            <div>
-              <Label className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-medium">
-                Promo Code
-              </Label>
-              {appliedPromo ? (
-                <div className="flex items-center gap-2 bg-primary/5 border border-primary/30 px-4 py-3">
-                  <Tag className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-foreground font-medium flex-1">{appliedPromo}</span>
-                  <span className="text-xs text-primary font-medium">-10%</span>
-                  <button type="button" onClick={removePromo} className="text-muted-foreground hover:text-foreground transition-colors">
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  <Input
-                    type="text"
-                    placeholder="Enter promo code"
-                    value={promoCode}
-                    onChange={(e) => { setPromoCode(e.target.value); setPromoError(""); }}
-                    onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), applyPromo())}
-                    className="rounded-none bg-background border-border focus:border-primary focus:ring-primary/20 text-foreground placeholder:text-muted-foreground/40 h-12 uppercase tracking-wider"
-                  />
-                  <Button
-                    type="button"
-                    onClick={applyPromo}
-                    variant="outline"
-                    className="rounded-none border-border h-12 px-5 text-xs tracking-wider uppercase hover:border-primary hover:text-primary"
-                  >
-                    Apply
-                  </Button>
-                </div>
-              )}
-              {promoError && <p className="text-destructive text-xs mt-1.5 font-light">{promoError}</p>}
-            </div>
             {/* Terms */}
             <div className="flex items-start gap-3 pt-2">
               <Checkbox
