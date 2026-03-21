@@ -64,8 +64,10 @@ const OrderForm = () => {
   });
 
   const product = products.find((p) => p.id === selectedProduct)!;
+  const boxDiscount = withBox ? 0 : 80;
+  const basePrice = product.price - boxDiscount;
   const surcharge = paymentMethod === "cod" ? 30 : 0;
-  const total = product.price + surcharge;
+  const total = basePrice + surcharge;
 
 
   const validate = () => {
