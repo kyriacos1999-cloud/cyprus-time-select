@@ -43,6 +43,7 @@ const Index = () => {
       <SEOContentBlock />
       <FinalCTA />
       <Footer />
+      <RecentPurchaseToast />
       
     </main>
   );
