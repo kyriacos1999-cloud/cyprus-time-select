@@ -92,8 +92,8 @@ export const productSEOData: Record<number, ProductSEO> = {
   },
   6: {
     slug: "daytona-black-chronograph",
-    seoTitle: "Daytona Black Chronograph | Premium Men's Watch | Cyprus",
-    metaDescription: "Premium Daytona-style chronograph with black dial, tachymeter bezel, and automatic movement. Free next-day delivery in Cyprus.",
+    seoTitle: "Buy Daytona Black Chronograph Watch Cyprus | Premium | Replic8",
+    metaDescription: "Buy the Daytona Black chronograph in Cyprus from €270. Automatic movement, tachymeter bezel, 904L steel. Free next-day delivery across Cyprus.",
     longDescription: "The Daytona chronograph is the pinnacle of racing-inspired watchmaking, and this premium recreation captures every detail of its legendary design. The black dial features three sub-dials for chronograph functionality, while the tachymeter bezel allows speed calculations — a nod to the watch's motorsport heritage. Built with 904L stainless steel and powered by a high-precision automatic movement, this timepiece is engineered for both beauty and function. The push-pull chronograph pushers operate with satisfying precision, making this more than just a fashion statement. Delivered free next day to Paphos, Larnaca, Limassol, and all across Cyprus.",
     features: [
       "Automatic chronograph movement",
