@@ -59,6 +59,39 @@ export type Database = {
         }
         Relationships: []
       }
+      preorder_requests: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string | null
+          photo_url: string | null
+          status: string
+          watch_description: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone?: string | null
+          photo_url?: string | null
+          status?: string
+          watch_description: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string | null
+          photo_url?: string | null
+          status?: string
+          watch_description?: string
+        }
+        Relationships: []
+      }
       product_inventory: {
         Row: {
           id: number
