@@ -18,8 +18,10 @@ import {
   ChevronRight,
   RefreshCw,
   Loader2,
+  Lock,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 type WeeklyReport = {
   id: string;
