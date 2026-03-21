@@ -401,6 +401,7 @@ const OrderForm = () => {
                 <div>
                   <p className="font-display text-base text-foreground tracking-wide">{product.name}</p>
                   <p className="text-[11px] text-muted-foreground font-light mt-0.5">{product.description}</p>
+                  <p className="text-[11px] text-primary font-medium mt-1">{withBox ? "Full Set — Box, papers & card" : "Watch Only — No box"}</p>
                 </div>
               </div>
 
