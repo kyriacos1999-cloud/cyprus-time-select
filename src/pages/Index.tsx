@@ -40,10 +40,12 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <TrustBar />
+      <ValuePropsStrip />
       <CollectionGrid />
+      <SocialProof />
+      <MidPageCTA />
       <ProductSection />
       <WhyBuySection />
-      <SocialProof />
       <OrderForm />
       <FAQSection />
       <PreorderSection />
