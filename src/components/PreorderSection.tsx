@@ -173,7 +173,7 @@ const PreorderSection = () => {
           {/* Phone */}
           <div>
             <Label className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-medium">
-              Phone <span className="text-muted-foreground/50">(optional)</span>
+              Phone
             </Label>
             <Input
               value={form.phone}
