@@ -113,6 +113,48 @@ export type Database = {
         }
         Relationships: []
       }
+      visitor_events: {
+        Row: {
+          created_at: string
+          device_type: string | null
+          event_type: string
+          id: string
+          metadata: Json | null
+          page: string | null
+          product_id: number | null
+          referrer: string | null
+          scroll_depth: number | null
+          session_id: string
+          time_on_page: number | null
+        }
+        Insert: {
+          created_at?: string
+          device_type?: string | null
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          page?: string | null
+          product_id?: number | null
+          referrer?: string | null
+          scroll_depth?: number | null
+          session_id: string
+          time_on_page?: number | null
+        }
+        Update: {
+          created_at?: string
+          device_type?: string | null
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          page?: string | null
+          product_id?: number | null
+          referrer?: string | null
+          scroll_depth?: number | null
+          session_id?: string
+          time_on_page?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
