@@ -19,6 +19,7 @@ const OrderForm = () => {
   const queryProduct = new URLSearchParams(location.search).get("product");
   const initialProduct = queryProduct ? parseInt(queryProduct, 10) : products[0].id;
   const [selectedProduct, setSelectedProduct] = useState(initialProduct);
+  const [withBox, setWithBox] = useState(true);
   const [highlightProduct, setHighlightProduct] = useState(false);
   const { soldOutIds } = useSoldOut();
 
@@ -63,8 +64,10 @@ const OrderForm = () => {
   });
 
   const product = products.find((p) => p.id === selectedProduct)!;
+  const boxDiscount = withBox ? 0 : 80;
+  const basePrice = product.price - boxDiscount;
   const surcharge = paymentMethod === "cod" ? 30 : 0;
-  const total = product.price + surcharge;
+  const total = basePrice + surcharge;
 
 
   const validate = () => {
@@ -201,7 +204,40 @@ const OrderForm = () => {
               </div>
             </div>
 
-            {/* Fields */}
+            {/* Box option */}
+            <div>
+              <Label className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3 block font-medium">
+                Package Option
+              </Label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setWithBox(true)}
+                  className={`p-4 border text-center transition-all duration-300 ${
+                    withBox
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-background hover:border-primary/30"
+                  }`}
+                >
+                  <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Full Set</span>
+                  <span className="text-xs text-muted-foreground font-light">Box, papers & card</span>
+                  <span className="block text-lg font-display text-foreground mt-2">€{product.price}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setWithBox(false)}
+                  className={`p-4 border text-center transition-all duration-300 ${
+                    !withBox
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-background hover:border-primary/30"
+                  }`}
+                >
+                  <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Watch Only</span>
+                  <span className="text-xs text-muted-foreground font-light">No box or papers</span>
+                  <span className="block text-lg font-display text-foreground mt-2">€{product.price - 80}</span>
+                </button>
+              </div>
+            </div>
             {[
               { key: "name", label: "Full Name", type: "text", placeholder: "Your full name" },
               { key: "email", label: "Email Address", type: "email", placeholder: "you@example.com" },
@@ -319,7 +355,7 @@ const OrderForm = () => {
                     </span>
                   )}
                   <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Online Payment</span>
-                  <span className="text-2xl font-display text-foreground">€{product.price}</span>
+                  <span className="text-2xl font-display text-foreground">€{basePrice}</span>
                 </button>
                 <button
                   type="button"
@@ -331,7 +367,7 @@ const OrderForm = () => {
                   }`}
                 >
                   <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Cash on Delivery</span>
-                  <span className="text-2xl font-display text-foreground">€{product.price + 30}</span>
+                  <span className="text-2xl font-display text-foreground">€{basePrice + 30}</span>
                   <span className="block text-[10px] text-muted-foreground mt-1 font-light">+€30 surcharge</span>
                 </button>
               </div>
@@ -365,13 +401,14 @@ const OrderForm = () => {
                 <div>
                   <p className="font-display text-base text-foreground tracking-wide">{product.name}</p>
                   <p className="text-[11px] text-muted-foreground font-light mt-0.5">{product.description}</p>
+                  <p className="text-[11px] text-primary font-medium mt-1">{withBox ? "Full Set — Box, papers & card" : "Watch Only — No box"}</p>
                 </div>
               </div>
 
               <div className="space-y-3 text-sm font-light">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Timepiece</span>
-                  <span className="text-foreground">€{product.price}</span>
+                  <span className="text-muted-foreground">Timepiece {withBox ? "(Full Set)" : "(Watch Only)"}</span>
+                  <span className="text-foreground">€{basePrice}</span>
                 </div>
                 {paymentMethod === "cod" && (
                   <div className="flex justify-between">
