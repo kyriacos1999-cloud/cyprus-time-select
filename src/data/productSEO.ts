@@ -60,8 +60,8 @@ export const productSEOData: Record<number, ProductSEO> = {
   },
   4: {
     slug: "submariner-blue-gold",
-    seoTitle: "Submariner Blue & Gold Two-Tone | Premium Watch | Cyprus",
-    metaDescription: "Two-tone blue and gold Submariner-style watch with automatic movement. Premium stainless steel and gold finish. Free delivery Cyprus.",
+    seoTitle: "Buy Submariner Blue Gold Two-Tone Watch Cyprus | Replic8",
+    metaDescription: "Buy the stunning two-tone blue and gold Submariner in Cyprus. Automatic movement, premium finish. Free next-day delivery to all cities.",
     longDescription: "This stunning two-tone timepiece combines the sporty functionality of a dive watch with the luxurious appeal of gold accenting. The deep blue dial and matching blue bezel create a rich, oceanic aesthetic, while the two-tone steel and gold bracelet adds an unmistakable sense of prestige. Every detail — from the luminous hour markers to the precision-machined crown — has been carefully crafted to match the original design. Powered by a Seiko NH35 automatic movement and built to withstand daily wear, this watch delivers luxury style at a fraction of the price. Available with free next-day delivery to Larnaca, Paphos, Nicosia, and all Cyprus cities.",
     features: [
       "Seiko NH35 automatic movement",
