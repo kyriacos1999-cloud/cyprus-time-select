@@ -230,6 +230,110 @@ ${recommendations.map((r, i) => `${i + 1}. ${r}`).join("\n")}`;
 
     if (insertError) throw insertError;
 
+    // Send email report via queue
+    const emailHtml = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+<div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e0e0e0;">
+  <div style="background:#006039;padding:28px 32px;">
+    <h1 style="margin:0;color:#ffffff;font-size:22px;letter-spacing:1px;">Replic8 Weekly Report</h1>
+    <p style="margin:6px 0 0;color:rgba(255,255,255,0.7);font-size:13px;">
+      ${weekStart.toLocaleDateString("en-GB",{day:"numeric",month:"short"})} – ${weekEnd.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}
+    </p>
+  </div>
+
+  <div style="padding:28px 32px;">
+    <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+      <tr>
+        <td style="padding:12px;text-align:center;border:1px solid #eee;">
+          <div style="font-size:28px;font-weight:bold;color:#1a1a1a;">${uniqueSessions}</div>
+          <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Visitors</div>
+        </td>
+        <td style="padding:12px;text-align:center;border:1px solid #eee;">
+          <div style="font-size:28px;font-weight:bold;color:#1a1a1a;">${productViewCount}</div>
+          <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Product Views</div>
+        </td>
+        <td style="padding:12px;text-align:center;border:1px solid #eee;">
+          <div style="font-size:28px;font-weight:bold;color:#1a1a1a;">${checkoutStarts}</div>
+          <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Checkouts</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:12px;text-align:center;border:1px solid #eee;">
+          <div style="font-size:28px;font-weight:bold;color:#006039;">${conversionFunnel.conversion_rate}</div>
+          <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Conversion</div>
+        </td>
+        <td style="padding:12px;text-align:center;border:1px solid #eee;">
+          <div style="font-size:28px;font-weight:bold;color:#1a1a1a;">${avgTimeOnPage}s</div>
+          <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Avg Time</div>
+        </td>
+        <td style="padding:12px;text-align:center;border:1px solid #eee;">
+          <div style="font-size:28px;font-weight:bold;color:#1a1a1a;">${avgScrollDepth}%</div>
+          <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;">Scroll Depth</div>
+        </td>
+      </tr>
+    </table>
+
+    <h2 style="font-size:15px;color:#1a1a1a;margin:24px 0 12px;border-bottom:2px solid #006039;padding-bottom:6px;">
+      🔍 Top Reasons Users Don't Convert
+    </h2>
+    ${topExitReasons.length > 0
+      ? `<ol style="margin:0;padding-left:20px;color:#333;font-size:14px;line-height:1.8;">
+          ${topExitReasons.map((r: any) => `<li>${r.reason} <span style="color:#888;">(${r.count})</span></li>`).join("")}
+        </ol>`
+      : `<p style="color:#888;font-size:14px;">No survey data yet — more responses needed</p>`}
+
+    <h2 style="font-size:15px;color:#1a1a1a;margin:24px 0 12px;border-bottom:2px solid #006039;padding-bottom:6px;">
+      🎯 High-Intent Behaviors
+    </h2>
+    ${highIntentBehaviors.length > 0
+      ? `<ol style="margin:0;padding-left:20px;color:#333;font-size:14px;line-height:1.8;">
+          ${highIntentBehaviors.map((b: any) => `<li>${b.behavior} <span style="color:#888;">(${b.count} users)</span></li>`).join("")}
+        </ol>`
+      : `<p style="color:#888;font-size:14px;">No high-intent signals yet</p>`}
+
+    <h2 style="font-size:15px;color:#1a1a1a;margin:24px 0 12px;border-bottom:2px solid #006039;padding-bottom:6px;">
+      💡 Recommendations
+    </h2>
+    <ol style="margin:0;padding-left:20px;color:#333;font-size:14px;line-height:1.8;">
+      ${recommendations.map((r: string) => `<li>${r}</li>`).join("")}
+    </ol>
+
+    <div style="margin-top:28px;text-align:center;">
+      <a href="https://replic8.shop/admin" style="display:inline-block;background:#006039;color:#ffffff;text-decoration:none;padding:12px 28px;font-size:13px;letter-spacing:1px;text-transform:uppercase;">
+        View Full Dashboard
+      </a>
+    </div>
+  </div>
+
+  <div style="background:#f8f8f8;padding:16px 32px;border-top:1px solid #eee;">
+    <p style="margin:0;color:#999;font-size:11px;text-align:center;">
+      Replic8 — Weekly Analytics Report · replic8.shop
+    </p>
+  </div>
+</div>
+</body>
+</html>`;
+
+    try {
+      await supabase.rpc("enqueue_email", {
+        queue_name: "transactional_emails",
+        message_body: JSON.stringify({
+          to: "kyriacos1999@gmail.com",
+          subject: `Replic8 Weekly Report — ${weekStart.toLocaleDateString("en-GB", { day: "numeric", month: "short" })} to ${weekEnd.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`,
+          html: emailHtml,
+          from_name: "Replic8 Analytics",
+          message_id: `weekly-report-${weekStart.toISOString().split("T")[0]}`,
+          template_name: "weekly_report",
+        }),
+      });
+    } catch (emailErr: any) {
+      console.error("Email enqueue failed:", emailErr);
+      // Don't throw — report is already saved, email is optional
+    }
+
     return new Response(
       JSON.stringify({ success: true, summary: rawSummary }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
