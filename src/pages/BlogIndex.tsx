@@ -1,19 +1,34 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
-import { blogPosts } from "@/data/blogPosts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 import Navbar from "@/components/Navbar";
 import UrgencyBanner from "@/components/UrgencyBanner";
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
 
 const BlogIndex = () => {
+  const { posts, loading } = useBlogPosts();
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Watch Blog | Guides, Style Tips & News | Replic8 Cyprus";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", "Expert watch guides, style tips, and buying advice for men in Cyprus. Learn about automatic movements, dive watches, gifting, and fashion.");
   }, []);
+
+  if (loading) {
+    return (
+      <main>
+        <UrgencyBanner />
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center pt-24">
+          <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+        <Footer />
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -41,37 +56,39 @@ const BlogIndex = () => {
           </motion.div>
 
           {/* Featured Post */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-16"
-          >
-            <Link to={`/blog/${blogPosts[0].slug}`} className="group block">
-              <article className="border border-border p-8 md:p-12 hover:border-primary/30 transition-colors duration-300">
-                <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground font-light">
-                  <span className="bg-primary/10 text-primary px-3 py-1 font-medium tracking-wide uppercase text-[10px]">
-                    {blogPosts[0].category}
+          {posts.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-16"
+            >
+              <Link to={`/blog/${posts[0].slug}`} className="group block">
+                <article className="border border-border p-8 md:p-12 hover:border-primary/30 transition-colors duration-300">
+                  <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground font-light">
+                    <span className="bg-primary/10 text-primary px-3 py-1 font-medium tracking-wide uppercase text-[10px]">
+                      {posts[0].category}
+                    </span>
+                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {posts[0].date}</span>
+                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {posts[0].readTime}</span>
+                  </div>
+                  <h2 className="text-2xl md:text-4xl font-display text-foreground mb-4 tracking-tight group-hover:text-primary transition-colors">
+                    {posts[0].title}
+                  </h2>
+                  <p className="text-muted-foreground text-sm leading-relaxed font-light max-w-2xl mb-6">
+                    {posts[0].excerpt}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-primary text-xs tracking-[0.15em] uppercase font-medium group-hover:gap-3 transition-all">
+                    Read Article <ArrowRight className="w-4 h-4" />
                   </span>
-                  <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {blogPosts[0].date}</span>
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {blogPosts[0].readTime}</span>
-                </div>
-                <h2 className="text-2xl md:text-4xl font-display text-foreground mb-4 tracking-tight group-hover:text-primary transition-colors">
-                  {blogPosts[0].title}
-                </h2>
-                <p className="text-muted-foreground text-sm leading-relaxed font-light max-w-2xl mb-6">
-                  {blogPosts[0].excerpt}
-                </p>
-                <span className="inline-flex items-center gap-2 text-primary text-xs tracking-[0.15em] uppercase font-medium group-hover:gap-3 transition-all">
-                  Read Article <ArrowRight className="w-4 h-4" />
-                </span>
-              </article>
-            </Link>
-          </motion.div>
+                </article>
+              </Link>
+            </motion.div>
+          )}
 
           {/* Post Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {blogPosts.slice(1).map((post, i) => (
+            {posts.slice(1).map((post, i) => (
               <motion.div
                 key={post.slug}
                 initial={{ opacity: 0, y: 20 }}
