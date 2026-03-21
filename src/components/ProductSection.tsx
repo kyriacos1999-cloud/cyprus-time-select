@@ -44,6 +44,8 @@ import product6Box from "@/assets/product6-box.jpg";
 import product6Fullset from "@/assets/product6-fullset.jpg";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import LiveViewerCount from "@/components/LiveViewerCount";
+import LowStockBadge from "@/components/LowStockBadge";
 
 export type Product = {
   id: number;
