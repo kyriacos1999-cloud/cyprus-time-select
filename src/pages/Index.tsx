@@ -2,9 +2,10 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import UrgencyBanner from "@/components/UrgencyBanner";
 import HeroSection from "@/components/HeroSection";
-
+import ValuePropsStrip from "@/components/ValuePropsStrip";
 import TrustBar from "@/components/TrustBar";
 import CollectionGrid from "@/components/CollectionGrid";
+import MidPageCTA from "@/components/MidPageCTA";
 import ProductSection from "@/components/ProductSection";
 import WhyBuySection from "@/components/WhyBuySection";
 import SocialProof from "@/components/SocialProof";
@@ -19,9 +20,7 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import ReturningVisitorBanner from "@/components/ReturningVisitorBanner";
 import CartAbandonmentReminder from "@/components/CartAbandonmentReminder";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
-
 import WatchAssemblyIntro from "@/components/WatchAssemblyIntro";
-
 const Index = () => {
   const alreadySeen = sessionStorage.getItem("intro_seen") === "1";
   const [introComplete, setIntroComplete] = useState(alreadySeen);
@@ -41,10 +40,12 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <TrustBar />
+      <ValuePropsStrip />
       <CollectionGrid />
+      <SocialProof />
+      <MidPageCTA />
       <ProductSection />
       <WhyBuySection />
-      <SocialProof />
       <OrderForm />
       <FAQSection />
       <PreorderSection />
