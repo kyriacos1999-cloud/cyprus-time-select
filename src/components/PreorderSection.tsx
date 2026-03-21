@@ -44,6 +44,7 @@ const PreorderSection = () => {
     const errs: Record<string, string> = {};
     if (!form.name.trim()) errs.name = "Name is required";
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Valid email is required";
+    if (!form.phone.trim() || !/^[0-9+\-\s]{7,15}$/.test(form.phone.trim())) errs.phone = "Valid phone number is required";
     if (!form.description.trim()) errs.description = "Please describe the watch you're looking for";
     return errs;
   };
@@ -172,7 +173,7 @@ const PreorderSection = () => {
           {/* Phone */}
           <div>
             <Label className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2 block font-medium">
-              Phone <span className="text-muted-foreground/50">(optional)</span>
+              Phone
             </Label>
             <Input
               value={form.phone}
@@ -180,6 +181,7 @@ const PreorderSection = () => {
               placeholder="+357 99 123 456"
               className="rounded-none border-border bg-background focus:border-primary h-12 text-sm"
             />
+            {errors.phone && <p className="text-destructive text-xs mt-1.5 font-light">{errors.phone}</p>}
           </div>
 
           {/* Watch Description */}
