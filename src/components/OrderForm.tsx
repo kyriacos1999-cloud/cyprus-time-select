@@ -355,7 +355,7 @@ const OrderForm = () => {
                     </span>
                   )}
                   <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Online Payment</span>
-                  <span className="text-2xl font-display text-foreground">€{product.price}</span>
+                  <span className="text-2xl font-display text-foreground">€{basePrice}</span>
                 </button>
                 <button
                   type="button"
@@ -367,7 +367,7 @@ const OrderForm = () => {
                   }`}
                 >
                   <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Cash on Delivery</span>
-                  <span className="text-2xl font-display text-foreground">€{product.price + 30}</span>
+                  <span className="text-2xl font-display text-foreground">€{basePrice + 30}</span>
                   <span className="block text-[10px] text-muted-foreground mt-1 font-light">+€30 surcharge</span>
                 </button>
               </div>
