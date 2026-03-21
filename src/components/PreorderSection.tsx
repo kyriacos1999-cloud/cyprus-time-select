@@ -44,6 +44,7 @@ const PreorderSection = () => {
     const errs: Record<string, string> = {};
     if (!form.name.trim()) errs.name = "Name is required";
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Valid email is required";
+    if (!form.phone.trim() || !/^[0-9+\-\s]{7,15}$/.test(form.phone.trim())) errs.phone = "Valid phone number is required";
     if (!form.description.trim()) errs.description = "Please describe the watch you're looking for";
     return errs;
   };
