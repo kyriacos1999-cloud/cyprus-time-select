@@ -272,14 +272,20 @@ const ProductGallery = ({ product }: { product: Product }) => {
           {product.description}
         </p>
 
-        <div className="flex items-end gap-6 mb-8">
+        <div className="flex items-end gap-6 mb-4">
           <div>
-            <p className="text-[10px] text-primary tracking-[0.2em] uppercase mb-1 font-medium">Online Price</p>
+            <p className="text-[10px] text-primary tracking-[0.2em] uppercase mb-1 font-medium">Full Set</p>
             <span className="text-4xl font-display text-foreground">€{product.price}</span>
           </div>
           <div>
-            <p className="text-[10px] text-muted-foreground tracking-[0.2em] uppercase mb-1">Cash on Delivery</p>
-            <span className="text-lg text-muted-foreground">€{product.price + 30}</span>
+            <p className="text-[10px] text-muted-foreground tracking-[0.2em] uppercase mb-1">Watch Only</p>
+            <span className="text-lg text-muted-foreground">€{product.price - 80}</span>
+          </div>
+        </div>
+        <div className="flex items-end gap-6 mb-8">
+          <div>
+            <p className="text-[10px] text-muted-foreground/60 tracking-[0.2em] uppercase mb-1">Cash on Delivery</p>
+            <span className="text-sm text-muted-foreground">from €{product.price - 80 + 30}</span>
           </div>
         </div>
 
