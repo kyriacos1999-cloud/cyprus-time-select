@@ -181,7 +181,7 @@ const ProductPage = () => {
 
     return () => {
       // Reset to homepage defaults on unmount
-      document.title = "Luxury Watches Cyprus | Premium Men's Watches | Fast Delivery";
+      document.title = "Buy Luxury Watches Cyprus | Premium Men's Watches | Free Next-Day Delivery";
     };
   }, [result]);
 
