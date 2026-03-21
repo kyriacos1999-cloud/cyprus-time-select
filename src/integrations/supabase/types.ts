@@ -155,6 +155,69 @@ export type Database = {
         }
         Relationships: []
       }
+      weekly_reports: {
+        Row: {
+          avg_scroll_depth: number | null
+          avg_time_on_page: number | null
+          checkout_starts: number | null
+          conversion_funnel: Json | null
+          created_at: string
+          device_breakdown: Json | null
+          high_intent_behaviors: Json | null
+          id: string
+          product_interest: Json | null
+          product_views: number | null
+          raw_summary: string | null
+          recommendations: Json | null
+          top_exit_reasons: Json | null
+          total_visitors: number | null
+          traffic_sources: Json | null
+          unique_sessions: number | null
+          week_end: string
+          week_start: string
+        }
+        Insert: {
+          avg_scroll_depth?: number | null
+          avg_time_on_page?: number | null
+          checkout_starts?: number | null
+          conversion_funnel?: Json | null
+          created_at?: string
+          device_breakdown?: Json | null
+          high_intent_behaviors?: Json | null
+          id?: string
+          product_interest?: Json | null
+          product_views?: number | null
+          raw_summary?: string | null
+          recommendations?: Json | null
+          top_exit_reasons?: Json | null
+          total_visitors?: number | null
+          traffic_sources?: Json | null
+          unique_sessions?: number | null
+          week_end: string
+          week_start: string
+        }
+        Update: {
+          avg_scroll_depth?: number | null
+          avg_time_on_page?: number | null
+          checkout_starts?: number | null
+          conversion_funnel?: Json | null
+          created_at?: string
+          device_breakdown?: Json | null
+          high_intent_behaviors?: Json | null
+          id?: string
+          product_interest?: Json | null
+          product_views?: number | null
+          raw_summary?: string | null
+          recommendations?: Json | null
+          top_exit_reasons?: Json | null
+          total_visitors?: number | null
+          traffic_sources?: Json | null
+          unique_sessions?: number | null
+          week_end?: string
+          week_start?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
