@@ -181,6 +181,7 @@ const PreorderSection = () => {
               placeholder="+357 99 123 456"
               className="rounded-none border-border bg-background focus:border-primary h-12 text-sm"
             />
+            {errors.phone && <p className="text-destructive text-xs mt-1.5 font-light">{errors.phone}</p>}
           </div>
 
           {/* Watch Description */}
