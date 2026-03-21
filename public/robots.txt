@@ -18,3 +18,4 @@ Disallow: /admin
 Disallow: /payment-success
 
 Sitemap: https://replic8.shop/sitemap.xml
+Sitemap: https://ejhkqqsdkhebahrxjpeh.supabase.co/functions/v1/generate-sitemap
