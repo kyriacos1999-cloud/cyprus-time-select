@@ -363,6 +363,7 @@ const ProductSection = () => {
           <motion.div
             key={product.id}
             id={`product-${product.id}`}
+            data-product-id={product.id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
