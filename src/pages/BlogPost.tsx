@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ChevronRight, ArrowLeft } from "lucide-react";
-import { getBlogPostBySlug, blogPosts } from "@/data/blogPosts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 import { products } from "@/components/ProductSection";
 import { productSEOData } from "@/data/productSEO";
 import Navbar from "@/components/Navbar";
@@ -11,7 +11,8 @@ import Footer from "@/components/Footer";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getBlogPostBySlug(slug) : null;
+  const { posts, getBySlug, loading } = useBlogPosts();
+  const post = slug ? getBySlug(slug) : null;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,7 +50,6 @@ const BlogPost = () => {
     }
     canonical.setAttribute("href", pageUrl);
 
-    // Article schema
     const schema = document.createElement("script");
     schema.type = "application/ld+json";
     schema.id = "blog-schema";
@@ -71,6 +71,19 @@ const BlogPost = () => {
     };
   }, [post]);
 
+  if (loading) {
+    return (
+      <main>
+        <UrgencyBanner />
+        <Navbar />
+        <div className="min-h-screen flex items-center justify-center pt-24">
+          <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+        <Footer />
+      </main>
+    );
+  }
+
   if (!post) {
     return (
       <main>
@@ -88,7 +101,7 @@ const BlogPost = () => {
   }
 
   const relatedWatches = products.filter((p) => post.relatedProducts.includes(p.id));
-  const otherPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const otherPosts = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
     <main>
