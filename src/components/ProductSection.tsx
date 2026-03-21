@@ -329,6 +329,10 @@ const ProductGallery = ({ product }: { product: Product }) => {
         <p className="text-muted-foreground/60 text-[11px] mt-3 font-light tracking-wide">
           Free next-day delivery · Secure checkout · No hidden fees
         </p>
+        <div className="mt-4 flex flex-col gap-2">
+          <LiveViewerCount />
+          <LowStockBadge productId={product.id} />
+        </div>
       </div>
     </div>
   );
