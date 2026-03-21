@@ -407,8 +407,8 @@ const OrderForm = () => {
 
               <div className="space-y-3 text-sm font-light">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Timepiece</span>
-                  <span className="text-foreground">€{product.price}</span>
+                  <span className="text-muted-foreground">Timepiece {withBox ? "(Full Set)" : "(Watch Only)"}</span>
+                  <span className="text-foreground">€{basePrice}</span>
                 </div>
                 {paymentMethod === "cod" && (
                   <div className="flex justify-between">
