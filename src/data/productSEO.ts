@@ -12,8 +12,8 @@ export type ProductSEO = {
 export const productSEOData: Record<number, ProductSEO> = {
   1: {
     slug: "submariner-no-date-black",
-    seoTitle: "Submariner No Date Black | Premium Men's Watch | Cyprus",
-    metaDescription: "Premium Submariner-style automatic watch with black dial, stainless steel case, and Seiko NH35 movement. Free next-day delivery across Cyprus.",
+    seoTitle: "Buy Submariner No Date Black Watch Cyprus | Free Delivery | Replic8",
+    metaDescription: "Buy the Submariner No Date Black automatic watch in Cyprus from €220. Seiko NH35 movement, 904L steel, scratch-resistant glass. Free next-day delivery to Nicosia, Limassol & all cities.",
     longDescription: "This premium men's watch draws inspiration from one of the most iconic dive watch designs ever created. Featuring a clean black dial without a date window, this timepiece delivers a bold, symmetrical aesthetic that watch enthusiasts appreciate. The 904L-grade stainless steel construction ensures lasting durability, while the Seiko NH35 automatic movement provides reliable, battery-free timekeeping. The scratch-resistant sapphire-style glass protects the detailed dial, and the unidirectional rotating bezel adds both style and function. Whether you're in Nicosia, Limassol, or Larnaca, this watch ships with free next-day delivery and arrives in a premium presentation box with papers.",
     features: [
       "Seiko NH35 automatic movement",
