@@ -179,18 +179,6 @@ const AdminDashboard = () => {
   }
 
 
-  const generateNow = async () => {
-    setGenerating(true);
-    try {
-      await supabase.functions.invoke("generate-weekly-report");
-      await fetchReports();
-      setCurrentIndex(0);
-    } catch (err) {
-      console.error("Failed to generate report:", err);
-    }
-    setGenerating(false);
-  };
-
   const report = reports[currentIndex];
 
   if (loading) {
