@@ -28,8 +28,8 @@ export const productSEOData: Record<number, ProductSEO> = {
   },
   2: {
     slug: "submariner-hulk-green",
-    seoTitle: "Submariner Hulk Green | Premium Men's Watch | Cyprus",
-    metaDescription: "Premium green dial Submariner-style automatic watch with Seiko NH35 movement and 904L steel. Free next-day delivery in Cyprus.",
+    seoTitle: "Buy Submariner Hulk Green Watch Cyprus | AAA Clone | Replic8",
+    metaDescription: "Buy the iconic Submariner Hulk green dial watch in Cyprus from €220. Automatic Seiko NH35, 904L steel. Free next-day delivery across Cyprus.",
     longDescription: "Known among collectors as the 'Hulk', this striking green dial and green bezel combination is one of the most sought-after designs in modern watchmaking. Our premium recreation captures every detail of this legendary timepiece — from the sunburst green dial that shifts colour in different light, to the precisely engraved bezel insert. The robust 904L stainless steel bracelet and case ensure this watch feels substantial on the wrist, while the Seiko NH35 automatic movement delivers smooth sweeping seconds. Available for delivery across Cyprus — Nicosia, Limassol, Paphos, and beyond.",
     features: [
       "Seiko NH35 automatic movement",
