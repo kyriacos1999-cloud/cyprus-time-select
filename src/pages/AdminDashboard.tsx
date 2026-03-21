@@ -92,7 +92,7 @@ const DeviceIcon = ({ type }: { type: string }) => {
   return <Monitor className="w-4 h-4" />;
 };
 
-const ADMIN_PASSWORD_HASH = "replic8admin2025";
+const ADMIN_PASSWORD_HASH = "Antriana99";
 
 const AdminDashboard = () => {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem("admin_authed") === "1");
