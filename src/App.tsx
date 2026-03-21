@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GeoGuard from "./components/GeoGuard";
 import Index from "./pages/Index";
 import ProductPage from "./pages/ProductPage";
+import AdminDashboard from "./pages/AdminDashboard";
 import BlogIndex from "./pages/BlogIndex";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
