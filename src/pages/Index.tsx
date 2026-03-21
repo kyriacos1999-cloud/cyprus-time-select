@@ -41,6 +41,7 @@ const Index = () => {
       <SocialProof />
       <OrderForm />
       <FAQSection />
+      <PreorderSection />
       <SEOContentBlock />
       <FinalCTA />
       <Footer />
