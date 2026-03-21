@@ -18,8 +18,10 @@ import {
   ChevronRight,
   RefreshCw,
   Loader2,
+  Lock,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 type WeeklyReport = {
   id: string;
@@ -90,7 +92,12 @@ const DeviceIcon = ({ type }: { type: string }) => {
   return <Monitor className="w-4 h-4" />;
 };
 
+const ADMIN_PASSWORD_HASH = "replic8admin2025";
+
 const AdminDashboard = () => {
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem("admin_authed") === "1");
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState(false);
   const [reports, setReports] = useState<WeeklyReport[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -108,8 +115,8 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    fetchReports();
-  }, []);
+    if (authed) fetchReports();
+  }, [authed]);
 
   const generateNow = async () => {
     setGenerating(true);
@@ -122,6 +129,55 @@ const AdminDashboard = () => {
     }
     setGenerating(false);
   };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD_HASH) {
+      sessionStorage.setItem("admin_authed", "1");
+      setAuthed(true);
+      setAuthError(false);
+    } else {
+      setAuthError(true);
+    }
+  };
+
+  if (!authed) {
+    return (
+      <div className="min-h-screen bg-secondary flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-background border border-border p-10 max-w-sm w-full text-center"
+        >
+          <div className="w-14 h-14 bg-primary/10 flex items-center justify-center mx-auto mb-6">
+            <Lock className="w-7 h-7 text-primary" />
+          </div>
+          <h1 className="font-display text-2xl text-foreground mb-2 tracking-tight">Admin Access</h1>
+          <p className="text-muted-foreground text-sm font-light mb-6">Enter your password to continue</p>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setAuthError(false); }}
+              className="rounded-none bg-background border-border focus:border-primary focus:ring-primary/20 text-foreground h-12 text-center"
+              autoFocus
+            />
+            {authError && (
+              <p className="text-destructive text-xs">Incorrect password</p>
+            )}
+            <button
+              type="submit"
+              className="w-full bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium py-3.5 hover:bg-primary/90 transition-colors"
+            >
+              Enter Dashboard
+            </button>
+          </form>
+        </motion.div>
+      </div>
+    );
+  }
+
 
   const report = reports[currentIndex];
 
