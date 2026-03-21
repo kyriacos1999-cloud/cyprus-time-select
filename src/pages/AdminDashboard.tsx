@@ -103,6 +103,33 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
 
+  const fetchReports = async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from("weekly_reports")
+      .select("*")
+      .order("week_start", { ascending: false })
+      .limit(20);
+    setReports((data as any) || []);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (authed) fetchReports();
+  }, [authed]);
+
+  const generateNow = async () => {
+    setGenerating(true);
+    try {
+      await supabase.functions.invoke("generate-weekly-report");
+      await fetchReports();
+      setCurrentIndex(0);
+    } catch (err) {
+      console.error("Failed to generate report:", err);
+    }
+    setGenerating(false);
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === ADMIN_PASSWORD_HASH) {
@@ -151,20 +178,6 @@ const AdminDashboard = () => {
     );
   }
 
-  const fetchReports = async () => {
-    setLoading(true);
-    const { data } = await supabase
-      .from("weekly_reports")
-      .select("*")
-      .order("week_start", { ascending: false })
-      .limit(20);
-    setReports((data as any) || []);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchReports();
-  }, []);
 
   const generateNow = async () => {
     setGenerating(true);
