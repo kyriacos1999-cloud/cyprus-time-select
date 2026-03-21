@@ -204,7 +204,40 @@ const OrderForm = () => {
               </div>
             </div>
 
-            {/* Fields */}
+            {/* Box option */}
+            <div>
+              <Label className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3 block font-medium">
+                Package Option
+              </Label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setWithBox(true)}
+                  className={`p-4 border text-center transition-all duration-300 ${
+                    withBox
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-background hover:border-primary/30"
+                  }`}
+                >
+                  <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Full Set</span>
+                  <span className="text-xs text-muted-foreground font-light">Box, papers & card</span>
+                  <span className="block text-lg font-display text-foreground mt-2">€{product.price}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setWithBox(false)}
+                  className={`p-4 border text-center transition-all duration-300 ${
+                    !withBox
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-background hover:border-primary/30"
+                  }`}
+                >
+                  <span className="font-display text-sm text-foreground block mb-1 tracking-wide">Watch Only</span>
+                  <span className="text-xs text-muted-foreground font-light">No box or papers</span>
+                  <span className="block text-lg font-display text-foreground mt-2">€{product.price - 80}</span>
+                </button>
+              </div>
+            </div>
             {[
               { key: "name", label: "Full Name", type: "text", placeholder: "Your full name" },
               { key: "email", label: "Email Address", type: "email", placeholder: "you@example.com" },
