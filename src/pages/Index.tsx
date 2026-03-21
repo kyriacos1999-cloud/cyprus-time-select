@@ -12,6 +12,7 @@ import OrderForm from "@/components/OrderForm";
 import FAQSection from "@/components/FAQSection";
 import SEOContentBlock from "@/components/SEOContentBlock";
 import FinalCTA from "@/components/FinalCTA";
+import PreorderSection from "@/components/PreorderSection";
 import Footer from "@/components/Footer";
 import RecentPurchaseToast from "@/components/RecentPurchaseToast";
 
