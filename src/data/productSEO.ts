@@ -44,8 +44,8 @@ export const productSEOData: Record<number, ProductSEO> = {
   },
   3: {
     slug: "datejust-36mm-grey",
-    seoTitle: "Datejust 36mm Dark Grey | Premium Men's Watch | Cyprus",
-    metaDescription: "Elegant 36mm Datejust-style watch with dark grey dial, fluted bezel, and automatic movement. Free next-day delivery across Cyprus.",
+    seoTitle: "Buy Datejust 36mm Dark Grey Watch Cyprus | Dress Watch | Replic8",
+    metaDescription: "Buy the elegant Datejust 36mm with dark grey dial and fluted bezel in Cyprus. Automatic movement, 904L steel. Free next-day delivery.",
     longDescription: "The Datejust design is perhaps the most versatile and recognisable dress watch ever made. This 36mm recreation features a sophisticated dark grey dial paired with a beautifully crafted fluted bezel that catches light from every angle. The date window at 3 o'clock with cyclops magnification lens adds practical functionality to the elegant design. Built with 904L stainless steel and powered by a reliable Seiko NH35 automatic movement, this is a timepiece that transitions effortlessly from the office in Nicosia to dinner in Limassol.",
     features: [
       "Seiko NH35 automatic movement",
