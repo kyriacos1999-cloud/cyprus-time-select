@@ -49,7 +49,7 @@ const Index = () => {
       <ProductSection />
       <BundleOffer />
       <WhyBuySection />
-      <OrderForm />
+      
       <FAQSection />
       <PreorderSection />
       <SEOContentBlock />
