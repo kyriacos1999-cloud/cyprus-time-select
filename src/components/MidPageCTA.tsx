@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-const MidPageCTA = () => (
+const MidPageCTA = () => {
+  const navigate = useNavigate();
+  return (
   <section className="py-14 md:py-20 bg-primary">
     <div className="container mx-auto px-4 text-center">
       <motion.div
@@ -17,7 +20,7 @@ const MidPageCTA = () => (
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
-            onClick={() => document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => navigate("/checkout")}
             className="bg-background text-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-background/90 transition-colors duration-300"
           >
             Start Your Order
@@ -32,6 +35,7 @@ const MidPageCTA = () => (
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 export default MidPageCTA;

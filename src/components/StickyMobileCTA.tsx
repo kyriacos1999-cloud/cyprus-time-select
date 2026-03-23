@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const StickyMobileCTA = () => {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
@@ -35,7 +37,7 @@ const StickyMobileCTA = () => {
               View Collection
             </button>
             <button
-              onClick={() => document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => navigate("/checkout")}
               className="flex-1 border border-primary text-primary text-xs tracking-[0.15em] uppercase font-medium py-3.5 hover:bg-primary/5 transition-colors duration-300"
             >
               Start Your Order

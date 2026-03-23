@@ -43,6 +43,7 @@ import product6Clasp from "@/assets/product6-clasp.jpg";
 import product6Box from "@/assets/product6-box.jpg";
 import product6Fullset from "@/assets/product6-fullset.jpg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import LiveViewerCount from "@/components/LiveViewerCount";
 import LowStockBadge from "@/components/LowStockBadge";
@@ -174,6 +175,7 @@ const products: Product[] = [
 export { products };
 
 const ProductGallery = ({ product }: { product: Product }) => {
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -316,11 +318,7 @@ const ProductGallery = ({ product }: { product: Product }) => {
 
         <button
           onClick={() => {
-            const params = new URLSearchParams(window.location.search);
-            params.set("product", String(product.id));
-            window.history.replaceState({}, "", `?${params.toString()}`);
-            document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-            window.dispatchEvent(new CustomEvent("select-product", { detail: product.id }));
+            navigate(`/checkout?product=${product.id}`);
           }}
           className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-rolex-green-light transition-colors duration-300 w-fit"
         >
