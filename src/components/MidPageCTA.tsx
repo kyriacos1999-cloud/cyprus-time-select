@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const MidPageCTA = () => (
   <section className="py-14 md:py-20 bg-primary">
