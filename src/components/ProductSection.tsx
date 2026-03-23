@@ -318,11 +318,7 @@ const ProductGallery = ({ product }: { product: Product }) => {
 
         <button
           onClick={() => {
-            const params = new URLSearchParams(window.location.search);
-            params.set("product", String(product.id));
-            window.history.replaceState({}, "", `?${params.toString()}`);
-            document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-            window.dispatchEvent(new CustomEvent("select-product", { detail: product.id }));
+            navigate(`/checkout?product=${product.id}`);
           }}
           className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-rolex-green-light transition-colors duration-300 w-fit"
         >

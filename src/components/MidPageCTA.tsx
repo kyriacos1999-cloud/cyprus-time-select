@@ -35,6 +35,7 @@ const MidPageCTA = () => {
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 export default MidPageCTA;
