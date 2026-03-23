@@ -134,6 +134,8 @@ const ReviewsSection = ({ productId }: { productId: number }) => {
 
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const result = slug ? getProductBySlug(slug, products) : null;
 
