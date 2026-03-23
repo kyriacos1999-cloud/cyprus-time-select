@@ -354,12 +354,24 @@ const ProductPage = () => {
                 <div className="flex items-center gap-2"><Gift className="w-4 h-4 text-primary" /> Gift-ready packaging</div>
               </div>
 
-              <Link
-                to={`/?product=${product.id}#order-section`}
-                className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[hsl(var(--rolex-green-light))] transition-colors duration-300 w-fit text-center"
-              >
-                Order Now
-              </Link>
+              <div className="flex gap-3 flex-wrap">
+                <button
+                  onClick={() => navigate(`/checkout?product=${product.id}`)}
+                  className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[hsl(var(--rolex-green-light))] transition-colors duration-300 text-center"
+                >
+                  Order Now
+                </button>
+                <button
+                  onClick={() => {
+                    addItem(product);
+                    toast.success(`${product.name} added to cart`);
+                  }}
+                  className="border border-primary text-primary text-xs tracking-[0.2em] uppercase font-medium px-6 py-4 hover:bg-primary/5 transition-colors duration-300 flex items-center gap-2"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  Add to Cart
+                </button>
+              </div>
               <p className="text-xs text-muted-foreground mt-3 font-light flex items-center gap-1.5">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 High demand this week – limited pieces available.
