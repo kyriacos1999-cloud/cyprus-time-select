@@ -47,6 +47,7 @@ const Index = () => {
       <SocialProof />
       <MidPageCTA />
       <ProductSection />
+      <BundleOffer />
       <WhyBuySection />
       <OrderForm />
       <FAQSection />
@@ -54,6 +55,7 @@ const Index = () => {
       <SEOContentBlock />
       <FinalCTA />
       <Footer />
+      <StickyMobileCTA />
       <RecentPurchaseToast />
       <ExitIntentPopup />
       <CartAbandonmentReminder />
