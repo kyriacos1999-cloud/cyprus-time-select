@@ -21,6 +21,8 @@ import ReturningVisitorBanner from "@/components/ReturningVisitorBanner";
 import CartAbandonmentReminder from "@/components/CartAbandonmentReminder";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import WatchAssemblyIntro from "@/components/WatchAssemblyIntro";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
+import BundleOffer from "@/components/BundleOffer";
 const Index = () => {
   const alreadySeen = sessionStorage.getItem("intro_seen") === "1";
   const [introComplete, setIntroComplete] = useState(alreadySeen);
