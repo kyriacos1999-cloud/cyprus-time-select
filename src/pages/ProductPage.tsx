@@ -1,10 +1,12 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { products } from "@/components/ProductSection";
 import { getProductBySlug, productSEOData } from "@/data/productSEO";
 import { productReviews } from "@/data/productReviews";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronRight, Package, Truck, ShieldCheck, Gift, X } from "lucide-react";
+import { Star, ChevronRight, Package, Truck, ShieldCheck, Gift, X, ShoppingCart } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import UrgencyBanner from "@/components/UrgencyBanner";
 import Footer from "@/components/Footer";
