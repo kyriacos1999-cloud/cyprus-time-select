@@ -43,6 +43,7 @@ import product6Clasp from "@/assets/product6-clasp.jpg";
 import product6Box from "@/assets/product6-box.jpg";
 import product6Fullset from "@/assets/product6-fullset.jpg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import LiveViewerCount from "@/components/LiveViewerCount";
 import LowStockBadge from "@/components/LowStockBadge";
