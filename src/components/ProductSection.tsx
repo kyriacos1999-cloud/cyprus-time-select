@@ -179,6 +179,7 @@ export { products };
 
 const ProductGallery = ({ product }: { product: Product }) => {
   const navigate = useNavigate();
+  const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
