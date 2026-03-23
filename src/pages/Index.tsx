@@ -9,7 +9,7 @@ import MidPageCTA from "@/components/MidPageCTA";
 import ProductSection from "@/components/ProductSection";
 import WhyBuySection from "@/components/WhyBuySection";
 import SocialProof from "@/components/SocialProof";
-import OrderForm from "@/components/OrderForm";
+
 import FAQSection from "@/components/FAQSection";
 import SEOContentBlock from "@/components/SEOContentBlock";
 import FinalCTA from "@/components/FinalCTA";
