@@ -45,6 +45,9 @@ import product6Fullset from "@/assets/product6-fullset.jpg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 import LiveViewerCount from "@/components/LiveViewerCount";
 import LowStockBadge from "@/components/LowStockBadge";
 
@@ -176,6 +179,7 @@ export { products };
 
 const ProductGallery = ({ product }: { product: Product }) => {
   const navigate = useNavigate();
+  const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -316,14 +320,24 @@ const ProductGallery = ({ product }: { product: Product }) => {
           </div>
         </div>
 
-        <button
-          onClick={() => {
-            navigate(`/checkout?product=${product.id}`);
-          }}
-          className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-rolex-green-light transition-colors duration-300 w-fit"
-        >
-          Select This Timepiece
-        </button>
+        <div className="flex gap-3 flex-wrap">
+          <button
+            onClick={() => navigate(`/checkout?product=${product.id}`)}
+            className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-rolex-green-light transition-colors duration-300"
+          >
+            Buy Now
+          </button>
+          <button
+            onClick={() => {
+              addItem(product);
+              toast.success(`${product.name} added to cart`);
+            }}
+            className="border border-primary text-primary text-xs tracking-[0.2em] uppercase font-medium px-6 py-4 hover:bg-primary/5 transition-colors duration-300 flex items-center gap-2"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            Add to Cart
+          </button>
+        </div>
         <p className="text-muted-foreground/60 text-[11px] mt-3 font-light tracking-wide">
           Free next-day delivery · Secure checkout · No hidden fees
         </p>

@@ -1,10 +1,9 @@
 import { Crown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CartDrawer from "@/components/CartDrawer";
 
 const Navbar = () => {
-  const scrollToOrder = () => {
-    document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-[38px] left-0 right-0 z-50 bg-rolex-green">
@@ -32,12 +31,15 @@ const Navbar = () => {
             </a>
           </div>
 
-          <button
-            onClick={scrollToOrder}
-            className="bg-primary-foreground text-primary text-xs tracking-[0.15em] uppercase font-medium px-5 py-2 hover:bg-primary-foreground/90 transition-colors"
-          >
-            Start Your Order
-          </button>
+          <div className="flex items-center gap-4">
+            <CartDrawer />
+            <button
+              onClick={() => navigate("/checkout")}
+              className="bg-primary-foreground text-primary text-xs tracking-[0.15em] uppercase font-medium px-5 py-2 hover:bg-primary-foreground/90 transition-colors"
+            >
+              Start Your Order
+            </button>
+          </div>
         </div>
       </div>
     </nav>
