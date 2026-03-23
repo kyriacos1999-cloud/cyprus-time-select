@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const StickyMobileCTA = () => {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
