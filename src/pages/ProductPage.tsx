@@ -1,14 +1,11 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { products } from "@/components/ProductSection";
-import { getProductBySlug, productSEOData } from "@/data/productSEO";
-import { productReviews } from "@/data/productReviews";
+import { products, getProductBySlug } from "@/data/products";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronRight, Package, Truck, ShieldCheck, Gift, X, ShoppingCart } from "lucide-react";
+import { motion } from "framer-motion";
+import { Star, ChevronRight, Package, Truck, ShieldCheck, RotateCcw, ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
-import UrgencyBanner from "@/components/UrgencyBanner";
 import Footer from "@/components/Footer";
 import {
   Accordion,
@@ -18,186 +15,41 @@ import {
 } from "@/components/ui/accordion";
 
 const productFaqs = [
-  { q: "What quality can I expect from this watch?", a: "Every watch features a stainless steel case, Seiko NH35 automatic movement, scratch-resistant glass, and detailed finishing. Each piece is individually inspected before shipping to ensure premium quality." },
-  { q: "Does the watch come with a box and papers?", a: "Yes. Every watch ships in a premium presentation box with accompanying papers, making it ready for gifting or personal collection." },
-  { q: "How fast is delivery in Cyprus?", a: "We offer free next-day delivery across Cyprus via Akis Express. Orders placed before 3pm are typically dispatched the same day." },
-  { q: "Is this watch suitable for daily wear?", a: "Absolutely. Built with durable stainless steel and 100m water resistance, our watches are designed for everyday use — from office to outdoor." },
-  { q: "Can I pay on delivery?", a: "Yes. We offer cash on delivery across Cyprus with a €30 surcharge, in addition to secure online payment via Stripe." },
-  { q: "What if I'm not satisfied?", a: "We offer a customer satisfaction guarantee. Contact us if there is any issue and we will resolve it promptly." },
+  { q: "What quality can I expect?", a: "Every watch features a stainless steel case, automatic self-winding movement, scratch-resistant mineral glass, and detailed finishing. Each piece is individually inspected before shipping." },
+  { q: "Does the watch come with packaging?", a: "Yes. Every watch ships in a premium presentation box, making it ready for gifting or personal collection." },
+  { q: "How fast is delivery?", a: "We offer free next-day delivery across Cyprus. Orders placed before 3 PM are typically dispatched the same day." },
+  { q: "Is this watch suitable for daily wear?", a: "Absolutely. Built with durable stainless steel and water resistance, our watches are designed for everyday use." },
+  { q: "Can I pay on delivery?", a: "Yes. We offer cash on delivery across Cyprus with a small surcharge, in addition to secure online payment." },
+  { q: "What if I'm not satisfied?", a: "We offer a 14-day return policy. Contact us if there's any issue and we'll resolve it promptly." },
 ];
-
-const ReviewsSection = ({ productId }: { productId: number }) => {
-  const reviews = productReviews[productId] || [];
-  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
-  const avgRating = reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : "0";
-
-  if (reviews.length === 0) return null;
-
-  return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-display text-foreground tracking-tight">
-            Customer Reviews
-          </h2>
-          <div className="flex items-center gap-2">
-            <div className="flex gap-0.5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[hsl(var(--rolex-gold))] text-[hsl(var(--rolex-gold))]" />
-              ))}
-            </div>
-            <span className="text-sm text-muted-foreground font-light">{avgRating} ({reviews.length})</span>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          {reviews.map((review, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="border border-border p-5 md:p-6"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="text-sm font-medium text-foreground">{review.name}</p>
-                  <p className="text-xs text-muted-foreground font-light">{review.city}, Cyprus · {review.date}</p>
-                </div>
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <Star
-                      key={s}
-                      className={`w-3.5 h-3.5 ${s < review.rating ? "fill-[hsl(var(--rolex-gold))] text-[hsl(var(--rolex-gold))]" : "text-border"}`}
-                    />
-                  ))}
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed font-light mb-4">
-                "{review.text}"
-              </p>
-              {review.photos.length > 0 && (
-                <div className="flex gap-2 flex-wrap">
-                  {review.photos.map((photo, pi) => (
-                    <button
-                      key={pi}
-                      onClick={() => setLightboxImg(photo)}
-                      className="w-16 h-16 md:w-20 md:h-20 overflow-hidden border border-border hover:border-primary transition-colors"
-                    >
-                      <img
-                        src={photo}
-                        alt={`Review photo by ${review.name}`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxImg && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setLightboxImg(null)}
-          >
-            <button
-              onClick={() => setLightboxImg(null)}
-              className="absolute top-4 right-4 text-white/70 hover:text-white"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <motion.img
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              src={lightboxImg}
-              alt="Review photo enlarged"
-              className="max-w-full max-h-[85vh] object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
-  );
-};
 
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const result = slug ? getProductBySlug(slug, products) : null;
+  const product = slug ? getProductBySlug(slug) : null;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
   useEffect(() => {
-    if (!result) return;
-    const { product, seo } = result;
-
-    document.title = seo.seoTitle;
-
-    const setMeta = (attr: string, key: string, content: string) => {
-      let el = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute(attr, key);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
-
-    const pageUrl = `https://replic8.shop/watches/${seo.slug}`;
-    // Product images are bundled assets — use origin + path for absolute URL
-    const ogImage = `${window.location.origin}${product.image}`;
-
-    setMeta("name", "description", seo.metaDescription);
-    setMeta("property", "og:title", seo.seoTitle);
-    setMeta("property", "og:description", seo.metaDescription);
-    setMeta("property", "og:image", ogImage);
-    setMeta("property", "og:url", pageUrl);
-    setMeta("property", "og:type", "product");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", seo.seoTitle);
-    setMeta("name", "twitter:description", seo.metaDescription);
-    setMeta("name", "twitter:image", ogImage);
-
-    // Set canonical
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", pageUrl);
-
+    if (!product) return;
+    document.title = `${product.name} | Premium Men's Watch | Replic8`;
     return () => {
-      // Reset to homepage defaults on unmount
-      document.title = "Buy Luxury Watches Cyprus | Premium Men's Watches | Free Next-Day Delivery";
+      document.title = "Replic8 — Premium Men's Watches in Cyprus";
     };
-  }, [result]);
+  }, [product]);
 
-  if (!result) {
+  if (!product) {
     return (
       <main>
-        <UrgencyBanner />
         <Navbar />
-        <div className="min-h-screen flex items-center justify-center pt-24">
+        <div className="min-h-screen flex items-center justify-center pt-14">
           <div className="text-center">
             <h1 className="text-3xl font-display text-foreground mb-4">Watch Not Found</h1>
-            <Link to="/" className="text-primary hover:underline">Back to Collection</Link>
+            <Link to="/shop" className="text-accent hover:underline">Back to Collection</Link>
           </div>
         </div>
         <Footer />
@@ -205,72 +57,18 @@ const ProductPage = () => {
     );
   }
 
-  const { product, seo } = result;
   const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 3);
-
-  const schemaProduct = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.name,
-    description: seo.longDescription,
-    image: product.images,
-    brand: { "@type": "Brand", name: "Replic8" },
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-      seller: { "@type": "Organization", name: "Replic8" },
-      shippingDetails: {
-        "@type": "OfferShippingDetails",
-        shippingDestination: { "@type": "DefinedRegion", addressCountry: "CY" },
-        deliveryTime: { "@type": "ShippingDeliveryTime", handlingTime: { "@type": "QuantitativeValue", value: 1, unitCode: "DAY" } },
-        shippingRate: { "@type": "MonetaryAmount", value: 0, currency: "EUR" },
-      },
-    },
-    aggregateRating: { "@type": "AggregateRating", ratingValue: "4.8", reviewCount: "24" },
-    review: [
-      { "@type": "Review", author: { "@type": "Person", name: "Andreas K." }, reviewRating: { "@type": "Rating", ratingValue: "5" }, reviewBody: "Excellent presentation and very fast delivery." },
-      { "@type": "Review", author: { "@type": "Person", name: "Maria L." }, reviewRating: { "@type": "Rating", ratingValue: "5" }, reviewBody: "Looks premium and feels solid." },
-    ],
-  };
-
-  const schemaBreadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://replic8.shop/" },
-      { "@type": "ListItem", position: 2, name: "Watches", item: "https://replic8.shop/#products" },
-      { "@type": "ListItem", position: 3, name: product.name, item: `https://replic8.shop/watches/${seo.slug}` },
-    ],
-  };
-
-  const schemaFAQ = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: productFaqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
 
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaProduct) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaBreadcrumb) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFAQ) }} />
-
-      <UrgencyBanner />
       <Navbar />
-
-      <article className="pt-[94px]">
+      <article className="pt-14">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="container mx-auto px-4 py-4">
           <ol className="flex items-center gap-1.5 text-xs text-muted-foreground font-light">
-            <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+            <li><Link to="/" className="hover:text-accent transition-colors">Home</Link></li>
             <li><ChevronRight className="w-3 h-3" /></li>
-            <li><Link to="/#products" className="hover:text-primary transition-colors">Watches</Link></li>
+            <li><Link to="/shop" className="hover:text-accent transition-colors">Shop</Link></li>
             <li><ChevronRight className="w-3 h-3" /></li>
             <li className="text-foreground font-medium">{product.name}</li>
           </ol>
@@ -281,19 +79,19 @@ const ProductPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Gallery */}
             <div>
-              <div className="relative aspect-square overflow-hidden bg-secondary mb-4">
+              <div className="relative aspect-square overflow-hidden bg-secondary mb-4 rounded-sm">
                 <motion.img
                   key={selectedImage}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                   src={product.images[selectedImage]}
-                  alt={`${product.name} — premium stainless steel men's watch, view ${selectedImage + 1}`}
-                  className="w-full h-full object-contain bg-white"
+                  alt={`${product.name} — view ${selectedImage + 1}`}
+                  className="w-full h-full object-contain bg-background"
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                 />
                 {product.badge && (
-                  <div className="absolute top-5 left-5 bg-primary text-primary-foreground text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5">
+                  <div className="absolute top-5 left-5 bg-foreground text-background text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5 rounded-sm">
                     {product.badge}
                   </div>
                 )}
@@ -304,16 +102,11 @@ const ProductPage = () => {
                     <button
                       key={i}
                       onClick={() => setSelectedImage(i)}
-                      className={`aspect-square overflow-hidden border-2 transition-all duration-200 ${
-                        selectedImage === i ? "border-primary" : "border-transparent hover:border-border"
+                      className={`aspect-square overflow-hidden border-2 transition-all duration-200 rounded-sm ${
+                        selectedImage === i ? "border-accent" : "border-transparent hover:border-border"
                       }`}
                     >
-                      <img
-                        src={img}
-                        alt={`${product.name} detail ${i + 1}`}
-                        className="w-full h-full object-cover bg-white"
-                        loading="lazy"
-                      />
+                      <img src={img} alt={`${product.name} detail ${i + 1}`} className="w-full h-full object-cover bg-background" loading="lazy" />
                     </button>
                   ))}
                 </div>
@@ -324,7 +117,7 @@ const ProductPage = () => {
             <div className="flex flex-col justify-center lg:pl-8">
               <div className="flex items-center gap-1.5 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[hsl(var(--rolex-gold))] text-[hsl(var(--rolex-gold))]" />
+                  <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                 ))}
                 <span className="text-xs text-muted-foreground ml-1">(24 reviews)</span>
               </div>
@@ -338,7 +131,7 @@ const ProductPage = () => {
 
               <div className="flex items-end gap-6 mb-8">
                 <div>
-                  <p className="text-[10px] text-primary tracking-[0.2em] uppercase mb-1 font-medium">Online Price</p>
+                  <p className="text-[10px] text-accent tracking-[0.2em] uppercase mb-1 font-medium">Price</p>
                   <span className="text-4xl font-display text-foreground">€{product.price}</span>
                 </div>
                 <div>
@@ -348,95 +141,69 @@ const ProductPage = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-3 mb-8 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2"><Package className="w-4 h-4 text-primary" /> Box & papers included</div>
-                <div className="flex items-center gap-2"><Truck className="w-4 h-4 text-primary" /> Free next-day delivery</div>
-                <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-primary" /> Secure checkout</div>
-                <div className="flex items-center gap-2"><Gift className="w-4 h-4 text-primary" /> Gift-ready packaging</div>
+                <div className="flex items-center gap-2"><Package className="w-4 h-4 text-accent" /> Presentation box included</div>
+                <div className="flex items-center gap-2"><Truck className="w-4 h-4 text-accent" /> Free next-day delivery</div>
+                <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-accent" /> Secure checkout</div>
+                <div className="flex items-center gap-2"><RotateCcw className="w-4 h-4 text-accent" /> 14-day returns</div>
               </div>
 
               <div className="flex gap-3 flex-wrap">
                 <button
                   onClick={() => navigate(`/checkout?product=${product.id}`)}
-                  className="bg-primary text-primary-foreground text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-[hsl(var(--rolex-green-light))] transition-colors duration-300 text-center"
+                  className="bg-foreground text-background text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-foreground/90 transition-colors duration-300 rounded-sm"
                 >
-                  Order Now
+                  Buy Now
                 </button>
                 <button
-                  onClick={() => {
-                    addItem(product);
-                    toast.success(`${product.name} added to cart`);
-                  }}
-                  className="border border-primary text-primary text-xs tracking-[0.2em] uppercase font-medium px-6 py-4 hover:bg-primary/5 transition-colors duration-300 flex items-center gap-2"
+                  onClick={() => { addItem(product); toast.success(`${product.name} added to cart`); }}
+                  className="border border-foreground text-foreground text-xs tracking-[0.2em] uppercase font-medium px-6 py-4 hover:bg-foreground/5 transition-colors duration-300 flex items-center gap-2 rounded-sm"
                 >
                   <ShoppingCart className="w-4 h-4" />
                   Add to Cart
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground mt-3 font-light flex items-center gap-1.5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                High demand this week – limited pieces available.
+              <p className="text-muted-foreground text-[11px] mt-3 font-light tracking-wide">
+                Free next-day delivery · Secure checkout · 1-year warranty
               </p>
             </div>
           </div>
         </section>
 
-        {/* Long Description */}
+        {/* Specs */}
         <section className="py-16 bg-secondary/30">
           <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-display text-foreground mb-6 tracking-tight">
-              About This Watch
-            </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed font-light">
-              {seo.longDescription}
-            </p>
-          </div>
-        </section>
-
-        {/* Features */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-display text-foreground mb-6 tracking-tight">
-              Watch Features
-            </h2>
-            <ul className="space-y-3">
-              {seo.features.map((f, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground font-light">
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
-                  {f}
-                </li>
+            <h2 className="text-2xl md:text-3xl font-display text-foreground mb-8 tracking-tight">Specifications</h2>
+            <div className="space-y-4">
+              {product.specs.map((spec, i) => (
+                <div key={i} className="flex justify-between items-center py-3 border-b border-border last:border-0">
+                  <span className="text-sm text-muted-foreground font-light">{spec.label}</span>
+                  <span className="text-sm text-foreground font-medium">{spec.value}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 
-        {/* Packaging */}
-        <section className="py-16 bg-secondary/30">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-display text-foreground mb-6 tracking-tight">
-              Presentation &amp; Packaging
-            </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed font-light">
-              Every watch from Replic8 arrives in a premium presentation box with accompanying papers and an international-style guarantee card. The packaging is designed to match the luxury feel of the timepiece itself — making it ideal for personal enjoyment or as a gift. Each box is carefully padded to protect the watch during transit, ensuring it arrives in perfect condition at your door anywhere in Cyprus.
-            </p>
-          </div>
-        </section>
-
-        {/* Gifting */}
+        {/* Shipping Info */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4 max-w-3xl">
-            <h2 className="text-2xl md:text-3xl font-display text-foreground mb-6 tracking-tight">
-              Perfect for Gifting
-            </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed font-light">
-              {seo.giftText}
-            </p>
+            <h2 className="text-2xl md:text-3xl font-display text-foreground mb-6 tracking-tight">Shipping & Returns</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-secondary/50 p-6 rounded-sm">
+                <Truck className="w-5 h-5 text-accent mb-3" />
+                <h3 className="font-display text-sm text-foreground mb-2">Free Next-Day Delivery</h3>
+                <p className="text-xs text-muted-foreground font-light leading-relaxed">Orders placed before 3 PM ship same day. Free delivery to all Cyprus locations.</p>
+              </div>
+              <div className="bg-secondary/50 p-6 rounded-sm">
+                <RotateCcw className="w-5 h-5 text-accent mb-3" />
+                <h3 className="font-display text-sm text-foreground mb-2">14-Day Returns</h3>
+                <p className="text-xs text-muted-foreground font-light leading-relaxed">Not happy? Return within 14 days for a full refund. Contact us for a prepaid return label.</p>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Customer Reviews */}
-        <ReviewsSection productId={product.id} />
-
-        {/* Product FAQ */}
+        {/* FAQ */}
         <section className="py-16 bg-secondary/30">
           <div className="container mx-auto px-4 max-w-2xl">
             <h2 className="text-2xl md:text-3xl font-display text-foreground mb-8 tracking-tight text-center">
@@ -444,8 +211,8 @@ const ProductPage = () => {
             </h2>
             <Accordion type="single" collapsible className="space-y-3">
               {productFaqs.map((faq, i) => (
-                <AccordionItem key={i} value={`pfaq-${i}`} className="border border-border px-6 bg-background">
-                  <AccordionTrigger className="font-display text-sm text-foreground hover:no-underline tracking-wide hover:text-primary transition-colors duration-300 py-4">
+                <AccordionItem key={i} value={`pfaq-${i}`} className="border border-border px-6 bg-background rounded-sm">
+                  <AccordionTrigger className="font-display text-sm text-foreground hover:no-underline tracking-wide hover:text-accent transition-colors duration-300 py-4">
                     {faq.q}
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground font-light pb-4 leading-relaxed">
@@ -464,32 +231,35 @@ const ProductPage = () => {
               You May Also Like
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {relatedProducts.map((rp) => {
-                const rpSeo = productSEOData[rp.id];
-                return (
-                  <Link
-                    key={rp.id}
-                    to={`/watches/${rpSeo?.slug || rp.id}`}
-                    className="group"
-                  >
-                    <div className="aspect-square overflow-hidden bg-white mb-3">
-                      <img
-                        src={rp.image}
-                        alt={`${rp.name} — premium men's watch`}
-                        className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h3 className="font-display text-sm text-foreground text-center">{rp.name}</h3>
-                    <p className="text-primary text-sm font-display text-center">€{rp.price}</p>
-                  </Link>
-                );
-              })}
+              {relatedProducts.map((rp) => (
+                <Link key={rp.id} to={`/watches/${rp.slug}`} className="group">
+                  <div className="aspect-square overflow-hidden bg-secondary rounded-sm mb-3">
+                    <img src={rp.image} alt={rp.name} className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  </div>
+                  <h3 className="font-display text-sm text-foreground text-center group-hover:text-accent transition-colors">{rp.name}</h3>
+                  <p className="text-accent text-sm font-display text-center">€{rp.price}</p>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
-      </article>
 
+        {/* Sticky Mobile CTA */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border p-3 flex gap-2 lg:hidden">
+          <button
+            onClick={() => navigate(`/checkout?product=${product.id}`)}
+            className="flex-1 bg-foreground text-background text-xs tracking-[0.15em] uppercase font-medium py-3.5 rounded-sm"
+          >
+            Buy Now · €{product.price}
+          </button>
+          <button
+            onClick={() => { addItem(product); toast.success(`${product.name} added to cart`); }}
+            className="border border-foreground text-foreground p-3.5 rounded-sm"
+          >
+            <ShoppingCart className="w-4 h-4" />
+          </button>
+        </div>
+      </article>
       <Footer />
     </main>
   );
