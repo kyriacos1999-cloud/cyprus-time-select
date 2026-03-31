@@ -1,44 +1,47 @@
-import { Crown } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Watch } from "lucide-react";
+import { Link } from "react-router-dom";
 import CartDrawer from "@/components/CartDrawer";
 
-const Navbar = () => {
-  const navigate = useNavigate();
+const navLinks = [
+  { label: "Shop", href: "/shop" },
+  { label: "About", href: "/about" },
+  { label: "Why Us", href: "/why-us" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
+];
 
+const Navbar = () => {
   return (
-    <nav className="fixed top-[38px] left-0 right-0 z-50 bg-rolex-green">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-14">
           <Link to="/" className="flex items-center gap-2">
-            <Crown className="w-5 h-5 text-[hsl(var(--rolex-gold))]" />
+            <Watch className="w-5 h-5 text-accent" />
             <span className="font-display text-lg text-primary-foreground tracking-wider">
               REPLIC8
             </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            <a href="/#products" className="text-primary-foreground/80 hover:text-primary-foreground text-xs tracking-[0.15em] uppercase font-medium transition-colors">
-              Collection
-            </a>
-            <Link to="/blog" className="text-primary-foreground/80 hover:text-primary-foreground text-xs tracking-[0.15em] uppercase font-medium transition-colors">
-              Blog
-            </Link>
-            <a href="/#why-us" className="text-primary-foreground/80 hover:text-primary-foreground text-xs tracking-[0.15em] uppercase font-medium transition-colors">
-              Why Us
-            </a>
-            <a href="/#faq" className="text-primary-foreground/80 hover:text-primary-foreground text-xs tracking-[0.15em] uppercase font-medium transition-colors">
-              FAQ
-            </a>
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.href}
+                className="text-primary-foreground/70 hover:text-primary-foreground text-xs tracking-[0.12em] uppercase font-medium transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex items-center gap-4">
             <CartDrawer />
-            <button
-              onClick={() => navigate("/checkout")}
-              className="bg-primary-foreground text-primary text-xs tracking-[0.15em] uppercase font-medium px-5 py-2 hover:bg-primary-foreground/90 transition-colors"
+            <Link
+              to="/shop"
+              className="hidden sm:inline-flex bg-accent text-accent-foreground text-xs tracking-[0.12em] uppercase font-medium px-5 py-2 hover:bg-warm-dark transition-colors rounded-sm"
             >
-              Start Your Order
-            </button>
+              Shop Now
+            </Link>
           </div>
         </div>
       </div>
