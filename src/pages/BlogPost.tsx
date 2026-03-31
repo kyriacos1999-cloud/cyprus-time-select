@@ -3,10 +3,8 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ChevronRight, ArrowLeft } from "lucide-react";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
-import { products } from "@/components/ProductSection";
-import { productSEOData } from "@/data/productSEO";
+import { products } from "@/data/products";
 import Navbar from "@/components/Navbar";
-import UrgencyBanner from "@/components/UrgencyBanner";
 import Footer from "@/components/Footer";
 
 const BlogPost = () => {

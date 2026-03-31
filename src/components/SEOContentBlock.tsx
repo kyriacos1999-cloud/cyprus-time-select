@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { productSEOData } from "@/data/productSEO";
-import { products } from "@/components/ProductSection";
+import { products } from "@/data/products";
 
 const SEOContentBlock = () => (
   <section className="py-20 md:py-24 bg-secondary/30">
