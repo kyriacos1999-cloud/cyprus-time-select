@@ -1,13 +1,33 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { products } from "@/components/ProductSection";
-import { productSEOData } from "@/data/productSEO";
-import { useSoldOut } from "@/hooks/useSoldOut";
+import { products } from "@/data/products";
+
+const categories = [
+  {
+    name: "Classic",
+    description: "Timeless elegance for every occasion",
+    image: products.find((p) => p.category === "Classic")?.image || "",
+  },
+  {
+    name: "Sport",
+    description: "Built for performance and style",
+    image: products.find((p) => p.category === "Sport")?.image || "",
+  },
+  {
+    name: "Minimal",
+    description: "Clean lines, pure design",
+    image: products.find((p) => p.name.includes("Classic"))?.image || products[2].image,
+  },
+  {
+    name: "Gift Picks",
+    description: "The perfect present, beautifully boxed",
+    image: products[0].image,
+  },
+];
 
 const CollectionGrid = () => {
-  const { soldOutIds } = useSoldOut();
   return (
-    <section className="py-20 md:py-28 bg-secondary/30">
+    <section className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -16,62 +36,45 @@ const CollectionGrid = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <p className="text-primary text-xs tracking-[0.5em] uppercase mb-4 font-medium">
-            Explore
+          <p className="text-accent text-xs tracking-[0.4em] uppercase mb-4 font-medium">
+            Collections
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-foreground tracking-tight">
-            The Collection
+            Shop by Style
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto">
-          {products.map((product, i) => {
-            const seo = productSEOData[product.id];
-            return (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {categories.map((cat, i) => (
+            <motion.div
+              key={cat.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+            >
+              <Link
+                to={`/shop?category=${cat.name}`}
+                className="group block"
               >
-                <Link
-                  to={seo ? `/watches/${seo.slug}` : `/#product-${product.id}`}
-                  className={`group block ${soldOutIds.has(product.id) ? "pointer-events-none" : ""}`}
-                >
-                  <div className="relative aspect-square overflow-hidden bg-white mb-3">
-                    <img
-                      src={product.image}
-                      alt={`${product.name} — premium automatic men's watch`}
-                      className={`w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500 ease-out ${soldOutIds.has(product.id) ? "grayscale opacity-50" : ""}`}
-                      loading="lazy"
-                    />
-                    {soldOutIds.has(product.id) ? (
-                      <div className="absolute top-3 left-3 bg-destructive text-destructive-foreground text-[8px] md:text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1">
-                        Sold Out
-                      </div>
-                    ) : product.badge ? (
-                      <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-[8px] md:text-[10px] tracking-[0.15em] uppercase font-medium px-2.5 py-1">
-                        {product.badge}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="text-center">
-                    <h3 className="font-display text-sm md:text-base text-foreground tracking-wide mb-1">
-                      {product.name}
-                    </h3>
-                    {soldOutIds.has(product.id) ? (
-                      <span className="text-destructive text-sm md:text-base font-display">Sold Out</span>
-                    ) : (
-                      <span className="text-primary text-sm md:text-base font-display">
-                        €{product.price}
-                      </span>
-                    )}
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
+                <div className="relative aspect-[3/4] overflow-hidden bg-secondary rounded-sm mb-3">
+                  <img
+                    src={cat.image}
+                    alt={`${cat.name} watches`}
+                    className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-300" />
+                </div>
+                <h3 className="font-display text-base text-foreground mb-1">
+                  {cat.name}
+                </h3>
+                <p className="text-muted-foreground text-xs font-light">
+                  {cat.description}
+                </p>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

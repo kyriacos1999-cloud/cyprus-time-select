@@ -3,12 +3,12 @@ import { Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const reviews = [
-  { name: "Andreas K.", city: "Nicosia", rating: 5, text: "Excellent presentation and very fast delivery. The watch looks incredible on the wrist." },
-  { name: "Maria L.", city: "Limassol", rating: 5, text: "Looks premium and feels solid. My husband couldn't tell the difference. Very impressed." },
-  { name: "Giorgos P.", city: "Larnaca", rating: 5, text: "Perfect gift for my brother's birthday. He absolutely loved it. Will order again." },
-  { name: "Elena S.", city: "Paphos", rating: 5, text: "Surprisingly heavy and well-made. The box packaging was a nice touch too." },
-  { name: "Christos M.", city: "Nicosia", rating: 4, text: "Great quality for the price. Delivery was next day as promised. Very professional." },
-  { name: "Anna D.", city: "Limassol", rating: 5, text: "Ordered the Submariner — it's stunning. Everyone at work asked about it." },
+  { name: "Andreas K.", city: "Nicosia", rating: 5, text: "Excellent quality and incredibly fast delivery. The watch arrived next day, beautifully packaged." },
+  { name: "Maria L.", city: "Limassol", rating: 5, text: "Bought this as a birthday gift — the presentation box made it look even more impressive. Very happy." },
+  { name: "Giorgos P.", city: "Larnaca", rating: 5, text: "Solid build quality and the automatic movement is smooth. Great value for the price." },
+  { name: "Elena S.", city: "Paphos", rating: 5, text: "Customer service was responsive and helpful. The watch exceeded my expectations." },
+  { name: "Christos M.", city: "Nicosia", rating: 4, text: "Good quality watch, delivery was next day as promised. Professional experience overall." },
+  { name: "Anna D.", city: "Limassol", rating: 5, text: "Third purchase from Replic8 — consistent quality every time. Highly recommend." },
 ];
 
 const SocialProof = () => {
@@ -17,7 +17,7 @@ const SocialProof = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % reviews.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -28,7 +28,7 @@ const SocialProof = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-[hsl(var(--rolex-cream))]">
+    <section className="py-20 md:py-28 bg-secondary/50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -37,11 +37,11 @@ const SocialProof = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
-            What Our Customers Say
+          <p className="text-accent text-xs tracking-[0.4em] uppercase mb-4 font-medium">
+            Testimonials
           </p>
           <h2 className="text-3xl md:text-5xl font-display text-foreground tracking-tight">
-            Trusted Across <span className="italic">Cyprus</span>
+            What Our Customers Say
           </h2>
         </motion.div>
 
@@ -54,13 +54,13 @@ const SocialProof = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-background border border-border p-6 md:p-8"
+                className="bg-background border border-border p-6 md:p-8 rounded-sm"
               >
                 <div className="flex gap-0.5 mb-4">
                   {Array.from({ length: 5 }).map((_, s) => (
                     <Star
                       key={s}
-                      className={`w-4 h-4 ${s < review.rating ? "fill-[hsl(var(--rolex-gold))] text-[hsl(var(--rolex-gold))]" : "text-border"}`}
+                      className={`w-4 h-4 ${s < review.rating ? "fill-accent text-accent" : "text-border"}`}
                     />
                   ))}
                 </div>
@@ -82,7 +82,7 @@ const SocialProof = () => {
               key={i}
               onClick={() => setCurrent(i)}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                i === current ? "bg-[hsl(var(--rolex-green))] w-6" : "bg-border"
+                i === current ? "bg-accent w-6" : "bg-border"
               }`}
             />
           ))}
