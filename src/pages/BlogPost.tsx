@@ -3,10 +3,8 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ChevronRight, ArrowLeft } from "lucide-react";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
-import { products } from "@/components/ProductSection";
-import { productSEOData } from "@/data/productSEO";
+import { products } from "@/data/products";
 import Navbar from "@/components/Navbar";
-import UrgencyBanner from "@/components/UrgencyBanner";
 import Footer from "@/components/Footer";
 
 const BlogPost = () => {
@@ -74,7 +72,7 @@ const BlogPost = () => {
   if (loading) {
     return (
       <main>
-        <UrgencyBanner />
+        
         <Navbar />
         <div className="min-h-screen flex items-center justify-center pt-24">
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -87,7 +85,7 @@ const BlogPost = () => {
   if (!post) {
     return (
       <main>
-        <UrgencyBanner />
+        
         <Navbar />
         <div className="min-h-screen flex items-center justify-center pt-24">
           <div className="text-center">
@@ -105,7 +103,7 @@ const BlogPost = () => {
 
   return (
     <main>
-      <UrgencyBanner />
+      
       <Navbar />
 
       <article className="pt-[94px]">
@@ -174,9 +172,8 @@ const BlogPost = () => {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 {relatedWatches.map((rp) => {
-                  const rpSeo = productSEOData[rp.id];
                   return (
-                    <Link key={rp.id} to={`/watches/${rpSeo?.slug || rp.id}`} className="group">
+                    <Link key={rp.id} to={`/watches/${rp.slug}`} className="group">
                       <div className="aspect-square overflow-hidden bg-white mb-3">
                         <img
                           src={rp.image}

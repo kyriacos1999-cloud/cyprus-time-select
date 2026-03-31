@@ -1,4 +1,4 @@
-import { Product } from "@/components/ProductSection";
+import { Product } from "@/data/products";
 
 export type ProductSEO = {
   slug: string;

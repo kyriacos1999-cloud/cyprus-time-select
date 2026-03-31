@@ -1,71 +1,95 @@
-import heroImage from "@/assets/watch-hero.jpg";
 import { motion } from "framer-motion";
+import { Truck, Shield, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { products } from "@/data/products";
 
 const HeroSection = () => {
-  const scrollToOrder = () => {
-    document.getElementById("order-section")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[94px]">
-      {/* Full-bleed background image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Premium Rolex clone watches Cyprus — AAA replica timepieces by Replic8"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
-
-      {/* Centered text overlay — Rolex style */}
-      <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          <p className="text-white/70 text-xs tracking-[0.5em] uppercase mb-6 font-medium">
-            Exclusive to Cyprus
-          </p>
-
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display text-white leading-[1.05] mb-8 tracking-tight">
-            Luxury Watches
-            <br />
-            <span className="italic">in Cyprus</span>
-          </h1>
-
-          <p className="text-white/70 text-base md:text-lg mb-10 max-w-lg mx-auto leading-relaxed font-light">
-            Premium automatic timepieces, delivered to your door — free, next day.
-          </p>
-
-          <div className="flex flex-col items-center gap-3">
-            <button
-              onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white text-sm tracking-[0.15em] uppercase font-medium px-10 py-4 hover:bg-white/20 transition-all duration-300"
-            >
-              Explore the Collection
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <p className="text-white/40 text-[11px] tracking-wide font-light">
-              Free next-day delivery · 1-year warranty · Full set included
+    <section className="relative min-h-[90vh] flex items-center bg-foreground overflow-hidden">
+      <div className="container mx-auto px-4 py-20 md:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left — copy */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="text-accent text-xs tracking-[0.4em] uppercase mb-5 font-medium">
+              Premium Men's Watches — Cyprus
             </p>
-          </div>
-        </motion.div>
-      </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-primary-foreground leading-[1.1] mb-6">
+              Quality Timepieces,
+              <br />
+              <span className="italic">Delivered Tomorrow</span>
+            </h1>
+            <p className="text-primary-foreground/60 text-base md:text-lg max-w-lg leading-relaxed font-light mb-8">
+              Curated automatic watches with premium materials, secure checkout, and free next-day delivery across Cyprus.
+            </p>
 
-      {/* Bottom scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <svg className="w-5 h-5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-        </svg>
-      </motion.div>
+            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <Link
+                to="/shop"
+                className="inline-flex items-center justify-center gap-2 bg-accent text-accent-foreground text-xs tracking-[0.15em] uppercase font-medium px-8 py-4 hover:bg-warm-dark transition-colors duration-300 rounded-sm"
+              >
+                Shop Collection
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href="#why-choose-us"
+                className="inline-flex items-center justify-center gap-2 border border-primary-foreground/20 text-primary-foreground text-xs tracking-[0.15em] uppercase font-medium px-8 py-4 hover:bg-primary-foreground/5 transition-colors duration-300 rounded-sm"
+              >
+                Why Choose Us
+              </a>
+            </div>
+
+            {/* Trust bullets */}
+            <div className="grid grid-cols-2 gap-3 text-primary-foreground/50 text-xs font-light">
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-accent" />
+                Free next-day delivery in Cyprus
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-accent" />
+                Secure checkout
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-accent" />
+                Cash on delivery available
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-accent" />
+                Easy returns
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right — featured watch grid */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hidden lg:grid grid-cols-2 gap-3"
+          >
+            {products.slice(0, 4).map((product, i) => (
+              <Link
+                key={product.id}
+                to={`/watches/${product.slug}`}
+                className="group relative aspect-square bg-primary-foreground/5 overflow-hidden rounded-sm"
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-foreground/80 to-transparent">
+                  <p className="text-primary-foreground text-xs font-medium">{product.name}</p>
+                  <p className="text-accent text-xs">€{product.price}</p>
+                </div>
+              </Link>
+            ))}
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gift, Tag, Check, ChevronDown, ChevronUp, ShoppingCart } from "lucide-react";
-import { products, Product } from "@/components/ProductSection";
+import { products, Product } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
