@@ -72,7 +72,7 @@ const BlogPost = () => {
   if (loading) {
     return (
       <main>
-        <UrgencyBanner />
+        
         <Navbar />
         <div className="min-h-screen flex items-center justify-center pt-24">
           <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
