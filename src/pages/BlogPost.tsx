@@ -103,7 +103,7 @@ const BlogPost = () => {
 
   return (
     <main>
-      <UrgencyBanner />
+      
       <Navbar />
 
       <article className="pt-[94px]">
