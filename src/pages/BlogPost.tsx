@@ -172,9 +172,8 @@ const BlogPost = () => {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 {relatedWatches.map((rp) => {
-                  const rpSeo = productSEOData[rp.id];
                   return (
-                    <Link key={rp.id} to={`/watches/${rpSeo?.slug || rp.id}`} className="group">
+                    <Link key={rp.id} to={`/watches/${rp.slug}`} className="group">
                       <div className="aspect-square overflow-hidden bg-white mb-3">
                         <img
                           src={rp.image}
