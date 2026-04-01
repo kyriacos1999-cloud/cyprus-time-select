@@ -375,21 +375,43 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Payment</p>
-                  <div className="bg-background border border-border p-5 rounded-sm">
-                    <div className="flex items-center gap-2 mb-3">
+                  <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Payment Method</p>
+                  <RadioGroup value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as "card" | "cod")} className="grid grid-cols-1 gap-3">
+                    <label
+                      htmlFor="pay-card"
+                      className={cn(
+                        "flex items-center gap-4 bg-background border p-4 rounded-sm cursor-pointer transition-colors",
+                        paymentMethod === "card" ? "border-accent" : "border-border"
+                      )}
+                    >
+                      <RadioGroupItem value="card" id="pay-card" />
+                      <CreditCard className="w-5 h-5 text-accent shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-foreground">Pay Online</p>
+                        <p className="text-[11px] text-muted-foreground font-light">Visa, Mastercard, Apple Pay, Google Pay</p>
+                      </div>
+                    </label>
+                    <label
+                      htmlFor="pay-cod"
+                      className={cn(
+                        "flex items-center gap-4 bg-background border p-4 rounded-sm cursor-pointer transition-colors",
+                        paymentMethod === "cod" ? "border-accent" : "border-border"
+                      )}
+                    >
+                      <RadioGroupItem value="cod" id="pay-cod" />
+                      <Banknote className="w-5 h-5 text-accent shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-foreground">Cash on Delivery</p>
+                        <p className="text-[11px] text-muted-foreground font-light">Pay when you receive your order (+€{COD_SURCHARGE} fee)</p>
+                      </div>
+                    </label>
+                  </RadioGroup>
+                  {paymentMethod === "card" && (
+                    <div className="flex items-center gap-2 pl-1">
                       <Lock className="w-3.5 h-3.5 text-accent" />
                       <span className="text-xs text-muted-foreground font-light">You'll be redirected to our secure payment partner.</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider font-medium">We accept</span>
-                      <div className="flex gap-1.5">
-                        {["Visa", "Mastercard", "Apple Pay", "Google Pay"].map((m) => (
-                          <span key={m} className="text-[9px] bg-muted text-muted-foreground px-2 py-0.5 font-medium rounded-sm">{m}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
