@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2, ChevronsUpDown, Check, MapPin } from "lucide-react";
@@ -51,6 +51,21 @@ const CheckoutPage = () => {
     () => akisBranches.find((b) => b.name === selectedBranch),
     [selectedBranch]
   );
+
+  // Auto-suggest nearest branch based on city
+  useEffect(() => {
+    if (!form.city.trim() || selectedBranch) return;
+    const cityLower = form.city.trim().toLowerCase();
+    // Match city name against branch cities (fuzzy: check if typed city is contained in branch city or vice versa)
+    const matchedBranch = akisBranches.find(
+      (b) => b.city.toLowerCase() === cityLower ||
+             b.city.toLowerCase().includes(cityLower) ||
+             cityLower.includes(b.city.toLowerCase())
+    );
+    if (matchedBranch) {
+      setSelectedBranch(matchedBranch.name);
+    }
+  }, [form.city]);
 
   const validate = () => {
     const errs: Record<string, string> = {};
