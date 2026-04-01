@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2, ChevronsUpDown, Check, MapPin } from "lucide-react";
+import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2, ChevronsUpDown, Check, MapPin, CreditCard, Banknote } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
