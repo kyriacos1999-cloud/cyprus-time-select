@@ -385,12 +385,13 @@ const CheckoutPage = () => {
                 <div className="space-y-2">
                   <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Promo Code</p>
                   <div className="flex gap-2">
-                    <Input value={promoCode} onChange={(e) => { setPromoCode(e.target.value); if (promoApplied) { setPromoApplied(false); setPromoDiscount(0); } }} placeholder="Enter code" className="bg-background border-border focus:border-accent h-10 flex-1" />
-                    <Button type="button" variant="outline" onClick={handleApplyPromo} className="h-10 text-xs tracking-wider uppercase">
-                      <Tag className="w-3.5 h-3.5 mr-1" />Apply
+                    <Input value={promoCode} onChange={(e) => { setPromoCode(e.target.value); setPromoError(""); if (promoApplied) { setPromoApplied(false); setPromoDiscount(0); } }} placeholder="Enter code" className="bg-background border-border focus:border-accent h-10 flex-1" />
+                    <Button type="button" variant="outline" onClick={handleApplyPromo} disabled={promoLoading || promoApplied} className="h-10 text-xs tracking-wider uppercase">
+                      {promoLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <><Tag className="w-3.5 h-3.5 mr-1" />Apply</>}
                     </Button>
                   </div>
                   {promoApplied && <p className="text-accent text-xs font-light">Code applied — you save €{promoDiscount}!</p>}
+                  {promoError && <p className="text-destructive text-xs font-light">{promoError}</p>}
                 </div>
 
                 <div className="flex items-start gap-3">
