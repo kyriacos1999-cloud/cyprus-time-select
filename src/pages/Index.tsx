@@ -5,6 +5,7 @@ import CollectionGrid from "@/components/CollectionGrid";
 import ProductSection from "@/components/ProductSection";
 import WhyBuySection from "@/components/WhyBuySection";
 import HowItWorks from "@/components/HowItWorks";
+import TikTokGrid from "@/components/TikTokGrid";
 import SocialProof from "@/components/SocialProof";
 import DeliveryReturnsBlock from "@/components/DeliveryReturnsBlock";
 import FAQSection from "@/components/FAQSection";
@@ -21,6 +22,7 @@ const Index = () => {
       <ProductSection />
       <WhyBuySection />
       <HowItWorks />
+      <TikTokGrid />
       <SocialProof />
       <DeliveryReturnsBlock />
       <FAQSection />
