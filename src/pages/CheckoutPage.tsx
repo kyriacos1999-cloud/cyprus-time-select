@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2 } from "lucide-react";
+import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2, ChevronsUpDown, Check, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { products } from "@/data/products";
+import { akisBranches, branchCities } from "@/data/akisBranches";
 import { useCart } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -31,6 +35,8 @@ const CheckoutPage = () => {
   const [form, setForm] = useState({
     name: "", email: "", phone: "", address: "", city: "", postalCode: "",
   });
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const [branchOpen, setBranchOpen] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [promoDiscount, setPromoDiscount] = useState(0);
@@ -40,6 +46,11 @@ const CheckoutPage = () => {
 
   const discount = promoApplied ? promoDiscount : 0;
   const total = subtotal - discount;
+
+  const selectedBranchData = useMemo(
+    () => akisBranches.find((b) => b.name === selectedBranch),
+    [selectedBranch]
+  );
 
   const validate = () => {
     const errs: Record<string, string> = {};
@@ -89,6 +100,7 @@ const CheckoutPage = () => {
           customerName: form.name,
           productName: productNames,
           origin: window.location.origin,
+          akisBranch: selectedBranch || undefined,
         },
       });
       if (error) throw error;
@@ -233,6 +245,79 @@ const CheckoutPage = () => {
                       <Input value={form.postalCode} onChange={(e) => updateField("postalCode", e.target.value)} placeholder="1234" className="bg-background border-border focus:border-accent h-12" />
                       {errors.postalCode && <p className="text-destructive text-xs mt-1 font-light">{errors.postalCode}</p>}
                     </div>
+                  </div>
+                </div>
+
+                {/* Akis Express Branch Selector */}
+                <div className="space-y-4">
+                  <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Pickup Point (Optional)</p>
+                  <div>
+                    <Label className="text-xs text-muted-foreground mb-1.5 block font-medium">
+                      <MapPin className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
+                      Akis Express Branch
+                    </Label>
+                    <p className="text-[11px] text-muted-foreground font-light mb-2">
+                      Prefer to collect from an Akis Express branch? Select one below, or leave empty for home delivery.
+                    </p>
+                    <Popover open={branchOpen} onOpenChange={setBranchOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={branchOpen}
+                          className="w-full justify-between bg-background border-border h-12 font-light text-sm hover:bg-background"
+                        >
+                          {selectedBranch
+                            ? selectedBranchData
+                              ? `${selectedBranchData.name} — ${selectedBranchData.city}`
+                              : selectedBranch
+                            : "Select a branch..."}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+                        <Command>
+                          <CommandInput placeholder="Search branch or city..." />
+                          <CommandList>
+                            <CommandEmpty>No branch found.</CommandEmpty>
+                            {branchCities.map((city) => (
+                              <CommandGroup key={city} heading={city}>
+                                {akisBranches
+                                  .filter((b) => b.city === city)
+                                  .map((branch) => (
+                                    <CommandItem
+                                      key={branch.name}
+                                      value={`${branch.name} ${branch.city} ${branch.address}`}
+                                      onSelect={() => {
+                                        setSelectedBranch(
+                                          selectedBranch === branch.name ? "" : branch.name
+                                        );
+                                        setBranchOpen(false);
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          selectedBranch === branch.name ? "opacity-100" : "opacity-0"
+                                        )}
+                                      />
+                                      <div>
+                                        <p className="text-sm">{branch.name}</p>
+                                        <p className="text-[11px] text-muted-foreground">{branch.address}</p>
+                                      </div>
+                                    </CommandItem>
+                                  ))}
+                              </CommandGroup>
+                            ))}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {selectedBranchData && (
+                      <p className="text-xs text-accent mt-1.5 font-light">
+                        📍 {selectedBranchData.address}
+                      </p>
+                    )}
                   </div>
                 </div>
 
