@@ -206,10 +206,13 @@ Deno.serve(async (req) => {
 
     const seasonalContext = getSeasonalContext();
 
+    const isGreek = (topic as any).lang === "el";
+
     const prompt = `Write an SEO-optimized blog article for Replic8, a premium watch store based in Cyprus.
 
 TARGET KEYWORD: "${topic.keyword}"
 CATEGORY: ${topic.category}
+${isGreek ? "LANGUAGE: Write the ENTIRE article in Greek (Ελληνικά). Use natural Cypriot Greek tone. The slug and JSON keys stay in English but all content values must be in Greek." : "LANGUAGE: English"}
 ${seasonalContext}
 
 BRAND INFO:
