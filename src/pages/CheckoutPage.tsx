@@ -219,6 +219,12 @@ const CheckoutPage = () => {
                           <span>-€{discount}</span>
                         </div>
                       )}
+                      {paymentMethod === "cod" && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Cash on Delivery fee</span>
+                          <span className="text-foreground">+€{COD_SURCHARGE}</span>
+                        </div>
+                      )}
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Delivery</span>
                         <span className="text-accent font-medium">FREE</span>
