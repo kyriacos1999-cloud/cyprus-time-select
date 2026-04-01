@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { products, getProductBySlug } from "@/data/products";
+import { productReviews } from "@/data/productReviews";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronRight, Package, Truck, ShieldCheck, RotateCcw, ShoppingCart } from "lucide-react";
