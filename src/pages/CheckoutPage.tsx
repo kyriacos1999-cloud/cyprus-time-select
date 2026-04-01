@@ -59,6 +59,7 @@ const CheckoutPage = () => {
     if (!form.address.trim()) errs.address = "Billing address is required";
     if (!form.city.trim()) errs.city = "City is required";
     if (!form.postalCode.trim()) errs.postalCode = "Postal code is required";
+    if (!selectedBranch) errs.branch = "Please select an Akis Express branch for delivery";
     if (!agreed) errs.agreed = "You must agree to the terms";
     return errs;
   };
@@ -254,10 +255,10 @@ const CheckoutPage = () => {
                   <div>
                     <Label className="text-xs text-muted-foreground mb-1.5 block font-medium">
                       <MapPin className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
-                      Akis Express Branch
+                      Akis Express Branch <span className="text-destructive">*</span>
                     </Label>
                     <p className="text-[11px] text-muted-foreground font-light mb-2">
-                      Prefer to collect from an Akis Express branch? Select one below, or leave empty for home delivery.
+                      Select an Akis Express branch for delivery.
                     </p>
                     <Popover open={branchOpen} onOpenChange={setBranchOpen}>
                       <PopoverTrigger asChild>
@@ -317,6 +318,9 @@ const CheckoutPage = () => {
                       <p className="text-xs text-accent mt-1.5 font-light">
                         📍 {selectedBranchData.address}
                       </p>
+                    )}
+                    {errors.branch && (
+                      <p className="text-xs text-destructive mt-1.5">{errors.branch}</p>
                     )}
                   </div>
                 </div>
