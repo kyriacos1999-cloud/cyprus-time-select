@@ -26,7 +26,7 @@ const ReturnsPage = () => (
             </li>
             <li className="flex gap-3">
               <span className="text-accent font-display text-base">2.</span>
-              <span>We'll send you a prepaid return label within 24 hours.</span>
+              <span>We'll contact you with instructions on where to send the watch.</span>
             </li>
             <li className="flex gap-3">
               <span className="text-accent font-display text-base">3.</span>
