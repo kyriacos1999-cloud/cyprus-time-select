@@ -22,6 +22,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import WelcomeDiscount from "./components/WelcomeDiscount";
 
 const queryClient = new QueryClient();
 
