@@ -52,6 +52,21 @@ const CheckoutPage = () => {
     [selectedBranch]
   );
 
+  // Auto-suggest nearest branch based on city
+  useEffect(() => {
+    if (!form.city.trim() || selectedBranch) return;
+    const cityLower = form.city.trim().toLowerCase();
+    // Match city name against branch cities (fuzzy: check if typed city is contained in branch city or vice versa)
+    const matchedBranch = akisBranches.find(
+      (b) => b.city.toLowerCase() === cityLower ||
+             b.city.toLowerCase().includes(cityLower) ||
+             cityLower.includes(b.city.toLowerCase())
+    );
+    if (matchedBranch) {
+      setSelectedBranch(matchedBranch.name);
+    }
+  }, [form.city]);
+
   const validate = () => {
     const errs: Record<string, string> = {};
     if (!form.name.trim()) errs.name = "Full name is required";
