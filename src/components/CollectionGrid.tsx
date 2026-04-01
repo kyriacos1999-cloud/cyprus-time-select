@@ -6,22 +6,22 @@ const categories = [
   {
     name: "Classic",
     description: "Timeless elegance for every occasion",
-    image: products.find((p) => p.category === "Classic")?.image || "",
+    image: products.find((p) => p.slug === "viceroy-classic-36")?.image || products[2].image,
   },
   {
     name: "Sport",
     description: "Built for performance and style",
-    image: products.find((p) => p.category === "Sport")?.image || "",
+    image: products.find((p) => p.slug === "atlas-gmt")?.image || products[4].image,
   },
   {
     name: "Minimal",
     description: "Clean lines, pure design",
-    image: products.find((p) => p.name.includes("Classic"))?.image || products[2].image,
+    image: products.find((p) => p.slug === "meridian-diver-two-tone")?.image || products[3].image,
   },
   {
     name: "Gift Picks",
     description: "The perfect present, beautifully boxed",
-    image: products[0].image,
+    image: products.find((p) => p.slug === "apex-chronograph")?.image || products[5].image,
   },
 ];
 
