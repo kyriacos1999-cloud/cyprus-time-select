@@ -255,10 +255,10 @@ const CheckoutPage = () => {
                   <div>
                     <Label className="text-xs text-muted-foreground mb-1.5 block font-medium">
                       <MapPin className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />
-                      Akis Express Branch
+                      Akis Express Branch <span className="text-destructive">*</span>
                     </Label>
                     <p className="text-[11px] text-muted-foreground font-light mb-2">
-                      Prefer to collect from an Akis Express branch? Select one below, or leave empty for home delivery.
+                      Select an Akis Express branch for delivery.
                     </p>
                     <Popover open={branchOpen} onOpenChange={setBranchOpen}>
                       <PopoverTrigger asChild>
