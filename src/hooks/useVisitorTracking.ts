@@ -30,11 +30,57 @@ const getVisitCount = (): number => {
   return count;
 };
 
+const getUtmParams = (): Record<string, string> => {
+  const params = new URLSearchParams(window.location.search);
+  const utms: Record<string, string> = {};
+  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+    const val = params.get(key);
+    if (val) utms[key] = val;
+  }
+  // Persist UTMs for the session so they survive page navigations
+  if (Object.keys(utms).length > 0) {
+    sessionStorage.setItem("utm_params", JSON.stringify(utms));
+  }
+  const stored = sessionStorage.getItem("utm_params");
+  return stored ? JSON.parse(stored) : {};
+};
+
+const getTrafficSource = (): string => {
+  const utms = getUtmParams();
+  if (utms.utm_source) return utms.utm_source;
+
+  const ref = document.referrer || "";
+  if (!ref) return "direct";
+  try {
+    const host = new URL(ref).hostname.toLowerCase();
+    if (host.includes("google")) return "google";
+    if (host.includes("facebook") || host.includes("fb.com") || host.includes("fb.me")) return "facebook";
+    if (host.includes("instagram")) return "instagram";
+    if (host.includes("tiktok")) return "tiktok";
+    if (host.includes("youtube")) return "youtube";
+    if (host.includes("twitter") || host.includes("x.com")) return "twitter/x";
+    if (host.includes("pinterest")) return "pinterest";
+    if (host.includes("reddit")) return "reddit";
+    if (host.includes("linkedin")) return "linkedin";
+    if (host.includes("whatsapp")) return "whatsapp";
+    if (host.includes("t.me") || host.includes("telegram")) return "telegram";
+    return host;
+  } catch {
+    return ref;
+  }
+};
+
 const trackEvent = async (
   eventType: string,
   data: Record<string, unknown> = {}
 ) => {
   try {
+    const utms = getUtmParams();
+    const metadata = {
+      ...(typeof data.metadata === "object" && data.metadata !== null ? data.metadata : {}),
+      traffic_source: getTrafficSource(),
+      ...(Object.keys(utms).length > 0 ? { utm: utms } : {}),
+    };
     await (supabase as any).from("visitor_events").insert({
       session_id: getSessionId(),
       event_type: eventType,
@@ -42,6 +88,7 @@ const trackEvent = async (
       device_type: getDeviceType(),
       referrer: document.referrer || null,
       ...data,
+      metadata,
     });
   } catch {
     // silent fail — analytics should never break the site
