@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2, ChevronsUpDown, Check, MapPin } from "lucide-react";
+import { ArrowLeft, Shield, RotateCcw, Headphones, Lock, Tag, Loader2, ChevronsUpDown, Check, MapPin, CreditCard, Banknote } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,6 +38,7 @@ const CheckoutPage = () => {
   });
   const [selectedBranch, setSelectedBranch] = useState("");
   const [branchOpen, setBranchOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "cod">("card");
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [promoDiscount, setPromoDiscount] = useState(0);
@@ -44,8 +46,10 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const COD_SURCHARGE = 30;
   const discount = promoApplied ? promoDiscount : 0;
-  const total = subtotal - discount;
+  const codFee = paymentMethod === "cod" ? COD_SURCHARGE : 0;
+  const total = subtotal - discount + codFee;
 
   const selectedBranchData = useMemo(
     () => akisBranches.find((b) => b.name === selectedBranch),
@@ -124,6 +128,40 @@ const CheckoutPage = () => {
     if (Object.keys(errs).length > 0) return;
 
     const primaryItem = checkoutItems[0];
+
+    // COD flow — no Stripe redirect needed
+    if (paymentMethod === "cod") {
+      setLoading(true);
+      try {
+        const productNames = checkoutItems.map((i) => i.product.name).join(", ");
+        const orderDetails = {
+          customerName: form.name,
+          customerEmail: form.email,
+          phone: form.phone,
+          address: form.address,
+          city: form.city,
+          postalCode: form.postalCode,
+          akisBranch: selectedBranch,
+          products: productNames,
+          subtotal,
+          codFee: COD_SURCHARGE,
+          discount,
+          total,
+          paymentMethod: "cod",
+        };
+        // Store COD order
+        await supabase.functions.invoke("create-cod-order", { body: orderDetails });
+        if (!isDirectCheckout) clearCart();
+        navigate(`/payment-success?method=cod&name=${encodeURIComponent(form.name)}&total=${total}`);
+      } catch (err: any) {
+        setErrors({ submit: err.message || "Order failed. Please try again." });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // Card flow
     if (!primaryItem?.product.priceId) {
       setErrors({ submit: "This product is not available for online payment." });
       return;
@@ -213,6 +251,12 @@ const CheckoutPage = () => {
                         <div className="flex justify-between text-accent">
                           <span>Promo discount</span>
                           <span>-€{discount}</span>
+                        </div>
+                      )}
+                      {paymentMethod === "cod" && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Cash on Delivery fee</span>
+                          <span className="text-foreground">+€{COD_SURCHARGE}</span>
                         </div>
                       )}
                       <div className="flex justify-between">
@@ -365,21 +409,43 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Payment</p>
-                  <div className="bg-background border border-border p-5 rounded-sm">
-                    <div className="flex items-center gap-2 mb-3">
+                  <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Payment Method</p>
+                  <RadioGroup value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as "card" | "cod")} className="grid grid-cols-1 gap-3">
+                    <label
+                      htmlFor="pay-card"
+                      className={cn(
+                        "flex items-center gap-4 bg-background border p-4 rounded-sm cursor-pointer transition-colors",
+                        paymentMethod === "card" ? "border-accent" : "border-border"
+                      )}
+                    >
+                      <RadioGroupItem value="card" id="pay-card" />
+                      <CreditCard className="w-5 h-5 text-accent shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-foreground">Pay Online</p>
+                        <p className="text-[11px] text-muted-foreground font-light">Visa, Mastercard, Apple Pay, Google Pay</p>
+                      </div>
+                    </label>
+                    <label
+                      htmlFor="pay-cod"
+                      className={cn(
+                        "flex items-center gap-4 bg-background border p-4 rounded-sm cursor-pointer transition-colors",
+                        paymentMethod === "cod" ? "border-accent" : "border-border"
+                      )}
+                    >
+                      <RadioGroupItem value="cod" id="pay-cod" />
+                      <Banknote className="w-5 h-5 text-accent shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-foreground">Cash on Delivery</p>
+                        <p className="text-[11px] text-muted-foreground font-light">Pay when you receive your order (+€{COD_SURCHARGE} fee)</p>
+                      </div>
+                    </label>
+                  </RadioGroup>
+                  {paymentMethod === "card" && (
+                    <div className="flex items-center gap-2 pl-1">
                       <Lock className="w-3.5 h-3.5 text-accent" />
                       <span className="text-xs text-muted-foreground font-light">You'll be redirected to our secure payment partner.</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider font-medium">We accept</span>
-                      <div className="flex gap-1.5">
-                        {["Visa", "Mastercard", "Apple Pay", "Google Pay"].map((m) => (
-                          <span key={m} className="text-[9px] bg-muted text-muted-foreground px-2 py-0.5 font-medium rounded-sm">{m}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -405,6 +471,8 @@ const CheckoutPage = () => {
                 <Button type="submit" disabled={!isFormValid || loading} className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium tracking-wider uppercase text-xs py-7 transition-all duration-300 disabled:opacity-40">
                   {loading ? (
                     <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Processing…</span>
+                  ) : paymentMethod === "cod" ? (
+                    `Place Order · €${total} (Pay on Delivery)`
                   ) : (
                     `Complete Purchase · €${total}`
                   )}
@@ -413,8 +481,11 @@ const CheckoutPage = () => {
                 {errors.submit && <p className="text-destructive text-sm text-center font-light">{errors.submit}</p>}
 
                 <p className="text-center text-[10px] text-muted-foreground font-light">
-                  <Lock className="w-3 h-3 inline mr-1 -mt-0.5" />
-                  Your payment is secured with 256-bit SSL encryption
+                  {paymentMethod === "card" ? (
+                    <><Lock className="w-3 h-3 inline mr-1 -mt-0.5" />Your payment is secured with 256-bit SSL encryption</>
+                  ) : (
+                    <><Banknote className="w-3 h-3 inline mr-1 -mt-0.5" />Pay cash upon delivery — a €{COD_SURCHARGE} handling fee applies</>
+                  )}
                 </p>
               </div>
             </div>
