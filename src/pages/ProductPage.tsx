@@ -204,6 +204,69 @@ const ProductPage = () => {
           </div>
         </section>
 
+        {/* Customer Reviews */}
+        {productReviews[product.id] && productReviews[product.id].length > 0 && (
+          <section className="py-16 bg-background">
+            <div className="container mx-auto px-4 max-w-3xl">
+              <h2 className="text-2xl md:text-3xl font-display text-foreground mb-2 tracking-tight">Customer Reviews</h2>
+              <div className="flex items-center gap-2 mb-8">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <span className="text-sm text-muted-foreground font-light">
+                  {productReviews[product.id].length} verified reviews
+                </span>
+              </div>
+              <div className="space-y-6">
+                {productReviews[product.id].map((review, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.05 }}
+                    className="border border-border p-6 rounded-sm bg-secondary/30"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-medium">
+                          {review.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">{review.name}</p>
+                          <p className="text-[11px] text-muted-foreground font-light">{review.city}, Cyprus</p>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground font-light">{new Date(review.date).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}</p>
+                    </div>
+                    <div className="flex gap-0.5 mb-3">
+                      {Array.from({ length: 5 }).map((_, s) => (
+                        <Star key={s} className={`w-3.5 h-3.5 ${s < review.rating ? "fill-accent text-accent" : "text-border"}`} />
+                      ))}
+                    </div>
+                    <p className="text-sm text-foreground leading-relaxed font-light mb-4">"{review.text}"</p>
+                    {review.photos.length > 0 && (
+                      <div className="flex gap-2 flex-wrap">
+                        {review.photos.map((photo, pi) => (
+                          <img
+                            key={pi}
+                            src={photo}
+                            alt={`Review photo by ${review.name}`}
+                            className="w-24 h-24 object-cover rounded-sm border border-border"
+                            loading="lazy"
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* FAQ */}
         <section className="py-16 bg-secondary/30">
           <div className="container mx-auto px-4 max-w-2xl">
