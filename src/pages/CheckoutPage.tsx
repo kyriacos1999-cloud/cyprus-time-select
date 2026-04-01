@@ -319,6 +319,9 @@ const CheckoutPage = () => {
                         📍 {selectedBranchData.address}
                       </p>
                     )}
+                    {errors.branch && (
+                      <p className="text-xs text-destructive mt-1.5">{errors.branch}</p>
+                    )}
                   </div>
                 </div>
 
