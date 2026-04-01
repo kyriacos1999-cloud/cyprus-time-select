@@ -15,18 +15,6 @@ const categories = [
     image: products.find((p) => p.slug === "atlas-gmt")?.image || products[4].image,
     price: "From €300",
   },
-  {
-    name: "Minimal",
-    description: "Clean lines, pure design",
-    image: products.find((p) => p.slug === "meridian-diver-two-tone")?.image || products[3].image,
-    price: "From €300",
-  },
-  {
-    name: "Gift Picks",
-    description: "The perfect present, beautifully boxed",
-    image: products.find((p) => p.slug === "apex-chronograph")?.image || products[5].image,
-    price: "From €350",
-  },
 ];
 
 const CollectionGrid = () => {
