@@ -7,21 +7,25 @@ const categories = [
     name: "Classic",
     description: "Timeless elegance for every occasion",
     image: products.find((p) => p.slug === "viceroy-classic-36")?.image || products[2].image,
+    price: "From €300",
   },
   {
     name: "Sport",
     description: "Built for performance and style",
     image: products.find((p) => p.slug === "atlas-gmt")?.image || products[4].image,
+    price: "From €300",
   },
   {
     name: "Minimal",
     description: "Clean lines, pure design",
     image: products.find((p) => p.slug === "meridian-diver-two-tone")?.image || products[3].image,
+    price: "From €300",
   },
   {
     name: "Gift Picks",
     description: "The perfect present, beautifully boxed",
     image: products.find((p) => p.slug === "apex-chronograph")?.image || products[5].image,
+    price: "From €350",
   },
 ];
 
@@ -71,6 +75,9 @@ const CollectionGrid = () => {
                 </h3>
                 <p className="text-muted-foreground text-xs font-light">
                   {cat.description}
+                </p>
+                <p className="text-accent text-xs font-medium mt-1">
+                  {cat.price}
                 </p>
               </Link>
             </motion.div>
