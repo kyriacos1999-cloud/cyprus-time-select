@@ -86,10 +86,34 @@ const CheckoutPage = () => {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const handleApplyPromo = () => {
-    if (promoCode.trim().toUpperCase() === "WELCOME10") {
-      setPromoDiscount(Math.round(subtotal * 0.1));
+  const [promoLoading, setPromoLoading] = useState(false);
+  const [promoError, setPromoError] = useState("");
+
+  const handleApplyPromo = async () => {
+    const trimmed = promoCode.trim().toUpperCase();
+    if (!trimmed) return;
+
+    setPromoLoading(true);
+    setPromoError("");
+
+    try {
+      const { data, error } = await supabase.functions.invoke("welcome-discount", {
+        body: { action: "validate", code: trimmed },
+      });
+
+      if (error || !data?.valid) {
+        setPromoError(data?.error || "Invalid code");
+        setPromoLoading(false);
+        return;
+      }
+
+      const percent = data.discountPercent || 10;
+      setPromoDiscount(Math.round(subtotal * (percent / 100)));
       setPromoApplied(true);
+    } catch (err) {
+      setPromoError("Failed to validate code");
+    } finally {
+      setPromoLoading(false);
     }
   };
 
