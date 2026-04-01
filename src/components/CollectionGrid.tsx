@@ -76,6 +76,9 @@ const CollectionGrid = () => {
                 <p className="text-muted-foreground text-xs font-light">
                   {cat.description}
                 </p>
+                <p className="text-accent text-xs font-medium mt-1">
+                  {cat.price}
+                </p>
               </Link>
             </motion.div>
           ))}
