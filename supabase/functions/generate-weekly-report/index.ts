@@ -74,16 +74,33 @@ Deno.serve(async (req) => {
       deviceCounts[device] = (deviceCounts[device] || 0) + 1;
     });
 
-    // Traffic sources
+    // Traffic sources — use metadata.traffic_source first, fallback to referrer parsing
     const sourceCounts: Record<string, number> = {};
     pageViews.forEach((e: any) => {
-      let source = "direct";
-      const ref = e.referrer || "";
-      if (ref.includes("google")) source = "Google";
-      else if (ref.includes("facebook") || ref.includes("fb.")) source = "Facebook";
-      else if (ref.includes("instagram")) source = "Instagram";
-      else if (ref.includes("tiktok")) source = "TikTok";
-      else if (ref) source = new URL(ref).hostname;
+      let source = e.metadata?.traffic_source || "direct";
+      if (source === "direct") {
+        const ref = e.referrer || "";
+        if (ref) {
+          try {
+            const host = new URL(ref).hostname.toLowerCase();
+            if (host.includes("google")) source = "google";
+            else if (host.includes("facebook") || host.includes("fb.")) source = "facebook";
+            else if (host.includes("instagram")) source = "instagram";
+            else if (host.includes("tiktok")) source = "tiktok";
+            else if (host.includes("youtube")) source = "youtube";
+            else if (host.includes("twitter") || host.includes("x.com")) source = "twitter/x";
+            else if (host.includes("pinterest")) source = "pinterest";
+            else if (host.includes("reddit")) source = "reddit";
+            else if (host.includes("linkedin")) source = "linkedin";
+            else if (host.includes("whatsapp")) source = "whatsapp";
+            else source = host;
+          } catch {
+            source = ref;
+          }
+        }
+      }
+      // Capitalize first letter for display
+      source = source.charAt(0).toUpperCase() + source.slice(1);
       sourceCounts[source] = (sourceCounts[source] || 0) + 1;
     });
     const trafficSources = Object.entries(sourceCounts)
