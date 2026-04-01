@@ -59,6 +59,7 @@ const CheckoutPage = () => {
     if (!form.address.trim()) errs.address = "Billing address is required";
     if (!form.city.trim()) errs.city = "City is required";
     if (!form.postalCode.trim()) errs.postalCode = "Postal code is required";
+    if (!selectedBranch) errs.branch = "Please select an Akis Express branch for delivery";
     if (!agreed) errs.agreed = "You must agree to the terms";
     return errs;
   };
