@@ -128,6 +128,40 @@ const CheckoutPage = () => {
     if (Object.keys(errs).length > 0) return;
 
     const primaryItem = checkoutItems[0];
+
+    // COD flow — no Stripe redirect needed
+    if (paymentMethod === "cod") {
+      setLoading(true);
+      try {
+        const productNames = checkoutItems.map((i) => i.product.name).join(", ");
+        const orderDetails = {
+          customerName: form.name,
+          customerEmail: form.email,
+          phone: form.phone,
+          address: form.address,
+          city: form.city,
+          postalCode: form.postalCode,
+          akisBranch: selectedBranch,
+          products: productNames,
+          subtotal,
+          codFee: COD_SURCHARGE,
+          discount,
+          total,
+          paymentMethod: "cod",
+        };
+        // Store COD order
+        await supabase.functions.invoke("create-cod-order", { body: orderDetails });
+        if (!isDirectCheckout) clearCart();
+        navigate(`/payment-success?method=cod&name=${encodeURIComponent(form.name)}&total=${total}`);
+      } catch (err: any) {
+        setErrors({ submit: err.message || "Order failed. Please try again." });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // Card flow
     if (!primaryItem?.product.priceId) {
       setErrors({ submit: "This product is not available for online payment." });
       return;
