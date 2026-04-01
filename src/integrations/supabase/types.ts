@@ -329,6 +329,39 @@ export type Database = {
         }
         Relationships: []
       }
+      welcome_discounts: {
+        Row: {
+          code: string
+          created_at: string
+          discount_percent: number
+          expires_at: string
+          id: string
+          used: boolean
+          used_at: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_percent?: number
+          expires_at: string
+          id?: string
+          used?: boolean
+          used_at?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_percent?: number
+          expires_at?: string
+          id?: string
+          used?: boolean
+          used_at?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

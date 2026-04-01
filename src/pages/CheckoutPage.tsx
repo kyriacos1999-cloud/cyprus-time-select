@@ -86,10 +86,34 @@ const CheckoutPage = () => {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const handleApplyPromo = () => {
-    if (promoCode.trim().toUpperCase() === "WELCOME10") {
-      setPromoDiscount(Math.round(subtotal * 0.1));
+  const [promoLoading, setPromoLoading] = useState(false);
+  const [promoError, setPromoError] = useState("");
+
+  const handleApplyPromo = async () => {
+    const trimmed = promoCode.trim().toUpperCase();
+    if (!trimmed) return;
+
+    setPromoLoading(true);
+    setPromoError("");
+
+    try {
+      const { data, error } = await supabase.functions.invoke("welcome-discount", {
+        body: { action: "validate", code: trimmed },
+      });
+
+      if (error || !data?.valid) {
+        setPromoError(data?.error || "Invalid code");
+        setPromoLoading(false);
+        return;
+      }
+
+      const percent = data.discountPercent || 10;
+      setPromoDiscount(Math.round(subtotal * (percent / 100)));
       setPromoApplied(true);
+    } catch (err) {
+      setPromoError("Failed to validate code");
+    } finally {
+      setPromoLoading(false);
     }
   };
 
@@ -361,12 +385,13 @@ const CheckoutPage = () => {
                 <div className="space-y-2">
                   <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium">Promo Code</p>
                   <div className="flex gap-2">
-                    <Input value={promoCode} onChange={(e) => { setPromoCode(e.target.value); if (promoApplied) { setPromoApplied(false); setPromoDiscount(0); } }} placeholder="Enter code" className="bg-background border-border focus:border-accent h-10 flex-1" />
-                    <Button type="button" variant="outline" onClick={handleApplyPromo} className="h-10 text-xs tracking-wider uppercase">
-                      <Tag className="w-3.5 h-3.5 mr-1" />Apply
+                    <Input value={promoCode} onChange={(e) => { setPromoCode(e.target.value); setPromoError(""); if (promoApplied) { setPromoApplied(false); setPromoDiscount(0); } }} placeholder="Enter code" className="bg-background border-border focus:border-accent h-10 flex-1" />
+                    <Button type="button" variant="outline" onClick={handleApplyPromo} disabled={promoLoading || promoApplied} className="h-10 text-xs tracking-wider uppercase">
+                      {promoLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <><Tag className="w-3.5 h-3.5 mr-1" />Apply</>}
                     </Button>
                   </div>
                   {promoApplied && <p className="text-accent text-xs font-light">Code applied — you save €{promoDiscount}!</p>}
+                  {promoError && <p className="text-destructive text-xs font-light">{promoError}</p>}
                 </div>
 
                 <div className="flex items-start gap-3">
