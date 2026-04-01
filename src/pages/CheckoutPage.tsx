@@ -38,6 +38,7 @@ const CheckoutPage = () => {
   });
   const [selectedBranch, setSelectedBranch] = useState("");
   const [branchOpen, setBranchOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "cod">("card");
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [promoDiscount, setPromoDiscount] = useState(0);
@@ -45,8 +46,10 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const COD_SURCHARGE = 30;
   const discount = promoApplied ? promoDiscount : 0;
-  const total = subtotal - discount;
+  const codFee = paymentMethod === "cod" ? COD_SURCHARGE : 0;
+  const total = subtotal - discount + codFee;
 
   const selectedBranchData = useMemo(
     () => akisBranches.find((b) => b.name === selectedBranch),
