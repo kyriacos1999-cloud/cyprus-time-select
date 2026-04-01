@@ -471,6 +471,8 @@ const CheckoutPage = () => {
                 <Button type="submit" disabled={!isFormValid || loading} className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium tracking-wider uppercase text-xs py-7 transition-all duration-300 disabled:opacity-40">
                   {loading ? (
                     <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Processing…</span>
+                  ) : paymentMethod === "cod" ? (
+                    `Place Order · €${total} (Pay on Delivery)`
                   ) : (
                     `Complete Purchase · €${total}`
                   )}
@@ -479,8 +481,11 @@ const CheckoutPage = () => {
                 {errors.submit && <p className="text-destructive text-sm text-center font-light">{errors.submit}</p>}
 
                 <p className="text-center text-[10px] text-muted-foreground font-light">
-                  <Lock className="w-3 h-3 inline mr-1 -mt-0.5" />
-                  Your payment is secured with 256-bit SSL encryption
+                  {paymentMethod === "card" ? (
+                    <><Lock className="w-3 h-3 inline mr-1 -mt-0.5" />Your payment is secured with 256-bit SSL encryption</>
+                  ) : (
+                    <><Banknote className="w-3 h-3 inline mr-1 -mt-0.5" />Pay cash upon delivery — a €{COD_SURCHARGE} handling fee applies</>
+                  )}
                 </p>
               </div>
             </div>
