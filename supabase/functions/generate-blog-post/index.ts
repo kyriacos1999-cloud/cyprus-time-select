@@ -92,6 +92,52 @@ const TOPICS = [
   { keyword: "watch lifestyle Cyprus Mediterranean", category: "Style Guide", products: [2, 4, 5] },
   { keyword: "watch review TikTok Cyprus", category: "Review", products: [1, 2, 6] },
   { keyword: "best everyday watch 2026", category: "Watch Guide", products: [1, 3, 5] },
+
+  // Cyprus-specific culture & lifestyle
+  { keyword: "ρολόι ανδρικό Κύπρος αγορά", category: "Οδηγός Αγοράς", products: [1, 2, 3], lang: "el" },
+  { keyword: "αυτόματο ρολόι Λευκωσία", category: "Οδηγός Πόλης", products: [1, 5, 6], lang: "el" },
+  { keyword: "ρολόι Rolex Λεμεσός τιμή", category: "Οδηγός Αγοράς", products: [1, 6, 3], lang: "el" },
+  { keyword: "ρολόι δώρο Κύπρος άνδρας", category: "Οδηγός Δώρων", products: [3, 4, 6], lang: "el" },
+  { keyword: "αγορά ρολόι online Κύπρος", category: "Οδηγός Αγοράς", products: [1, 2, 5], lang: "el" },
+  { keyword: "ρολόι Submariner Κύπρος", category: "Κριτική", products: [1, 2, 4], lang: "el" },
+  { keyword: "φθηνό πολυτελές ρολόι Κύπρος", category: "Οδηγός Αγοράς", products: [1, 3, 5], lang: "el" },
+  { keyword: "ρολόι αντοχή στο νερό θάλασσα", category: "Οδηγός Ρολογιών", products: [1, 2, 5], lang: "el" },
+  { keyword: "ρολόι γάμος Κύπρος ανδρικό", category: "Οδηγός Στυλ", products: [3, 4, 6], lang: "el" },
+  { keyword: "καλύτερο ρολόι 2026 Κύπρος", category: "Οδηγός Αγοράς", products: [1, 6, 5], lang: "el" },
+  { keyword: "ρολόι Daytona Κύπρος κριτική", category: "Κριτική", products: [6, 1, 5], lang: "el" },
+  { keyword: "ρολόι GMT Κύπρος αγορά", category: "Κριτική", products: [5, 1, 6], lang: "el" },
+  { keyword: "ρολόι Datejust γκρι καντράν", category: "Κριτική", products: [3, 1, 4], lang: "el" },
+  { keyword: "παράδοση ρολόι επόμενη μέρα Κύπρος", category: "Οδηγός Αγοράς", products: [1, 2, 3], lang: "el" },
+  { keyword: "αντικαταβολή ρολόι Κύπρος", category: "Οδηγός Αγοράς", products: [1, 3, 6], lang: "el" },
+
+  // More Cyprus neighborhoods & areas
+  { keyword: "luxury watch Makariou Nicosia", category: "City Guide", products: [3, 6, 1] },
+  { keyword: "watch shopping Limassol Marina", category: "City Guide", products: [4, 2, 5] },
+  { keyword: "Larnaca Salt Lake area style watch", category: "City Guide", products: [1, 3, 5] },
+  { keyword: "Paphos Harbour waterproof watch", category: "City Guide", products: [1, 2, 4] },
+  { keyword: "Paralimni watch delivery same day", category: "City Guide", products: [1, 5, 3] },
+  { keyword: "Kyrenia style watches North Cyprus", category: "City Guide", products: [2, 4, 6] },
+  { keyword: "Polis Chrysochous watch gift", category: "City Guide", products: [3, 1, 5] },
+  { keyword: "Kato Paphos watch summer 2026", category: "City Guide", products: [2, 5, 1] },
+  { keyword: "Strovolos Nicosia watch shop online", category: "City Guide", products: [1, 6, 3] },
+  { keyword: "Engomi business watch men", category: "City Guide", products: [3, 6, 4] },
+
+  // Cyprus cultural events & occasions
+  { keyword: "watch for Clean Monday Cyprus", category: "Seasonal", products: [1, 3, 5] },
+  { keyword: "Easter gift watch Cyprus 2026", category: "Gift Guide", products: [3, 4, 6] },
+  { keyword: "Kataklysmos festival watch Cyprus", category: "Seasonal", products: [1, 2, 5] },
+  { keyword: "Cyprus Independence Day gift watch", category: "Gift Guide", products: [1, 6, 5] },
+  { keyword: "Limassol Carnival watch style", category: "Style Guide", products: [2, 4, 6] },
+  { keyword: "wine festival Limassol watch", category: "Style Guide", products: [4, 3, 1] },
+  { keyword: "nameday gift watch Cyprus tradition", category: "Gift Guide", products: [3, 6, 1] },
+  { keyword: "christening gift godfather watch", category: "Gift Guide", products: [3, 4, 5] },
+
+  // Bilingual mixed keywords (Greeklish — how Cypriots actually search)
+  { keyword: "roloi Rolex Cyprus agora", category: "Buying Guide", products: [1, 2, 6] },
+  { keyword: "kalitero roloi andras Kypros", category: "Buying Guide", products: [1, 6, 5] },
+  { keyword: "roloi doro Kypros timi", category: "Gift Guide", products: [3, 4, 6] },
+  { keyword: "automatiko roloi Lefkosia", category: "City Guide", products: [1, 5, 3] },
+  { keyword: "roloi Lemesos paralia", category: "City Guide", products: [2, 4, 1] },
 ];
 
 // Get current month/season context for trend awareness
