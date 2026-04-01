@@ -266,7 +266,10 @@ Respond ONLY in valid JSON:
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
         messages: [
-          { role: "system", content: "You are an expert SEO copywriter specializing in luxury watches and the Cyprus market. Write engaging, informative content that ranks well on Google. Always respond with valid JSON only, no markdown code fences." },
+          { role: "system", content: isGreek
+            ? "You are an expert SEO copywriter specializing in luxury watches and the Cyprus market. Write engaging content in Greek (Ελληνικά) that ranks well on Google Cyprus. Always respond with valid JSON only, no markdown code fences."
+            : "You are an expert SEO copywriter specializing in luxury watches and the Cyprus market. Write engaging, informative content that ranks well on Google. Always respond with valid JSON only, no markdown code fences."
+          },
           { role: "user", content: prompt },
         ],
         response_format: { type: "json_object" },
