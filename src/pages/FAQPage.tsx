@@ -22,7 +22,7 @@ const faqCategories = [
   {
     title: "Products & Quality",
     faqs: [
-      { q: "What materials are your watches made from?", a: "Our watches feature 316L stainless steel cases and bracelets, scratch-resistant mineral glass crystals, and reliable automatic movements." },
+      { q: "What materials are your watches made from?", a: "Our watches are crafted from 904L stainless steel — the same corrosion-resistant, high-grade alloy used by top Swiss luxury brands. Combined with scratch-resistant sapphire crystals and reliable automatic movements, the result is exceptional durability and a premium feel." },
       { q: "Are your watches automatic?", a: "Yes. All our watches feature automatic (self-winding) movements that don't require batteries." },
       { q: "Do the watches come with packaging?", a: "Yes. Every watch ships in a premium presentation box suitable for gifting or personal collection." },
       { q: "What warranty do you offer?", a: "All watches include a 1-year warranty covering manufacturing defects." },
