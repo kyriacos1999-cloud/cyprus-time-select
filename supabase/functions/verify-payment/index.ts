@@ -58,6 +58,22 @@ serve(async (req) => {
       sessionId: session.id,
     };
 
+    // Save to orders table
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") || "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
+    );
+    await supabaseAdmin.from("orders").insert({
+      customer_name: orderDetails.customerName || "Unknown",
+      customer_email: orderDetails.customerEmail || null,
+      payment_method: "stripe",
+      products: [{ name: orderDetails.productName, quantity: 1 }],
+      total: parseFloat(orderDetails.amount) || 0,
+      currency: orderDetails.currency,
+      status: "paid",
+      stripe_session_id: session.id,
+    });
+
     return new Response(JSON.stringify(orderDetails), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,

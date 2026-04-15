@@ -41,6 +41,24 @@ serve(async (req) => {
       },
     });
 
+    // Save to orders table
+    await supabaseAdmin.from("orders").insert({
+      customer_name: order.customerName || "Unknown",
+      customer_email: order.customerEmail || null,
+      phone: order.phone || null,
+      address: order.address || null,
+      city: order.city || null,
+      postal_code: order.postalCode || null,
+      payment_method: "cod",
+      products: order.products || [],
+      subtotal: order.subtotal || 0,
+      discount: order.discount || 0,
+      fees: order.codFee || 0,
+      total: order.total || 0,
+      status: "confirmed",
+      metadata: { akis_branch: order.akisBranch },
+    });
+
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
