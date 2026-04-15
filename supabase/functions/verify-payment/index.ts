@@ -32,13 +32,14 @@ serve(async (req) => {
       throw new Error("Payment not completed");
     }
 
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") || "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
+    );
+
     // Mark product as sold out
     const productId = session.metadata?.product_id;
     if (productId) {
-      const supabaseAdmin = createClient(
-        Deno.env.get("SUPABASE_URL") || "",
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
-      );
       await supabaseAdmin
         .from("product_inventory")
         .update({ sold_out: true, updated_at: new Date().toISOString() })
@@ -57,6 +58,18 @@ serve(async (req) => {
       paymentStatus: session.payment_status,
       sessionId: session.id,
     };
+
+    // Save to orders table
+    await supabaseAdmin.from("orders").insert({
+      customer_name: orderDetails.customerName || "Unknown",
+      customer_email: orderDetails.customerEmail || null,
+      payment_method: "stripe",
+      products: [{ name: orderDetails.productName, quantity: 1 }],
+      total: parseFloat(orderDetails.amount) || 0,
+      currency: orderDetails.currency,
+      status: "paid",
+      stripe_session_id: session.id,
+    });
 
     return new Response(JSON.stringify(orderDetails), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

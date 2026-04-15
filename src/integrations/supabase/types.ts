@@ -146,6 +146,69 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          address: string | null
+          city: string | null
+          created_at: string
+          currency: string
+          customer_email: string | null
+          customer_name: string
+          discount: number | null
+          fees: number | null
+          id: string
+          metadata: Json | null
+          payment_method: string
+          phone: string | null
+          postal_code: string | null
+          products: Json
+          status: string
+          stripe_session_id: string | null
+          subtotal: number | null
+          total: number
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name: string
+          discount?: number | null
+          fees?: number | null
+          id?: string
+          metadata?: Json | null
+          payment_method?: string
+          phone?: string | null
+          postal_code?: string | null
+          products?: Json
+          status?: string
+          stripe_session_id?: string | null
+          subtotal?: number | null
+          total: number
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name?: string
+          discount?: number | null
+          fees?: number | null
+          id?: string
+          metadata?: Json | null
+          payment_method?: string
+          phone?: string | null
+          postal_code?: string | null
+          products?: Json
+          status?: string
+          stripe_session_id?: string | null
+          subtotal?: number | null
+          total?: number
+        }
+        Relationships: []
+      }
       preorder_requests: {
         Row: {
           created_at: string
