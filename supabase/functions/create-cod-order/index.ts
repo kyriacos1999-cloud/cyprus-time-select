@@ -59,6 +59,25 @@ serve(async (req) => {
       metadata: { akis_branch: order.akisBranch },
     });
 
+    // Send COD order notification email
+    const productNames = (order.products || []).map((p: any) => p.name || p.productName || "Watch").join(", ");
+    await supabaseAdmin.functions.invoke("send-transactional-email", {
+      body: {
+        templateName: "cod-order-notification",
+        recipientEmail: "kyriacos1999@gmail.com",
+        idempotencyKey: `cod-order-${crypto.randomUUID()}`,
+        templateData: {
+          customerName: order.customerName || "Unknown",
+          customerEmail: order.customerEmail || "",
+          phone: order.phone || "",
+          city: order.city || "",
+          address: order.address || "",
+          products: productNames,
+          total: String(order.total || 0),
+        },
+      },
+    });
+
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
