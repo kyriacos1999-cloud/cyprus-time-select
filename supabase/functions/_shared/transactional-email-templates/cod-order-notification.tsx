@@ -12,6 +12,8 @@ interface CodOrderProps {
   phone?: string
   city?: string
   address?: string
+  postalCode?: string
+  akisBranch?: string
   products?: string
   total?: string
 }
@@ -22,6 +24,8 @@ const CodOrderNotificationEmail = ({
   phone = '',
   city = '',
   address = '',
+  postalCode = '',
+  akisBranch = '',
   products = 'Watch',
   total = '0',
 }: CodOrderProps) => (
@@ -37,12 +41,18 @@ const CodOrderNotificationEmail = ({
           <Text style={label}>Customer</Text>
           <Text style={value}>{customerName}</Text>
           {customerEmail && <Text style={value}>{customerEmail}</Text>}
-          {phone && <Text style={value}>{phone}</Text>}
+          {phone && <Text style={value}>📞 {phone}</Text>}
         </Section>
         <Section>
-          <Text style={label}>Delivery</Text>
-          <Text style={value}>{address}{city ? `, ${city}` : ''}</Text>
+          <Text style={label}>Delivery Address</Text>
+          <Text style={value}>{address}{postalCode ? `, ${postalCode}` : ''}{city ? `, ${city}` : ''}</Text>
         </Section>
+        {akisBranch && (
+          <Section>
+            <Text style={label}>Akis Express Branch</Text>
+            <Text style={value}>{akisBranch}</Text>
+          </Section>
+        )}
         <Section>
           <Text style={label}>Products</Text>
           <Text style={value}>{products}</Text>
@@ -70,6 +80,8 @@ export const template = {
     phone: '+357 99 123456',
     city: 'Nicosia',
     address: '123 Main St',
+    postalCode: '1060',
+    akisBranch: 'Nicosia Central',
     products: 'Atlas GMT',
     total: '330',
   },
