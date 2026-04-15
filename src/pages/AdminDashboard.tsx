@@ -21,6 +21,7 @@ import DeviceOptimization from "@/components/admin/DeviceOptimization";
 import ProductPerformance from "@/components/admin/ProductPerformance";
 import ActionableRecommendations from "@/components/admin/ActionableRecommendations";
 import AlertsErrors from "@/components/admin/AlertsErrors";
+import OrdersPanel from "@/components/admin/OrdersPanel";
 
 type WeeklyReport = {
   id: string;
@@ -187,6 +188,8 @@ const AdminDashboard = () => {
           </div>
         ) : (
           <div className="space-y-6">
+            {/* Orders */}
+            <OrdersPanel />
             {/* Week navigation */}
             <div className="flex items-center justify-between">
               <button
