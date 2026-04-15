@@ -72,6 +72,8 @@ serve(async (req) => {
           phone: order.phone || "",
           city: order.city || "",
           address: order.address || "",
+          postalCode: order.postalCode || "",
+          akisBranch: order.akisBranch || "",
           products: productNames,
           total: String(order.total || 0),
         },
