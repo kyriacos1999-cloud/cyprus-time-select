@@ -80,6 +80,8 @@ export const template = {
     phone: '+357 99 123456',
     city: 'Nicosia',
     address: '123 Main St',
+    postalCode: '1060',
+    akisBranch: 'Nicosia Central',
     products: 'Atlas GMT',
     total: '330',
   },
