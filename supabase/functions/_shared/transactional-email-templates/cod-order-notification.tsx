@@ -24,6 +24,8 @@ const CodOrderNotificationEmail = ({
   phone = '',
   city = '',
   address = '',
+  postalCode = '',
+  akisBranch = '',
   products = 'Watch',
   total = '0',
 }: CodOrderProps) => (
@@ -39,12 +41,18 @@ const CodOrderNotificationEmail = ({
           <Text style={label}>Customer</Text>
           <Text style={value}>{customerName}</Text>
           {customerEmail && <Text style={value}>{customerEmail}</Text>}
-          {phone && <Text style={value}>{phone}</Text>}
+          {phone && <Text style={value}>📞 {phone}</Text>}
         </Section>
         <Section>
-          <Text style={label}>Delivery</Text>
-          <Text style={value}>{address}{city ? `, ${city}` : ''}</Text>
+          <Text style={label}>Delivery Address</Text>
+          <Text style={value}>{address}{postalCode ? `, ${postalCode}` : ''}{city ? `, ${city}` : ''}</Text>
         </Section>
+        {akisBranch && (
+          <Section>
+            <Text style={label}>Akis Express Branch</Text>
+            <Text style={value}>{akisBranch}</Text>
+          </Section>
+        )}
         <Section>
           <Text style={label}>Products</Text>
           <Text style={value}>{products}</Text>
