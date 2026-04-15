@@ -12,6 +12,8 @@ interface CodOrderProps {
   phone?: string
   city?: string
   address?: string
+  postalCode?: string
+  akisBranch?: string
   products?: string
   total?: string
 }
