@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronRight, Package, Truck, ShieldCheck, RotateCcw, ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
+import { useSoldOut } from "@/hooks/useSoldOut";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
