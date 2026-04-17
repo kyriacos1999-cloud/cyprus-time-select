@@ -29,8 +29,10 @@ const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { soldOutIds } = useSoldOut();
   const [selectedImage, setSelectedImage] = useState(0);
   const product = slug ? getProductBySlug(slug) : null;
+  const isSoldOut = product ? soldOutIds.has(product.id) : false;
 
   useEffect(() => {
     window.scrollTo(0, 0);
