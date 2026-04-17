@@ -94,7 +94,11 @@ const ProductPage = () => {
                   className="w-full h-full object-contain bg-background"
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                 />
-                {product.badge && (
+                {isSoldOut ? (
+                  <div className="absolute top-5 left-5 bg-destructive text-destructive-foreground text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5 rounded-sm">
+                    Sold Out
+                  </div>
+                ) : product.badge && (
                   <div className="absolute top-5 left-5 bg-foreground text-background text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5 rounded-sm">
                     {product.badge}
                   </div>
