@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useSoldOut } from "@/hooks/useSoldOut";
 import { toast } from "sonner";
 import { ShoppingCart, Filter } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -10,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 
 const ShopPage = () => {
   const { addItem } = useCart();
+  const { soldOutIds } = useSoldOut();
   const [searchParams] = useSearchParams();
   const categoryFilter = searchParams.get("category");
 
