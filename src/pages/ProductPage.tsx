@@ -321,13 +321,15 @@ const ProductPage = () => {
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border p-3 flex gap-2 lg:hidden">
           <button
             onClick={() => navigate(`/checkout?product=${product.id}`)}
-            className="flex-1 bg-foreground text-background text-xs tracking-[0.15em] uppercase font-medium py-3.5 rounded-sm"
+            disabled={isSoldOut}
+            className="flex-1 bg-foreground text-background text-xs tracking-[0.15em] uppercase font-medium py-3.5 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Buy Now · €{product.price}
+            {isSoldOut ? "Sold Out" : `Buy Now · €${product.price}`}
           </button>
           <button
             onClick={() => { addItem(product); toast.success(`${product.name} added to cart`); }}
-            className="border border-foreground text-foreground p-3.5 rounded-sm"
+            disabled={isSoldOut}
+            className="border border-foreground text-foreground p-3.5 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingCart className="w-4 h-4" />
           </button>
