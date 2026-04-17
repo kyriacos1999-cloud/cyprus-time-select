@@ -23,6 +23,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import WelcomeDiscount from "./components/WelcomeDiscount";
+import VisitorTracker from "./components/VisitorTracker";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <VisitorTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/shop" element={<ShopPage />} />
