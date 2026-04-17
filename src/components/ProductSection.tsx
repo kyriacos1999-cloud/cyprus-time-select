@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useSoldOut } from "@/hooks/useSoldOut";
 import { toast } from "sonner";
 
 const ProductSection = () => {
   const { addItem } = useCart();
+  const { soldOutIds } = useSoldOut();
 
   return (
     <section id="products" className="py-20 md:py-28 bg-secondary/30">
