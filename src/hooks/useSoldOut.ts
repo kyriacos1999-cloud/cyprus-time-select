@@ -21,9 +21,11 @@ export const useSoldOut = () => {
       .channel("inventory-changes")
       .on(
         "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "product_inventory" },
+        { event: "*", schema: "public", table: "product_inventory" },
         (payload: any) => {
-          const { product_id, sold_out } = payload.new;
+          const row = payload.new ?? payload.old;
+          if (!row) return;
+          const { product_id, sold_out } = row;
           setSoldOutIds((prev) => {
             const next = new Set(prev);
             if (sold_out) next.add(product_id);
