@@ -71,7 +71,7 @@ serve(async (req) => {
       stripe_session_id: session.id,
     });
 
-    // Send notification email (non-blocking — don't fail verification if email fails)
+    // Send notification email to store (non-blocking — don't fail verification if email fails)
     try {
       await supabaseAdmin.functions.invoke("send-transactional-email", {
         body: {
@@ -90,6 +90,29 @@ serve(async (req) => {
       });
     } catch (emailError) {
       console.error("Failed to send Stripe order notification email:", emailError);
+    }
+
+    // Send branded confirmation to customer (non-blocking)
+    if (orderDetails.customerEmail) {
+      try {
+        await supabaseAdmin.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "customer-order-confirmation",
+            recipientEmail: orderDetails.customerEmail,
+            idempotencyKey: `stripe-customer-confirm-${session.id}`,
+            templateData: {
+              customerName: orderDetails.customerName || "there",
+              products: orderDetails.productName,
+              total: orderDetails.amount,
+              currency: orderDetails.currency,
+              paymentMethod: "stripe",
+              orderRef: session.id,
+            },
+          },
+        });
+      } catch (emailError) {
+        console.error("Failed to send customer confirmation (Stripe):", emailError);
+      }
     }
 
     return new Response(JSON.stringify(orderDetails), {

@@ -59,13 +59,15 @@ serve(async (req) => {
       metadata: { akis_branch: order.akisBranch },
     });
 
-    // Send COD order notification email
+    // Send COD order notification email (to store)
     const productNames = (order.products || []).map((p: any) => p.name || p.productName || "Watch").join(", ");
+    const orderRef = crypto.randomUUID();
+
     await supabaseAdmin.functions.invoke("send-transactional-email", {
       body: {
         templateName: "cod-order-notification",
         recipientEmail: "kyriacos1999@gmail.com",
-        idempotencyKey: `cod-order-${crypto.randomUUID()}`,
+        idempotencyKey: `cod-order-${orderRef}`,
         templateData: {
           customerName: order.customerName || "Unknown",
           customerEmail: order.customerEmail || "",
@@ -79,6 +81,33 @@ serve(async (req) => {
         },
       },
     });
+
+    // Send branded confirmation to customer (non-blocking)
+    if (order.customerEmail) {
+      try {
+        await supabaseAdmin.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "customer-order-confirmation",
+            recipientEmail: order.customerEmail,
+            idempotencyKey: `cod-customer-confirm-${orderRef}`,
+            templateData: {
+              customerName: order.customerName || "there",
+              products: productNames,
+              total: String(order.total || 0),
+              currency: "EUR",
+              paymentMethod: "cod",
+              address: order.address || "",
+              city: order.city || "",
+              postalCode: order.postalCode || "",
+              akisBranch: order.akisBranch || "",
+              orderRef,
+            },
+          },
+        });
+      } catch (e) {
+        console.error("Failed to send customer confirmation (COD):", e);
+      }
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
