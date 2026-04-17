@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, ChevronRight, Package, Truck, ShieldCheck, RotateCcw, ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
+import { useSoldOut } from "@/hooks/useSoldOut";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -28,8 +29,10 @@ const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { soldOutIds } = useSoldOut();
   const [selectedImage, setSelectedImage] = useState(0);
   const product = slug ? getProductBySlug(slug) : null;
+  const isSoldOut = product ? soldOutIds.has(product.id) : false;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,7 +94,11 @@ const ProductPage = () => {
                   className="w-full h-full object-contain bg-background"
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                 />
-                {product.badge && (
+                {isSoldOut ? (
+                  <div className="absolute top-5 left-5 bg-destructive text-destructive-foreground text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5 rounded-sm">
+                    Sold Out
+                  </div>
+                ) : product.badge && (
                   <div className="absolute top-5 left-5 bg-foreground text-background text-[10px] tracking-[0.2em] uppercase font-medium px-4 py-1.5 rounded-sm">
                     {product.badge}
                   </div>
@@ -151,20 +158,22 @@ const ProductPage = () => {
               <div className="flex gap-3 flex-wrap">
                 <button
                   onClick={() => navigate(`/checkout?product=${product.id}`)}
-                  className="bg-foreground text-background text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-foreground/90 transition-colors duration-300 rounded-sm"
+                  disabled={isSoldOut}
+                  className="bg-foreground text-background text-xs tracking-[0.2em] uppercase font-medium px-10 py-4 hover:bg-foreground/90 transition-colors duration-300 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-foreground"
                 >
-                  Buy Now
+                  {isSoldOut ? "Sold Out" : "Buy Now"}
                 </button>
                 <button
                   onClick={() => { addItem(product); toast.success(`${product.name} added to cart`); }}
-                  className="border border-foreground text-foreground text-xs tracking-[0.2em] uppercase font-medium px-6 py-4 hover:bg-foreground/5 transition-colors duration-300 flex items-center gap-2 rounded-sm"
+                  disabled={isSoldOut}
+                  className="border border-foreground text-foreground text-xs tracking-[0.2em] uppercase font-medium px-6 py-4 hover:bg-foreground/5 transition-colors duration-300 flex items-center gap-2 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ShoppingCart className="w-4 h-4" />
                   Add to Cart
                 </button>
               </div>
               <p className="text-muted-foreground text-[11px] mt-3 font-light tracking-wide">
-                Free next-day delivery · Secure checkout · 1-year warranty
+                {isSoldOut ? "Currently unavailable — check back soon or contact us via TikTok @replic8cy" : "Free next-day delivery · Secure checkout · 1-year warranty"}
               </p>
             </div>
           </div>
@@ -312,13 +321,15 @@ const ProductPage = () => {
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border p-3 flex gap-2 lg:hidden">
           <button
             onClick={() => navigate(`/checkout?product=${product.id}`)}
-            className="flex-1 bg-foreground text-background text-xs tracking-[0.15em] uppercase font-medium py-3.5 rounded-sm"
+            disabled={isSoldOut}
+            className="flex-1 bg-foreground text-background text-xs tracking-[0.15em] uppercase font-medium py-3.5 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Buy Now · €{product.price}
+            {isSoldOut ? "Sold Out" : `Buy Now · €${product.price}`}
           </button>
           <button
             onClick={() => { addItem(product); toast.success(`${product.name} added to cart`); }}
-            className="border border-foreground text-foreground p-3.5 rounded-sm"
+            disabled={isSoldOut}
+            className="border border-foreground text-foreground p-3.5 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ShoppingCart className="w-4 h-4" />
           </button>

@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useSoldOut } from "@/hooks/useSoldOut";
 import { toast } from "sonner";
 
 const ProductSection = () => {
   const { addItem } = useCart();
+  const { soldOutIds } = useSoldOut();
 
   return (
     <section id="products" className="py-20 md:py-28 bg-secondary/30">
@@ -27,7 +29,9 @@ const ProductSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {products.map((product, i) => (
+          {products.map((product, i) => {
+            const isSoldOut = soldOutIds.has(product.id);
+            return (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 20 }}
@@ -41,10 +45,14 @@ const ProductSection = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                    className={`w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500 ${isSoldOut ? "opacity-60" : ""}`}
                     loading="lazy"
                   />
-                  {product.badge && (
+                  {isSoldOut ? (
+                    <div className="absolute top-3 left-3 bg-destructive text-destructive-foreground text-[9px] tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-sm">
+                      Sold Out
+                    </div>
+                  ) : product.badge && (
                     <div className="absolute top-3 left-3 bg-foreground text-background text-[9px] tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-sm">
                       {product.badge}
                     </div>
@@ -64,18 +72,21 @@ const ProductSection = () => {
                   <span className="text-foreground font-display text-lg">€{product.price}</span>
                   <button
                     onClick={() => {
+                      if (isSoldOut) return;
                       addItem(product);
                       toast.success(`${product.name} added to cart`);
                     }}
-                    className="inline-flex items-center gap-1.5 text-accent hover:text-warm-dark text-xs font-medium transition-colors"
+                    disabled={isSoldOut}
+                    className="inline-flex items-center gap-1.5 text-accent hover:text-warm-dark text-xs font-medium transition-colors disabled:text-muted-foreground disabled:cursor-not-allowed disabled:hover:text-muted-foreground"
                   >
                     <ShoppingCart className="w-3.5 h-3.5" />
-                    Add to Cart
+                    {isSoldOut ? "Sold Out" : "Add to Cart"}
                   </button>
                 </div>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="text-center mt-12">

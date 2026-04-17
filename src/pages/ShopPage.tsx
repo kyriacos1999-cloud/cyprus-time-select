@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
+import { useSoldOut } from "@/hooks/useSoldOut";
 import { toast } from "sonner";
 import { ShoppingCart, Filter } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -10,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 
 const ShopPage = () => {
   const { addItem } = useCart();
+  const { soldOutIds } = useSoldOut();
   const [searchParams] = useSearchParams();
   const categoryFilter = searchParams.get("category");
 
@@ -62,7 +64,9 @@ const ShopPage = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {filteredProducts.map((product, i) => (
+            {filteredProducts.map((product, i) => {
+              const isSoldOut = soldOutIds.has(product.id);
+              return (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -75,10 +79,14 @@ const ShopPage = () => {
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500 ${isSoldOut ? "opacity-60" : ""}`}
                       loading="lazy"
                     />
-                    {product.badge && (
+                    {isSoldOut ? (
+                      <div className="absolute top-3 left-3 bg-destructive text-destructive-foreground text-[9px] tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-sm">
+                        Sold Out
+                      </div>
+                    ) : product.badge && (
                       <div className="absolute top-3 left-3 bg-foreground text-background text-[9px] tracking-[0.15em] uppercase font-medium px-3 py-1 rounded-sm">
                         {product.badge}
                       </div>
@@ -95,16 +103,22 @@ const ShopPage = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-foreground font-display text-lg">€{product.price}</span>
                     <button
-                      onClick={() => { addItem(product); toast.success(`${product.name} added to cart`); }}
-                      className="inline-flex items-center gap-1.5 text-accent hover:text-warm-dark text-xs font-medium transition-colors"
+                      onClick={() => {
+                        if (isSoldOut) return;
+                        addItem(product);
+                        toast.success(`${product.name} added to cart`);
+                      }}
+                      disabled={isSoldOut}
+                      className="inline-flex items-center gap-1.5 text-accent hover:text-warm-dark text-xs font-medium transition-colors disabled:text-muted-foreground disabled:cursor-not-allowed disabled:hover:text-muted-foreground"
                     >
                       <ShoppingCart className="w-3.5 h-3.5" />
-                      Add to Cart
+                      {isSoldOut ? "Sold Out" : "Add to Cart"}
                     </button>
                   </div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
