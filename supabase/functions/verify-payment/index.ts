@@ -71,6 +71,27 @@ serve(async (req) => {
       stripe_session_id: session.id,
     });
 
+    // Send notification email (non-blocking — don't fail verification if email fails)
+    try {
+      await supabaseAdmin.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "stripe-order-notification",
+          recipientEmail: "kyriacos1999@gmail.com",
+          idempotencyKey: `stripe-order-${session.id}`,
+          templateData: {
+            customerName: orderDetails.customerName || "Unknown",
+            customerEmail: orderDetails.customerEmail || "",
+            products: orderDetails.productName,
+            total: orderDetails.amount,
+            currency: orderDetails.currency,
+            sessionId: session.id,
+          },
+        },
+      });
+    } catch (emailError) {
+      console.error("Failed to send Stripe order notification email:", emailError);
+    }
+
     return new Response(JSON.stringify(orderDetails), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
