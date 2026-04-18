@@ -37,7 +37,18 @@ Deno.serve(async (req) => {
 
     if (error) throw error;
 
-    const allEvents = events || [];
+    // Filter out internal / admin / preview traffic that shouldn't count
+    // toward real visitor analytics.
+    const isInternalEvent = (e: any): boolean => {
+      const page: string = e.page || "";
+      const ref: string = e.referrer || "";
+      const ua: string = e.metadata?.user_agent || "";
+      if (page.startsWith("/admin")) return true;
+      if (/lovable\.app|lovableproject\.com|lovable\.dev/i.test(ref)) return true;
+      if (/bot|crawl|spider|slurp|facebookexternalhit|preview|lighthouse|headless/i.test(ua)) return true;
+      return false;
+    };
+    const allEvents = (events || []).filter((e: any) => !isInternalEvent(e));
 
     // === ANALYTICS CALCULATIONS ===
 
@@ -74,31 +85,53 @@ Deno.serve(async (req) => {
       deviceCounts[device] = (deviceCounts[device] || 0) + 1;
     });
 
-    // Traffic sources — use metadata.traffic_source first, fallback to referrer parsing
+    // Traffic sources — use metadata.traffic_source first, then click IDs in
+    // the referrer query string, then referrer host. Own-domain referrers
+    // (replic8.shop → replic8.shop) are treated as "direct".
+    const OWN_DOMAINS = ["replic8.shop", "www.replic8.shop"];
+    const classifyHost = (host: string): string | null => {
+      const h = host.toLowerCase();
+      if (h.includes("google")) return "google";
+      if (h.includes("facebook") || h.includes("fb.com") || h.includes("fb.me")) return "facebook";
+      if (h.includes("instagram")) return "instagram";
+      if (h.includes("tiktok")) return "tiktok";
+      if (h.includes("youtube")) return "youtube";
+      if (h.includes("twitter") || h.includes("x.com")) return "twitter/x";
+      if (h.includes("pinterest")) return "pinterest";
+      if (h.includes("reddit")) return "reddit";
+      if (h.includes("linkedin")) return "linkedin";
+      if (h.includes("whatsapp")) return "whatsapp";
+      if (h.includes("t.me") || h.includes("telegram")) return "telegram";
+      return null;
+    };
+
     const sourceCounts: Record<string, number> = {};
     pageViews.forEach((e: any) => {
-      let source = e.metadata?.traffic_source || "direct";
+      let source: string = (e.metadata?.traffic_source || "").toLowerCase() || "direct";
+
+      // Normalize: own-domain or preview hosts saved as a "source" → direct
+      if (OWN_DOMAINS.includes(source) || /lovable/i.test(source)) source = "direct";
+
+      // If still direct, attempt to recover from referrer
       if (source === "direct") {
         const ref = e.referrer || "";
         if (ref) {
           try {
-            const host = new URL(ref).hostname.toLowerCase();
-            if (host.includes("google")) source = "google";
-            else if (host.includes("facebook") || host.includes("fb.")) source = "facebook";
-            else if (host.includes("instagram")) source = "instagram";
-            else if (host.includes("tiktok")) source = "tiktok";
-            else if (host.includes("youtube")) source = "youtube";
-            else if (host.includes("twitter") || host.includes("x.com")) source = "twitter/x";
-            else if (host.includes("pinterest")) source = "pinterest";
-            else if (host.includes("reddit")) source = "reddit";
-            else if (host.includes("linkedin")) source = "linkedin";
-            else if (host.includes("whatsapp")) source = "whatsapp";
-            else source = host;
+            const url = new URL(ref);
+            const host = url.hostname.toLowerCase();
+            if (!OWN_DOMAINS.includes(host) && !/lovable/i.test(host)) {
+              // Click identifiers in URL → social platform
+              if (/fbclid=/i.test(ref)) source = "facebook";
+              else if (/gclid=/i.test(ref)) source = "google";
+              else if (/ttclid=/i.test(ref)) source = "tiktok";
+              else source = classifyHost(host) || host;
+            }
           } catch {
-            source = ref;
+            /* ignore malformed referrer */
           }
         }
       }
+
       // Capitalize first letter for display
       source = source.charAt(0).toUpperCase() + source.slice(1);
       sourceCounts[source] = (sourceCounts[source] || 0) + 1;

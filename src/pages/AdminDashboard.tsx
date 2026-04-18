@@ -92,6 +92,8 @@ const AdminDashboard = () => {
     e.preventDefault();
     if (password === ADMIN_PASSWORD_HASH) {
       sessionStorage.setItem("admin_authed", "1");
+      // Permanently mark this browser as internal so future visits aren't tracked
+      try { localStorage.setItem("is_internal_user", "1"); } catch { /* ignore */ }
       setAuthed(true);
       setAuthError(false);
     } else {

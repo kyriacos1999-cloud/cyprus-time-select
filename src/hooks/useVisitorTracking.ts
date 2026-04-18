@@ -1,6 +1,48 @@
 import { useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
+const PRODUCTION_HOSTS = ["replic8.shop", "www.replic8.shop"];
+
+/**
+ * Returns true when the current page should NOT be tracked
+ * (admin views, Lovable preview/editor, localhost, or bots).
+ */
+const shouldSkipTracking = (): boolean => {
+  if (typeof window === "undefined") return true;
+
+  const path = window.location.pathname || "";
+  const host = window.location.hostname || "";
+  const ua = navigator.userAgent || "";
+
+  // 1. Admin pages — never count own admin sessions as visitors
+  if (path.startsWith("/admin")) return true;
+
+  // 2. Lovable preview / editor / localhost — only track real production traffic
+  if (
+    host.includes("lovable.app") ||
+    host.includes("lovableproject.com") ||
+    host.includes("lovable.dev") ||
+    host === "localhost" ||
+    host === "127.0.0.1"
+  ) {
+    return true;
+  }
+
+  // 3. Persistent admin flag — once you log into admin in this browser,
+  // skip your own visits for the rest of the session.
+  try {
+    if (sessionStorage.getItem("admin_authed") === "1") return true;
+    if (localStorage.getItem("is_internal_user") === "1") return true;
+  } catch { /* ignore */ }
+
+  // 4. Common bots / crawlers
+  if (/bot|crawl|spider|slurp|facebookexternalhit|preview|lighthouse|headless/i.test(ua)) {
+    return true;
+  }
+
+  return false;
+};
+
 const getSessionId = (): string => {
   let id = sessionStorage.getItem("visitor_session_id");
   if (!id) {
@@ -45,14 +87,33 @@ const getUtmParams = (): Record<string, string> => {
   return stored ? JSON.parse(stored) : {};
 };
 
+/**
+ * Determine traffic source. Improvements:
+ *  - Detect fbclid / gclid / ttclid click identifiers as facebook/google/tiktok
+ *  - Treat own-domain referrers (replic8.shop → replic8.shop) as "direct"
+ *  - UTMs always win
+ */
 const getTrafficSource = (): string => {
   const utms = getUtmParams();
-  if (utms.utm_source) return utms.utm_source;
+  if (utms.utm_source) return utms.utm_source.toLowerCase();
+
+  // Click identifiers — these survive even when the referrer is stripped
+  const search = window.location.search || "";
+  if (/[?&]fbclid=/i.test(search)) return "facebook";
+  if (/[?&]gclid=/i.test(search)) return "google";
+  if (/[?&]ttclid=/i.test(search)) return "tiktok";
+  if (/[?&]igshid=/i.test(search)) return "instagram";
 
   const ref = document.referrer || "";
   if (!ref) return "direct";
+
   try {
     const host = new URL(ref).hostname.toLowerCase();
+    const currentHost = window.location.hostname.toLowerCase();
+
+    // Internal navigation on our own domain → not a real source
+    if (host === currentHost || PRODUCTION_HOSTS.includes(host)) return "direct";
+
     if (host.includes("google")) return "google";
     if (host.includes("facebook") || host.includes("fb.com") || host.includes("fb.me")) return "facebook";
     if (host.includes("instagram")) return "instagram";
@@ -74,6 +135,7 @@ const trackEvent = async (
   eventType: string,
   data: Record<string, unknown> = {}
 ) => {
+  if (shouldSkipTracking()) return;
   try {
     const utms = getUtmParams();
     const metadata = {
@@ -104,6 +166,7 @@ export const useVisitorTracking = () => {
   useEffect(() => {
     if (tracked.current) return;
     tracked.current = true;
+    if (shouldSkipTracking()) return;
 
     const visitorType = getVisitorType();
     const visitCount = getVisitCount();
@@ -121,6 +184,7 @@ export const useVisitorTracking = () => {
 
   // Track scroll depth
   useEffect(() => {
+    if (shouldSkipTracking()) return;
     const handler = () => {
       const scrolled = Math.round(
         ((window.scrollY + window.innerHeight) /
@@ -137,6 +201,7 @@ export const useVisitorTracking = () => {
 
   // Track time on page + scroll depth on unmount / tab close
   useEffect(() => {
+    if (shouldSkipTracking()) return;
     const handler = () => {
       const timeOnPage = Math.round((Date.now() - startTime.current) / 1000);
       trackEvent("page_exit", {
@@ -151,6 +216,7 @@ export const useVisitorTracking = () => {
 
   // Track product views when they scroll into view
   useEffect(() => {
+    if (shouldSkipTracking()) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
