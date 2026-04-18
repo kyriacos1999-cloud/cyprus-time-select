@@ -37,7 +37,18 @@ Deno.serve(async (req) => {
 
     if (error) throw error;
 
-    const allEvents = events || [];
+    // Filter out internal / admin / preview traffic that shouldn't count
+    // toward real visitor analytics.
+    const isInternalEvent = (e: any): boolean => {
+      const page: string = e.page || "";
+      const ref: string = e.referrer || "";
+      const ua: string = e.metadata?.user_agent || "";
+      if (page.startsWith("/admin")) return true;
+      if (/lovable\.app|lovableproject\.com|lovable\.dev/i.test(ref)) return true;
+      if (/bot|crawl|spider|slurp|facebookexternalhit|preview|lighthouse|headless/i.test(ua)) return true;
+      return false;
+    };
+    const allEvents = (events || []).filter((e: any) => !isInternalEvent(e));
 
     // === ANALYTICS CALCULATIONS ===
 
